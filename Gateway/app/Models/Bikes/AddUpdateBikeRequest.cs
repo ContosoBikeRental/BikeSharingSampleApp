@@ -21,6 +21,10 @@ namespace app.Models
         //TODO [Required]
         public string ImageUrl { get; set; }
 
+        [JsonProperty("address")]
+        [Required]
+        public string Address { get; set; }
+
         [JsonProperty("type")]
         [Required]
         public string Type { get; set; }

@@ -48,6 +48,10 @@ var incomingBikeSchema = {
         presence: true,
         length: { minimum: 1 }
     },
+    address: {
+        presence: true,
+        length: { minimum: 1 }
+    },
     type: {
         presence: true,
         inclusion: [ "mountain", "road", "tandem" ]

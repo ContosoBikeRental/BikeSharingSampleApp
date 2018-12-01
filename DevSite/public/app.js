@@ -241,6 +241,7 @@ app.controller('MainController', function($scope, $http, $timeout, $window, $doc
                     "model": randUser.name.first,
                     "hourlyCost": (Math.random() * 10.0).toFixed(2),
                     "type": bikeTypes[Math.floor(Math.random() * 3)],
+                    "address": randUser.location.street,
                     "ownerUserId": $scope.createBikeOwnerUserId,
                     "suitableHeightInMeters": Math.random() * 10.0,
                     "maximumWeightInKg": Math.random() * 10.0

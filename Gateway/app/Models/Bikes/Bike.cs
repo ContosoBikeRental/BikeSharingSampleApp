@@ -22,6 +22,9 @@ namespace app.Models
         [JsonProperty("imageUrl")]
         public string ImageUrl { get; private set; }
 
+        [JsonProperty("address")]
+        public string Address { get; private set; }
+
         [JsonProperty("type")]
         public string Type { get; private set; }
 
