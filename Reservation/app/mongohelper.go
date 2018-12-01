@@ -49,6 +49,7 @@ func CreateMongoConnection() *MongoHelper {
 
 	var mongoSession *mgo.Session
 	maxTries := 5
+	fmt.Printf("Connecting to Mongo: %s\n", uri)
 	for i := 1; i <= maxTries; i++ {
 		mongoSession, err = mgo.DialWithInfo(dialInfo)
 		if err == nil {
@@ -66,6 +67,7 @@ func CreateMongoConnection() *MongoHelper {
 		fmt.Fprintf(os.Stderr, "failed to connect to mongodb: %s\n", err)
 		os.Exit(1)
 	}
+	fmt.Println("Connected to Mongo")
 
 	//mongoSession.SetMode(mgo.PrimaryPreferred, true)
 	//mongoSession.SetSafe(&mgo.Safe{WMode: "majority"})
@@ -79,7 +81,7 @@ func CreateMongoConnection() *MongoHelper {
 	if collection == "" {
 		collection = reservationMongoDBCollection
 	}
-	
+
 	mongoHelper := &MongoHelper{
 		session:    mongoSession,
 		database:   mongoSession.DB(db),

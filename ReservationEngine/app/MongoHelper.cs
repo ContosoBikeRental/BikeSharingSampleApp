@@ -1,12 +1,12 @@
-﻿using app.Models;
+﻿// --------------------------------------------------------------------------------------------
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// --------------------------------------------------------------------------------------------
+
+using System;
+using System.Threading.Tasks;
+using app.Models;
 using MongoDB.Bson;
 using MongoDB.Driver;
-using System;
-using System.Linq;
-using System.Reflection;
-using System.Threading.Tasks;
-using Newtonsoft.Json;
-using System.Collections.Generic;
 
 namespace app
 {
@@ -28,6 +28,33 @@ namespace app
             _collection = Environment.GetEnvironmentVariable(Constants.MongoDbCollectionEnv) ?? customConfiguration.MongoDBConnectionInfo.Collection;
             _mongoClient = new MongoClient(_connectionString);
             LogUtility.Log("MongoHelper init end");
+            CheckConnectionLoop();
+        }
+
+        private static async void CheckConnectionLoop()
+        {
+            var db = _mongoClient.GetDatabase(_database);
+
+            while (true)
+            {
+                try
+                {
+                    BsonDocument isMongoLive = await db.RunCommandAsync((Command<BsonDocument>)"{ping:1}");
+                    if (!isMongoLive.Contains("ok") || isMongoLive["ok"].AsDouble != 1.0)
+                    {
+                        Console.Error.WriteLine("Mongo connection dead! Shutting down.");
+                        Environment.Exit(1);
+                    }
+                }
+                catch (Exception e)
+                {
+                    Console.Error.WriteLine("Exception pinging Mongo:");
+                    Console.Error.WriteLine(e.ToString());
+                    Environment.Exit(1);
+                }
+
+                await Task.Delay(3000);
+            }
         }
 
         /// <summary>
@@ -40,7 +67,7 @@ namespace app
             LogUtility.LogWithContext(requestId, "Updating reservationID " + reservationDetails.ReservationId);
             var db = _mongoClient.GetDatabase(_database);
             var collection = db.GetCollection<Reservation>(_collection).WithWriteConcern(new WriteConcern("majority"));
-            
+
             var filter = Builders<Reservation>.Filter.Eq("reservationId", reservationDetails.ReservationId);
             var update = Builders<Reservation>.Update.Set("state", reservationDetails.State).Set("endTime", reservationDetails.EndTime);
 

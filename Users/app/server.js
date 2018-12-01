@@ -276,6 +276,10 @@ function trySqlConnect(callback) {
       });
     }
   });
+  dbConnection.on('end', function () {
+    console.error('Lost SQL connection! Shutting down.');
+    process.exit(1);
+  });
 }
 
 async.retry({times: 20, interval: 1000}, trySqlConnect, function(err) {

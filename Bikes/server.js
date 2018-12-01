@@ -357,7 +357,7 @@ function dbError(res, err, requestID) {
 }
 
 app.get('/hello', function(req, res) {
-    res.send('hello!\n');
+    res.status(200).send('hello!\n');
 });
 
 // start server ------------------------------------------------------------
@@ -369,7 +369,9 @@ process.on("SIGINT", () => {
     if (server) {
         server.close();
     }
-    mongoDB.close();
+    var tmp = mongoDB;
+    mongoDB = null;
+    tmp.close();
 });
 
 process.on("SIGTERM", () => {
@@ -377,7 +379,9 @@ process.on("SIGTERM", () => {
     if (server) {
         server.close();
     }
-    mongoDB.close();
+    var tmp = mongoDB;
+    mongoDB = null;
+    tmp.close();
 });
 
 function tryMongoConnect(callback, results) {
@@ -400,6 +404,12 @@ async.retry({times: 10, interval: 1000}, tryMongoConnect, function(err, result) 
 
     console.log("Connected to MongoDB");
     mongoDB = result;
+    mongoDB.on('close', function() {
+        if (mongoDB) { // SIGINT and SIGTERM
+            console.log('Mongo connection closed! Shutting down.');
+            process.exit(1);
+        }
+    });
 
     // Start server
     server = app.listen(port, function () {
