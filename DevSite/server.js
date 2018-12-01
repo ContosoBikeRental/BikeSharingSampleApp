@@ -28,7 +28,13 @@ app.get('/hello', function(req, res) {
 
 // Get available bikes
 app.get('/api/availableBikes', function (req, res) {
-    request.get(gatewayServiceUri + "/api/bike/availableBikes", function(err, response, body) {
+    const options = {
+        url: gatewayServiceUri + "/api/bike/availableBikes",
+        headers: {
+            'azds-route-as': req.get('azds-route-as')
+        }
+    };
+    request.get(options, function(err, response, body) {
         if (err) {
             res.status(500).send(err);
             return;
@@ -40,7 +46,13 @@ app.get('/api/availableBikes', function (req, res) {
 
 // Get all bikes
 app.get('/api/allbikes', function (req, res) {
-    request.get(gatewayServiceUri + "/api/bike/allBikes", function(err, response, body) {
+    const options = {
+        url: gatewayServiceUri + "/api/bike/allBikes",
+        headers: {
+            'azds-route-as': req.get('azds-route-as')
+        }
+    };
+    request.get(options, function(err, response, body) {
         if (err) {
             res.status(500).send(err);
             return;
@@ -52,8 +64,14 @@ app.get('/api/allbikes', function (req, res) {
 
 // create new bike
 app.post('/api/bike', function(req, res) {
-    var requestOptions = { json: req.body };
-    request.post(gatewayServiceUri + "/api/bike", requestOptions, function(err, response, body) {
+    const requestOptions = { 
+        url: gatewayServiceUri + "/api/bike",
+        headers: {
+            'azds-route-as': req.get('azds-route-as')
+        },
+        json: req.body 
+    };
+    request.post(requestOptions, function(err, response, body) {
         if (err) {
             res.status(500).send(err);
             return;
@@ -70,7 +88,13 @@ app.get('/api/billing/invoice/:invoiceId', function(req, res) {
         return;
     }
 
-    request.get(gatewayServiceUri + "/api/billing/invoice/" + req.params.invoiceId, function(err, response, body) {
+    const options = {
+        url: gatewayServiceUri + "/api/billing/invoice/" + req.params.invoiceId,
+        headers: {
+            'azds-route-as': req.get('azds-route-as')
+        }
+    };
+    request.get(options, function(err, response, body) {
         if (err) {
             res.status(500).send(err);
             return;
@@ -82,8 +106,14 @@ app.get('/api/billing/invoice/:invoiceId', function(req, res) {
 
 // Create new customer
 app.post('/api/user', function(req, res) {
-    var requestOptions = { json: req.body };
-    request.post(gatewayServiceUri + "/api/user", requestOptions, function(err, response, body) {
+    const requestOptions = { 
+        url: gatewayServiceUri + "/api/user",
+        headers: {
+            'azds-route-as': req.get('azds-route-as')
+        },
+        json: req.body 
+    };
+    request.post(requestOptions, function(err, response, body) {
         if (err) {
             res.status(500).send(err);
             return;
@@ -95,8 +125,14 @@ app.post('/api/user', function(req, res) {
 
 // Create new vendor
 app.post('/api/user/vendor', function(req, res) {
-    var requestOptions = { json: req.body };
-    request.post(gatewayServiceUri + "/api/user/vendor", requestOptions, function(err, response, body) {
+    const requestOptions = { 
+        url: gatewayServiceUri + "/api/user/vendor",
+        headers: {
+            'azds-route-as': req.get('azds-route-as')
+        },
+        json: req.body 
+    };
+    request.post(requestOptions, function(err, response, body) {
         if (err) {
             res.status(500).send(err);
             return;
@@ -113,7 +149,13 @@ app.get('/api/billing/customer/:userId', function(req, res) {
         return;
     }
 
-    request.get(gatewayServiceUri + "/api/billing/customer/" + req.params.userId, function(err, response, body) {
+    const options = {
+        url: gatewayServiceUri + "/api/billing/customer/" + req.params.userId,
+        headers: {
+            'azds-route-as': req.get('azds-route-as')
+        }
+    };
+    request.get(options, function(err, response, body) {
         if (err) {
             res.status(500).send(err);
             return;
@@ -130,7 +172,13 @@ app.get('/api/billing/vendor/:userId', function(req, res) {
         return;
     }
 
-    request.get(gatewayServiceUri + "/api/billing/vendor/" + req.params.userId, function(err, response, body) {
+    const options = {
+        url: gatewayServiceUri + "/api/billing/vendor/" + req.params.userId,
+        headers: {
+            'azds-route-as': req.get('azds-route-as')
+        }
+    };
+    request.get(options, function(err, response, body) {
         if (err) {
             res.status(500).send(err);
             return;
@@ -151,8 +199,17 @@ app.post('/api/user/auth', function(req, res) {
         return;
     }
 
-    var authRequestOptions = { json: { "username": req.body.userName, "password": req.body.userPass } };
-    request.post(gatewayServiceUri + "/api/user/auth", authRequestOptions, function(err, response, body) {
+    var authRequestOptions = { 
+        url: gatewayServiceUri + "/api/user/auth",
+        headers: {
+            'azds-route-as': req.get('azds-route-as')
+        },
+        json: { 
+            "username": req.body.userName, 
+            "password": req.body.userPass 
+        } 
+    };
+    request.post(authRequestOptions, function(err, response, body) {
         if (err) {
             res.status(500).send(err);
             return;
@@ -164,7 +221,13 @@ app.post('/api/user/auth', function(req, res) {
 
 // Get all users
 app.get('/api/user/allUsers', function(req, res) {
-    request.get(gatewayServiceUri + "/api/user/allUsers", function(err, response, body) {
+    const options = {
+        url: gatewayServiceUri + "/api/user/allUsers",
+        headers: {
+            'azds-route-as': req.get('azds-route-as')
+        }
+    };
+    request.get(options, function(err, response, body) {
         if (err) {
             res.status(500).send(err);
             return;
@@ -181,7 +244,13 @@ app.get('/api/user/:userId/reservations', function(req, res) {
         return;
     }
 
-    request.get(gatewayServiceUri + "/api/user/" + req.params.userId + "/reservations", function(err, response, body) {
+    const options = {
+        url: gatewayServiceUri + "/api/user/" + req.params.userId + "/reservations",
+        headers: {
+            'azds-route-as': req.get('azds-route-as')
+        }
+    };
+    request.get(options, function(err, response, body) {
         if (err) {
             res.status(500).send(err);
             return;
@@ -198,7 +267,13 @@ app.get('/api/reservation/:reservationId', function(req, res) {
         return;
     }
 
-    request.get(gatewayServiceUri + "/api/reservation/" + req.params.reservationId, function(err, response, body) {
+    const options = {
+        url: gatewayServiceUri + "/api/reservation/" + req.params.reservationId,
+        headers: {
+            'azds-route-as': req.get('azds-route-as')
+        }
+    };
+    request.get(options, function(err, response, body) {
         if (err) {
             res.status(500).send(err);
             return;
@@ -210,7 +285,13 @@ app.get('/api/reservation/:reservationId', function(req, res) {
 
 // Get all reservations
 app.get('/api/reservation/allReservations', function(req, res) {
-    request.get(gatewayServiceUri + "/api/reservation/allReservations", function(err, response, body) {
+    const options = {
+        url: gatewayServiceUri + "/api/reservation/allReservations",
+        headers: {
+            'azds-route-as': req.get('azds-route-as')
+        }
+    };
+    request.get(options, function(err, response, body) {
         if (err) {
             res.status(500).send(err);
             return;
@@ -231,7 +312,7 @@ app.patch('/api/bikes/:bikeId/reserve/:userId', function(req, res) {
         return;
     }
 
-    handleReservation(res, { json: { "bikeId": req.params.bikeId, "userId": req.params.userId } }, "");
+    handleReservation(req, res, { json: { "bikeId": req.params.bikeId, "userId": req.params.userId } }, "");
 });
 
 // Complete reservation
@@ -241,11 +322,15 @@ app.patch('/api/reservation/:resId/clear', function(req, res) {
         return;
     }
 
-    handleReservation(res, {}, "/" + req.params.resId);
+    handleReservation(req, res, {}, "/" + req.params.resId);
 });
 
-function handleReservation(res, requestOptions, endpointAppend) {
-    request.post(gatewayServiceUri + "/api/reservation" + endpointAppend, requestOptions, function(err, response, body) {
+function handleReservation(req, res, requestOptions, endpointAppend) {
+    requestOptions.url = gatewayServiceUri + "/api/reservation" + endpointAppend;
+    requestOptions.headers = {
+        'azds-route-as': req.get('azds-route-as')
+    };
+    request.post(requestOptions, function(err, response, body) {
         if (err) {
             res.status(500).send(err);
             return;
