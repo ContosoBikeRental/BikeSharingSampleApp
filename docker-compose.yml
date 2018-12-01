@@ -1,0 +1,124 @@
+version: "2"
+
+services:
+    apigateway:
+        build: ./Gateway/
+        ports:
+            - "5000:5000"
+        environment:
+            - USERS_DNSNAME=users
+            - BIKES_DNSNAME=bikes
+            - RESERVATION_DNSNAME=reservations
+            - RESERVATION_ENGINE_DNSNAME=reservationengine
+            - BILLING_DNSNAME=billing
+            - APPLICATIONINSIGHTS_INSTRUMENTATIONKEY=190c4eb0-6fb3-46b3-bb21-ec6be6523e49
+        links:
+            - bikes
+            - users
+            - billing
+            - reservations
+        depends_on:
+            - bikes
+            - reservationengine
+            - users
+            - billing
+            - reservations
+
+    devsite:
+        build: ./DevSite/
+        environment:
+            - GATEWAY_DNSNAME=apigateway:5000
+        links:
+            - apigateway
+        depends_on:
+            - apigateway
+        ports:
+            - "8080:80"
+
+    bikes:
+        build: ./Bikes/
+        environment:
+            - MONGO_CONNECTIONSTRING=mongodb://mongo
+            - MONGO_COLLECTION=bikes
+        depends_on:
+            - mongo
+        links:
+            - mongo
+        ports:
+            - "8081:80"
+
+    users:
+        build: ./Users/
+        ports:
+            - "8082:80"
+        environment:
+            - SQL_USERNAME=SA
+            - SQL_PASSWORD=!DummyPassword123!
+            - SQL_SERVER=sql
+            - SQL_DATABASE=tempdb
+            - SQL_TABLE=dummytable
+        depends_on:
+            - sql
+        links:
+            - sql
+
+    billing:
+        build: ./Billing/
+        ports:
+            - "8083:80"
+        environment:
+            - MONGO_CONNECTIONSTRING=mongodb://mongo
+            - MONGO_DBNAME=billing
+        depends_on:
+            - mongo
+        links:
+            - mongo
+
+    reservations:
+        build: ./Reservation/
+        ports:
+            - "8084:80"
+        environment:
+            - MONGO_CONNECTIONSTRING=mongodb://mongo
+            - MONGO_DBNAME=resdb
+            - MONGO_COLLECTION=reservation
+        depends_on:
+            - mongo
+        links:
+            - mongo
+
+    reservationengine:
+        build: ./ReservationEngine/
+        ports:
+            - "8085:80"
+        environment:
+            - MONGO_CONNECTIONSTRING=mongodb://mongo
+            - MONGO_DBNAME=resdb
+            - MONGO_COLLECTION=reservation
+            - BIKES_DNSNAME=bikes
+            - BILLING_DNSNAME=billing
+        depends_on:
+            - bikes
+            - mongo
+            - billing
+            - reservations
+        links:
+            - bikes
+            - mongo
+            - reservations
+            - billing
+
+    mongo:
+        image: mongo:3.4
+        expose:
+            - "27017"
+        ports:
+            - "27017:27017"
+
+    sql:
+        image: "microsoft/mssql-server-linux"
+        expose:
+            - "1433"
+        environment:
+            - SA_PASSWORD=!DummyPassword123!
+            - ACCEPT_EULA=Y

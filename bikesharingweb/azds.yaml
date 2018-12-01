@@ -1,0 +1,30 @@
+kind: helm-release
+apiVersion: 1.0
+build:
+  context: .
+  dockerfile: Dockerfile
+install:
+  chart: charts/bikesharingweb
+  values:
+  - values.dev.yaml?
+  - secrets.dev.yaml?
+  set:
+    apiHost: gateway.856bb3af715744c6810b.eastus.aksapp.io
+    replicaCount: 1
+    image:
+      tag: $(tag)
+      pullPolicy: Never
+    ingress:
+      hosts:
+      # This expands to [space.s.]bikesharingweb.<guid>.<region>.aksapp.io
+      - $(spacePrefix)bikesharingweb$(hostSuffix)
+configurations:
+  develop:
+    build:
+      useGitIgnore: true
+    container:
+      sync:
+      - "!**/package.json"
+      command: [npm, run, dev]
+      iterate:
+        processesToKill: [node]

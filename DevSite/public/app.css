@@ -1,0 +1,87 @@
+body {
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.message {
+    font-family: Courier New, Courier, monospace;
+    font-weight: bold;
+    word-wrap: break-word;
+    display: block;
+}
+
+.textInput {
+    width: 250px;
+    margin-bottom: 10px;
+}
+
+.sectionEnd {
+    margin-bottom: 20px;
+}
+
+#header-wrap {
+    position: fixed;
+    height: auto;
+    top: 0;
+    width: 100%;
+    z-index: 100;
+    background-color: white;
+}
+
+#container {
+    margin-top: 500px;
+}
+
+.textBoxLabel {
+    display: inline-block;
+    width: 100px;
+}
+
+.msLogo {
+    position: absolute;
+    top: 20px;
+    right: 30px;
+}
+
+[ng-click],
+[data-ng-click],
+[x-ng-click],
+[onclick] {
+    cursor: pointer;
+}
+
+#headerOverlay {
+    position: absolute;
+    z-index: 10;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255,255,255,0.7);
+}
+
+#headerOverlayContent {
+    background-color: white;
+    position: absolute;
+    border-style: solid;
+    border-color: black;
+}
+
+#headerOverlayContentContainer {
+    position: relative;
+    left: 30%;
+    top: 23%;
+}
+
+.collapsed {
+    display: none;
+}
+
+.overlayContent {
+    margin: 30px;
+}
+
+#toggleHeader {
+    float: right;
+    margin-right: 10px;
+}

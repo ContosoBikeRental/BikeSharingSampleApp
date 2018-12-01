@@ -1,0 +1,46 @@
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+fullnameOverride: gateway
+replicaCount: 1
+image:
+  repository: yanambia/contoso-bikerental-gateway
+  tag: latest
+  pullPolicy: Always
+imagePullSecrets: []
+  
+service:
+  type: LoadBalancer
+  port: 80
+
+probes:
+  enabled: false
+
+ingress:
+  enabled: true
+  annotations:
+    kubernetes.io/ingress.class: addon-http-application-routing
+  path: /
+  hosts: 
+    # Unique for every cluster: gateway.<clusterDNSZone>
+
+secrets:
+  users:
+    dnsName: users
+  bikes:
+    dnsName: bikes
+  reservation:
+    dnsName: reservation
+  reservationengine:
+    dnsName: reservationengine
+  billing:
+    dnsName: billing
+  applicationInsights:
+      instrumentationKey: 00000000-0000-0000-0000-000000000000
+  
+resources: {}
+  
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}

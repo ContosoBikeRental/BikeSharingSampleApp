@@ -1,0 +1,291 @@
+var os = require('os');
+var express = require('express');
+var morgan = require('morgan');
+var bodyParser = require('body-parser');
+var Connection = require('tedious').Connection;
+var fs = require('fs');
+var validate = require('validate.js');
+var util = require('util');
+var async = require('async');
+
+var port = 80;
+var serviceName = "User Management Service";
+var app = express();
+app.use(morgan("dev"));
+app.use(bodyParser.json());
+
+var Request = require('tedious').Request;
+var TYPES = require('tedious').TYPES;
+var config = JSON.parse(fs.readFileSync('ConnectionConfig.json', 'utf8')).config;
+config.userName = process.env.SQL_USERNAME || config.userName;
+config.password = process.env.SQL_PASSWORD || config.password;
+config.server = process.env.SQL_SERVER || config.server;
+config.options.database = process.env.SQL_DATABASE || config.options.database;
+var dbConnection = Connection.prototype;  // Will be initialized below
+
+var tableName = process.env.SQL_TABLE || 'Users'
+var jsonColumnName = "JSON_F52E2B61-18A1-11d1-B105-00805F49916B"
+
+var userSchema = {
+  id: {
+    presence: true
+  },
+  username: {
+    presence: true
+  },
+  password: {
+    presence: true,
+    length: { minimum: 3 }
+  },
+  name: {
+    presence: true,
+    length: { minimum: 3, maximum: 100 }
+  },
+  address: {
+    presence: true,
+    length: { minimum: 10, maximum: 500 }
+  },
+  email: {
+    presence: true
+  },
+  type: {
+    presence: true,
+    inclusion: [ "vendor", "customer" ]
+  },
+  phone: {
+    format: {
+      pattern: "[0-9]+",
+      length: { minimum: 8, maximum: 15 }
+    }
+  }
+};
+
+function execInsert(params, callbackAffectedRows) {
+  var sqlStatement = util.format(
+    "INSERT INTO %s (Id, UserName, PasswordHash, Name, Address, Phone, Email, Type) VALUES (@Id, @UserName, HASHBYTES('SHA2_512', @Password), @Name, @Address, @Phone, @Email, @Type)",
+    tableName)
+  var request = new Request(sqlStatement, function (err, rowCount) {
+    if (err) {
+      console.log('Statement failed: ' + err);
+      callbackAffectedRows(rowCount, err);
+      return;
+    }
+    callbackAffectedRows(rowCount);
+  });
+  request.addParameter('Id', TYPES.NVarChar, params.id);
+  request.addParameter('UserName', TYPES.NVarChar, params.username);
+  request.addParameter('Password', TYPES.NVarChar, params.password);
+  request.addParameter('Name', TYPES.NVarChar, params.name);
+  request.addParameter('Address', TYPES.NVarChar, params.address);
+  request.addParameter('Phone', TYPES.NVarChar, params.phone);
+  request.addParameter('Email', TYPES.NVarChar, params.email);
+  request.addParameter('Type', TYPES.NVarChar, params.type);
+  dbConnection.execSql(request);
+}
+
+function statementComplete(err, rowCount) {
+  if (err) {
+    console.log('Statement failed: ' + err);
+  }
+  console.log('rowCount: ' + rowCount);
+}
+
+function execUpdate(sqlStatement, callbackAffectedRows) {
+  var request = new Request(sqlStatement, function (err, rowCount) {
+    if (err) {
+      console.log('Statement failed: ' + err);
+      callbackAffectedRows(rowCount, err);
+    }
+    callbackAffectedRows(rowCount);
+  });
+  dbConnection.execSql(request);
+}
+
+function execSelect(statement, callbackReturnResult) {
+  var sqlStatement = statement.toString() + ' FOR JSON PATH';
+  var request = new Request(sqlStatement, function (err, rowCount) {
+    if (err) {
+      console.log('Statement failed: ' + err);
+      callbackAffectedRows(rowCount, err);
+    }
+    if (rowCount == 0) {
+      callbackReturnResult(null);
+    }
+  });
+  dbConnection.execSql(request);
+  var result = null;
+  request.on('row', function (columns) {
+    result = JSON.parse(columns[jsonColumnName].value);
+    callbackReturnResult(result);
+  });
+}
+
+function execStatement(sqlStatement, callbackAffectedRows) {
+  var request = new Request(sqlStatement, function (err, rowCount) {
+    if (err) {
+      console.log('Statement failed: ' + err);
+      callbackAffectedRows(rowCount, err);
+    }
+      callbackAffectedRows(rowCount);
+  });
+  dbConnection.execSql(request);
+}
+
+function createTableIfNotExists(callbackFunc) {
+  sqlStatement = util.format(
+    "IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].%s') AND type in (N'U')) BEGIN CREATE TABLE %s(Id NVARCHAR(100) NOT NULL PRIMARY KEY, UserName NVARCHAR(100) NOT NULL, PasswordHash BINARY(64) NOT NULL, Name NVARCHAR(100) NOT NULL, Address NVARCHAR(500) NOT NULL, Phone NVARCHAR(22) NULL, Email NVARCHAR(100) NOT NULL, Type NVARCHAR(20) NOT NULL, CONSTRAINT Unique_Username_%s UNIQUE(Username))END",
+    tableName, tableName, tableName)
+  var request = new Request(sqlStatement, function (err, rowCount) {
+    if (err) {
+      console.log('Statement failed: ' + err);
+    }
+
+    callbackFunc(err);
+  });
+
+  dbConnection.execSql(request);
+}
+
+// api -------------------------------------------------------------
+app.get('/hello', function (req, res) {
+  res.send("Hello!")
+});
+
+app.get('/api/users/:userId', function (req, res) {
+  // get user details
+  var selectStatement = util.format("SELECT Id,UserName,Name,Address,Phone,Email,Type FROM %s WHERE Id='%s'", tableName, req.params.userId);
+  // var selectStatement = util.format("SELECT Id,UserName,Name,Address,Phone,Type FROM %s WHERE Id='%s'", tableName, req.params.userId);
+  execSelect(selectStatement, function (result, err) {
+    if (err) {
+      res.status(500).send(err);
+      return;
+    }
+    if (result == null) {
+      console.log("No records found.")
+      res.status(404).send("User not found");
+    } else {
+      console.log(JSON.stringify(result, null, 2));
+      res.status(200).send(result[0]);
+    }
+  });
+});
+
+app.get('/api/allUsers', function (req, res) {
+  var selectStatement = util.format("SELECT Id,UserName,Name,Address,Phone,Email,Type FROM %s", tableName);
+  execSelect(selectStatement, function (result, err) {
+    if (err) {
+      res.status(500).send(err);
+      return;
+    }
+    if (result == null) {
+      console.log("No records found.");
+      res.status(200).send([]);
+    } else {
+      res.status(200).send(result);
+    }
+  });
+});
+
+app.post('/api/users', function (req, res) {
+  // add user details
+  //verify body here
+  var validationErrors = validate(req.body, userSchema);
+  if (validationErrors) {
+    res.status(400).send(validationErrors);
+    return;
+  }
+
+  execInsert(req.body, function (rowCount, err) {
+    if (err) {
+      res.status(500).send(err);
+      return;
+    }
+    console.log("Affected Row(s): " + rowCount);
+    if (rowCount == 0) {
+      res.status(400).send("Bad Request.");
+    } else {
+      res.status(200).send();
+    };
+  });
+});
+
+app.put('/api/users/:userId', function (req, res) {
+  // update user
+  var sqlStatement = util.format("UPDATE %s SET Name='%s',Address='%s',Phone='%s',Email='%s' WHERE Id='%s'", tableName, req.body.name, req.body.address, req.body.phone, req.body.email, req.params.userId);
+  execUpdate(sqlStatement, function (rowCount, err) {
+    if (err) {
+      res.status(500).send(err);
+      return;
+    }
+    console.log("Affected Row(s): " + rowCount);
+    if (rowCount == 0) {
+      res.status(400).send("Bad Request.");
+    } else {
+      res.status(200).send();
+    };
+  });
+});
+
+app.post('/api/users/auth', function (req, res) {
+  // authenticate username and password
+  // returns 200 or 401 depending on password match
+  var selectStatement = util.format("SELECT TOP 1 Id FROM %s WHERE UserName='%s' AND PasswordHash=HASHBYTES('SHA2_512', CAST('%s' AS NVARCHAR))", tableName, req.body.username, req.body.password);
+  execSelect(selectStatement, function (result, err) {
+    if (err) {
+      res.status(500).send(err);
+      return;
+    }
+    if (result == null) {
+      res.status(401).send('Unauthorized.')
+    } else {
+      res.status(200).send(result[0]);
+    }
+  });
+});
+
+app.delete('/api/users/:userId', function (req, res) {
+  var deleteStatement = util.format("DELETE FROM %s WHERE Id='%s'", tableName, req.params.userId);
+  execStatement(deleteStatement, function (rowCount, err) {
+    if (err) {
+      res.status(500).send(err);
+      return;
+    }
+    if (rowCount == 0) {
+      res.status(400).send("Bad Request.");
+    } else {
+      res.status(202).send("Accepted.");
+    };
+  });
+});
+
+// application -------------------------------------------------------------
+
+function trySqlConnect(callback) {
+  dbConnection = new Connection(config);
+  dbConnection.on('connect', function (err) {
+    if (err) {
+      console.error('Can\'t connect to the database: ' + err);
+      callback(err);
+    } else {
+      console.log('Connected to the database');
+      createTableIfNotExists(function(err) {
+        if (err) {
+          console.error('Can\'t create table: ' + err);
+        }
+        callback(err);
+      });
+    }
+  });
+}
+
+async.retry({times: 20, interval: 1000}, trySqlConnect, function(err) {
+  if (err) {
+    console.error("Couldn't connect to SQL! Giving up.");
+    console.error(err);
+    process.exit(1);
+  }
+
+  app.listen(port, function () {
+    console.log(serviceName + ' listening on port ' + port);
+  });
+});

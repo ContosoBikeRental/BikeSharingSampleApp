@@ -1,0 +1,30 @@
+{
+  "name": "users",
+  "version": "1.0.0",
+  "description": "Management microservice for users.",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ContosoBikeRental/Users.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.14.0",
+    "morgan": "^1.8.0",
+    "express-api-validator": "0.1.0",
+    "body-parser": "^1.16.1",
+    "validate.js": "^0.11.1",
+    "tedious": "1.14.0",
+    "util": "0.10.3",
+    "async": "^2.1.5"
+  },
+  "bugs": {
+    "url": "https://github.com/ContosoBikeRental/Users/issues"
+  },
+  "homepage": "https://github.com/ContosoBikeRental/Users#readme"
+}

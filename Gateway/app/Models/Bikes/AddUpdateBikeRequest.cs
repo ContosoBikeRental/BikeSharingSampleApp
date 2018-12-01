@@ -1,0 +1,40 @@
+﻿using Newtonsoft.Json;
+using System.ComponentModel.DataAnnotations;
+
+namespace app.Models
+{
+    public class AddUpdateBikeRequest
+    {
+        [JsonProperty("manufacturer")]
+        [Required]
+        public string Manufacturer { get; set; }
+
+        [JsonProperty("model")]
+        [Required]
+        public string Model { get; set; }
+
+        [JsonProperty("hourlyCost")]
+        [Required]
+        public float? HourlyCost { get; set; }
+
+        [JsonProperty("imageUrl")]
+        //TODO [Required]
+        public string ImageUrl { get; set; }
+
+        [JsonProperty("type")]
+        [Required]
+        public string Type { get; set; }
+
+        [JsonProperty("ownerUserId")]
+        [Required]
+        public string OwnerUserId { get; set; }
+
+        [JsonProperty("suitableHeightInMeters")]
+        [Required]
+        public float? SuitableHeightInMeters { get; set; }
+
+        [JsonProperty("maximumWeightInKg")]
+        [Required]
+        public float? MaximumWeightInKg { get; set; }
+    }
+}

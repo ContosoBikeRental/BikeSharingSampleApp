@@ -1,0 +1,40 @@
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+fullnameOverride: users
+replicaCount: 1
+image:
+image:
+  repository: yanambia/contoso-bikerental-users
+  tag: latest
+  pullPolicy: Always
+imagePullSecrets: []
+  
+service:
+  type: ClusterIP
+  port: 80
+
+probes:
+  enabled: false
+
+ingress:
+  enabled: false
+  annotations:
+    kubernetes.io/ingress.class: addon-http-application-routing
+  path: /
+  tls: []
+ 
+secrets:
+  sql:
+    username: SA
+    password: "!DummyPassword123!"
+    server: databases-sql
+    database: tempdb
+    table: myTable
+
+resources: {}
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}

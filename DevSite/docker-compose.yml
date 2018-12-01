@@ -1,0 +1,14 @@
+version: "2"
+
+services:
+  devsite:
+    build: ./
+    environment:
+      - GATEWAY_DNSNAME=apigateway:5000
+    ports:
+      - "8080:80"
+
+networks:
+  default:
+    external:
+      name: package_default

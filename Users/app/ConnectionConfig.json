@@ -1,0 +1,19 @@
+{
+    "config": {
+        "userName": "dummyuser",
+        "password": "dummypassword",
+        "server": "dummydbserver",
+        "options": {
+            "encrypt": true,
+            "database": "dummydb",
+            "useColumnNames": true,
+            "debug": {
+                "data": true,
+                "payload": true,
+                "token": false,
+                "packet": true,
+                "log": true
+            }
+        }
+    }
+}

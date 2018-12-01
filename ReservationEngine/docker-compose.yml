@@ -1,0 +1,14 @@
+version: '2'
+
+services:
+    reservationengine:
+        build: .
+        environment:
+            - MONGO_CONNECTIONSTRING=dummymongoconnection
+            - MONGO_DBNAME=dummymongodb
+            - MONGO_COLLECTION=dummymongocollection
+            - NOTIFICATION_CONNECTIONSTRING=amqp://rabbit
+            - NOTIFICATION_EXCHANGENAME=in
+            - NOTIFICATION_ROUTINGKEY=reservation
+            - BIKES_DNSNAME=bikes
+            - BILLING_DNSNAME=billing

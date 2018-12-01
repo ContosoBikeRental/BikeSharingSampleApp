@@ -1,0 +1,36 @@
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+fullnameOverride: bikes
+replicaCount: 1
+image:
+  repository: yanambia/contoso-bikerental-bikes
+  tag: latest
+  pullPolicy: Always
+imagePullSecrets: []
+
+service:
+  type: ClusterIP
+  port: 80
+
+probes:
+  enabled: false
+
+ingress:
+  enabled: false
+  annotations:
+    kubernetes.io/ingress.class: addon-http-application-routing
+  path: /
+  tls: []
+  
+secrets:
+  mongo:
+    collection: bikes 
+    connectionString: mongodb://databases-mongo
+
+resources: {}
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}

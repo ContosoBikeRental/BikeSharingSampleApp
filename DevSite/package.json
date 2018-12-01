@@ -1,0 +1,11 @@
+{
+  "name": "demosite",
+  "version": "0.1.0",
+  "description": "Simple website for talking to Bikes",
+  "dependencies": {
+    "express": "^4.13.4",
+    "morgan": "^1.7.0",
+    "body-parser": "^1.16.1",
+    "request": "^2.71.0"
+  }
+}

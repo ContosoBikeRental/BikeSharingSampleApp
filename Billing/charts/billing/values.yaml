@@ -1,0 +1,36 @@
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+fullnameOverride: billing
+replicaCount: 1
+image:
+  repository: yanambia/contoso-bikerental-billing
+  tag: latest
+  pullPolicy: Always
+imagePullSecrets: []
+  
+service:
+  type: ClusterIP
+  port: 80
+
+probes:
+  enabled: false
+
+ingress:
+  enabled: false
+  annotations:
+    kubernetes.io/ingress.class: addon-http-application-routing
+  path: /
+  tls: []
+
+secrets:
+  mongo:
+    connectionString: mongodb://databases-mongo
+    dbName: billing
+
+resources: {}
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}

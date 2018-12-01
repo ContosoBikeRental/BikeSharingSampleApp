@@ -1,0 +1,23 @@
+kind: helm-release
+apiVersion: 1.0
+build:
+  context: .
+  dockerfile: Dockerfile
+install:
+  chart: charts/reservationengine
+  set:
+    replicaCount: 1
+    image:
+      tag: $(tag)
+      pullPolicy: Never
+    ingress:
+      hosts:
+      # This expands to [space.s.]reservationengine.<guid>.<region>.aksapp.io
+      - $(spacePrefix)reservationengine$(hostSuffix)
+configurations:
+  develop:
+    build:
+      useGitIgnore: true
+    container:
+      values:
+        - "charts/reservationengine/values.yaml"

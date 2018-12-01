@@ -1,0 +1,16 @@
+version: '2'
+
+services:
+    apigateway:
+        build: .
+        ports:
+            - "5000:5000"
+        environment:
+            - NOTIFICATION_CONNECTIONSTRING=amqp://rabbit
+            - NOTIFICATION_EXCHANGENAME=out
+            - USERS_DNSNAME=users
+            - BIKES_DNSNAME=bikes
+            - RESERVATION_DNSNAME=reservation
+            - RESERVATION_ENGINE_DNSNAME=reservationengine
+            - BILLING_DNSNAME=billing
+            - APPLICATIONINSIGHTS_INSTRUMENTATIONKEY=dummykey

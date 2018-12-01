@@ -1,0 +1,23 @@
+version: "2"
+
+services:
+  billing:
+    build: ./
+    environment:
+      - MONGO_CONNECTIONSTRING=mongodb://mongo
+      - MONGO_DBNAME=billing
+    expose:
+      - "80"
+    ports:
+      - "8080:80"
+    depends_on:
+      - mongo
+    links:
+      - mongo
+    
+  mongo:
+    image: mongo:3.4
+    expose:
+      - "27017"
+    ports:
+      - "27017:27017"

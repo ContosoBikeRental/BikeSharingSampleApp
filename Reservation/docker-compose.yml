@@ -1,0 +1,11 @@
+version: '2'
+
+services:
+    reservations:
+        build: .
+        ports:
+            - "8080:80"
+        environment:
+            - MONGO_CONNECTIONSTRING=dummyconnectionstring
+            - MONGO_DBNAME=dummydatabase
+            - MONGO_COLLECTION=dummycollection
