@@ -86,8 +86,8 @@ class CurrentRideBase extends React.Component {
                 <Content>
                     <div className="row">
                         <div className="col-sm-6">
-                            {/* <img src={this.state.bike.imageUrl} alt="photo of bike" /> */}
-                            <img src='/static/sample-bike-1.jpg' alt="photo of bike" />
+                            <img src={this.state.bike.imageUrl} alt="photo of bike" />
+                            {/* <img src='/static/sample-bike-1.jpg' alt="photo of bike" /> */}
                         </div>
                         <div className="col-sm-6">
                             <div className="details-container">
@@ -104,7 +104,8 @@ class CurrentRideBase extends React.Component {
                                     </div>
                                 </div>
                                 {/* <Field label="Pick-up instructions" value={reservation.pickupInstructions} /> */}
-                                <Field label="Pick-up/return address" value={this.state.vendor.address} />
+                                {/* <Field label="Pick-up/return address" value={this.state.vendor.address} /> */}
+                                <Field label="Pick-up/return address" value={this.state.bike.address} />
 
                                 <MediaQuery minWidth={600}>
                                     <div className="divider">
