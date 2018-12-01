@@ -44,6 +44,7 @@
         "model": "VX4L",
         "hourlyCost": 10,
         "type": "tandem",
+        "address": "1 Microsoft Way, Redmond, WA",
         "ownerUserId": "16a46619738a4865a5afcb5e18ffb138",
         "suitableHeightInMeters": 0.75,
         "maximumWeightInKg": 5.5
