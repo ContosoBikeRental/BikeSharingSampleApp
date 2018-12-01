@@ -22,12 +22,15 @@ namespace app.Controllers
     {
         private string _bikesService { get; set; }
 
+        private string _usersService { get; set; }
+
         private CustomConfiguration _customConfiguration { get; set; }
 
         public BikeController(IOptions<CustomConfiguration> customConfiguration)
         {
             _customConfiguration = customConfiguration.Value;
             _bikesService = Environment.GetEnvironmentVariable(Constants.BikesMicroserviceEnv) ?? _customConfiguration.Services.Bikes;
+            _usersService = Environment.GetEnvironmentVariable(Constants.UsersMicroserviceEnv) ?? _customConfiguration.Services.Users;
         }
 
         // GET: api/bike/1
@@ -109,14 +112,14 @@ namespace app.Controllers
         /// <returns></returns>
         private async Task<IActionResult> _CheckOwnerUserIdIsValidVendor(string ownerUserId)
         {
-            var userController = new UserController(Options.Create(this._customConfiguration));
-            var getUserResponseObj = await userController.GetUser(ownerUserId);
-            if (!(getUserResponseObj is JsonResult))
+            string getUserUrl = $"http://{_usersService}/api/users/{ownerUserId}";
+            var getUserResponse = await HttpHelper.GetAsync(getUserUrl, this.Request);
+            if (!getUserResponse.IsSuccessStatusCode)
             {
-                var getUserContentResult = getUserResponseObj as ContentResult;
-                return BadRequest($"Invalid OwnerUserId: {getUserContentResult?.StatusCode} {getUserContentResult?.Content}");
+                return await HttpHelper.ReturnResponseResult(getUserResponse);
             }
-            UserResponse user = (getUserResponseObj as JsonResult)?.Value as UserResponse;
+
+            UserResponse user = JsonConvert.DeserializeObject<UserResponse>(await getUserResponse.Content.ReadAsStringAsync());
             if (user == null)
             {
                 return new ContentResult()

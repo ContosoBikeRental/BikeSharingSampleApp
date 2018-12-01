@@ -143,18 +143,18 @@ namespace app.Controllers
             }
 
             // Now update Billing details
-            var billingController = new BillingController(Options.Create(this._customConfiguration));
-            var getVendorResponse = await billingController.GetVendor(userId);
-            if (!(getVendorResponse is JsonResult))
+            string getVendorUrl = $"http://{_billingService}/api/vendor/{userId}";
+            var getResponse = await HttpHelper.GetAsync(getVendorUrl, this.Request);
+            if (!getResponse.IsSuccessStatusCode)
             {
-                var vendorContentResult = getVendorResponse as ContentResult;
                 return new ContentResult
                 {
                     StatusCode = (int)HttpStatusCode.InternalServerError,
-                    Content = $"Couldn't find vendor billing details: {vendorContentResult?.StatusCode} {vendorContentResult?.Content}"
+                    Content = $"Couldn't find vendor billing details: {getResponse.StatusCode} {await getResponse.Content.ReadAsStringAsync()}"
                 };
             }
-            var currentVendor = (getVendorResponse as JsonResult)?.Value as Vendor;
+
+            var currentVendor = JsonConvert.DeserializeObject<Vendor>(await getResponse.Content.ReadAsStringAsync());
             if (currentVendor == null)
             {
                 return new ContentResult
@@ -170,17 +170,20 @@ namespace app.Controllers
                 AccountNumber = string.IsNullOrEmpty(vendorInput.AccountNumber) ? currentVendor.AccountNumber : vendorInput.AccountNumber,
                 RoutingNumber = string.IsNullOrEmpty(vendorInput.RoutingNumber) ? currentVendor.RoutingNumber : vendorInput.RoutingNumber
             };
-            var updateVendorResponse = await billingController.UpdateVendor(updatedVendorDetails);
-            if (!(updateVendorResponse is JsonResult))
+
+            string updateVendorDataUrl = $"http://{_billingService}/api/vendor";
+            var updateResponse = await HttpHelper.PatchAsync(updateVendorDataUrl, new StringContent(
+                JsonConvert.SerializeObject(updatedVendorDetails), Encoding.UTF8, "application/json"), this.Request);
+            if (!updateResponse.IsSuccessStatusCode)
             {
-                var updateVendorContentResult = updateVendorResponse as ContentResult;
                 return new ContentResult
                 {
                     StatusCode = (int)HttpStatusCode.InternalServerError,
-                    Content = $"Couldn't update vendor billing details: {updateVendorContentResult?.StatusCode} {updateVendorContentResult?.Content}"
+                    Content = $"Couldn't update vendor billing details: {updateResponse.StatusCode} {await updateResponse.Content.ReadAsStringAsync()}"
                 };
             }
-            var updatedVendor = (updateVendorResponse as JsonResult)?.Value as Vendor;
+
+            var updatedVendor = JsonConvert.DeserializeObject<Vendor>(await updateResponse.Content.ReadAsStringAsync());
             if (updatedVendor == null)
             {
                 return new ContentResult
@@ -216,18 +219,18 @@ namespace app.Controllers
             }
 
             // Now update Billing details
-            var billingController = new BillingController(Options.Create(this._customConfiguration));
-            var getCustomerResponse = await billingController.GetCustomerBillingData(userId);
-            if (!(getCustomerResponse is JsonResult))
+            string getCustomerDataUrl = $"http://{_billingService}/api/customer/{userId}";
+            var getResponse = await HttpHelper.GetAsync(getCustomerDataUrl, this.Request);
+            if (!getResponse.IsSuccessStatusCode)
             {
-                var customerContentResult = getCustomerResponse as ContentResult;
                 return new ContentResult
                 {
                     StatusCode = (int)HttpStatusCode.InternalServerError,
-                    Content = $"Couldn't find customer billing details: {customerContentResult?.StatusCode} {customerContentResult?.Content}"
+                    Content = $"Couldn't find customer billing details: {getResponse.StatusCode} {await getResponse.Content.ReadAsStringAsync()}"
                 };
             }
-            var currentCustomer = (getCustomerResponse as JsonResult)?.Value as Customer;
+
+            var currentCustomer = JsonConvert.DeserializeObject<Customer>(await getResponse.Content.ReadAsStringAsync());
             if (currentCustomer == null)
             {
                 return new ContentResult
@@ -244,17 +247,20 @@ namespace app.Controllers
                 CCCCV = string.IsNullOrEmpty(customerInput.CCCCV) ? currentCustomer.CCCCV : customerInput.CCCCV,
                 CCExpiry = string.IsNullOrEmpty(customerInput.CCExpiry) ? currentCustomer.CCExpiry : customerInput.CCExpiry
             };
-            var updateCustomerResponse = await billingController.UpdateCustomerBillingData(updatedCustomerDetails);
-            if (!(updateCustomerResponse is JsonResult))
+
+            string updateCustomerDataUrl = $"http://{_billingService}/api/customer";
+            var updateResponse = await HttpHelper.PatchAsync(updateCustomerDataUrl, new StringContent(
+                JsonConvert.SerializeObject(updatedCustomerDetails), Encoding.UTF8, "application/json"), this.Request);
+            if (!updateResponse.IsSuccessStatusCode)
             {
-                var updateCustomerContentResult = updateCustomerResponse as ContentResult;
                 return new ContentResult
                 {
                     StatusCode = (int)HttpStatusCode.InternalServerError,
-                    Content = $"Couldn't update customer billing data: {updateCustomerContentResult?.StatusCode} {updateCustomerContentResult?.Content}"
+                    Content = $"Couldn't update customer billing data: {updateResponse.StatusCode} {await updateResponse.Content.ReadAsStringAsync()}"
                 };
             }
-            var updatedCustomer = (updateCustomerResponse as JsonResult)?.Value as Customer;
+
+            var updatedCustomer = JsonConvert.DeserializeObject<Customer>(await updateResponse.Content.ReadAsStringAsync());
             if (updatedCustomer == null)
             {
                 return new ContentResult
@@ -358,15 +364,15 @@ namespace app.Controllers
 
             cust.UserID = userId;
 
-            var billingController = new BillingController(Options.Create(this._customConfiguration));
-            var billingResponse = await billingController.AddCustomerBillingData(cust);
-            if (!(billingResponse is JsonResult))
+            string addCustomerDataUrl = $"http://{_billingService}/api/customer";
+            var response = await HttpHelper.PostAsync(addCustomerDataUrl, new StringContent(
+                JsonConvert.SerializeObject(cust), Encoding.UTF8, "application/json"), this.Request);
+            if (!response.IsSuccessStatusCode)
             {
-                var contentResult = billingResponse as ContentResult;
                 return new ContentResult()
                 {
                     StatusCode = (int)HttpStatusCode.InternalServerError,
-                    Content = $"Billing controller couldn't create customer billing data: {contentResult?.StatusCode} {contentResult?.Content}"
+                    Content = $"Billing controller couldn't create customer billing data: {response.StatusCode} {await response.Content.ReadAsStringAsync()}"
                 };
             }
 
@@ -401,15 +407,15 @@ namespace app.Controllers
 
             vendor.UserID = userId;
 
-            var billingController = new BillingController(Options.Create(this._customConfiguration));
-            var billingResponse = await billingController.AddVendor(vendor);
-            if (!(billingResponse is JsonResult))
+            string addVendorUrl = $"http://{_billingService}/api/vendor";
+            var response = await HttpHelper.PostAsync(addVendorUrl, new StringContent(
+                JsonConvert.SerializeObject(vendor), Encoding.UTF8, "application/json"), this.Request);
+            if (!response.IsSuccessStatusCode)
             {
-                var contentResult = billingResponse as ContentResult;
                 return new ContentResult()
                 {
                     StatusCode = (int)HttpStatusCode.InternalServerError,
-                    Content = $"Billing controller couldn't create vendor billing data: {contentResult?.StatusCode} {contentResult?.Content}"
+                    Content = $"Billing controller couldn't create vendor billing data: {response.StatusCode} {await response.Content.ReadAsStringAsync()}"
                 };
             }
 
@@ -486,7 +492,7 @@ namespace app.Controllers
                 var reservations = JsonConvert.DeserializeObject<List<Reservation>>(responseBody) ?? new List<Reservation>();
                 foreach (var res in reservations)
                 {
-                    var addInvoiceDetailsResponse = await ReservationController._AddInvoiceDetailsToReservation(this._customConfiguration, res);
+                    var addInvoiceDetailsResponse = await ReservationController._AddInvoiceDetailsToReservation(_billingService, this.Request, res);
                     if (addInvoiceDetailsResponse != null)
                     {
                         return addInvoiceDetailsResponse;

@@ -74,31 +74,6 @@ namespace app.Controllers
             return await HttpHelper.ReturnResponseResult(response);
         }
 
-        // POST: /api/billing/customer
-        [HttpPost("customer")]
-        public async Task<IActionResult> AddCustomerBillingData([FromBody] Customer customerData)
-        {
-            if (!ModelState.IsValid)
-            {
-                return new ContentResult
-                {
-                    StatusCode = (int)HttpStatusCode.BadRequest,
-                    Content = JsonConvert.SerializeObject(ModelState.Values.SelectMany(v => v.Errors))
-                };
-            }
-
-            string addCustomerDataUrl = $"http://{_billingsService}/api/customer";
-            var response = await HttpHelper.PostAsync(addCustomerDataUrl, new StringContent(
-                JsonConvert.SerializeObject(customerData), Encoding.UTF8, "application/json"), this.Request);
-            if (response.IsSuccessStatusCode)
-            {
-                var addedCustomerData = JsonConvert.DeserializeObject<Customer>(await response.Content.ReadAsStringAsync());
-                return new JsonResult(addedCustomerData);
-            }
-
-            return await HttpHelper.ReturnResponseResult(response);
-        }
-
         // PATCH: /api/billing/customer
         [HttpPatch("customer")]
         public async Task<IActionResult> UpdateCustomerBillingData([FromBody] Customer customerData)
@@ -139,31 +114,6 @@ namespace app.Controllers
             return await HttpHelper.ReturnResponseResult(response);
         }
 
-        // POST: /api/billing/vendor
-        [HttpPost("vendor")]
-        public async Task<IActionResult> AddVendor([FromBody] Vendor vendorDetails)
-        {
-            if (!ModelState.IsValid)
-            {
-                return new ContentResult
-                {
-                    StatusCode = (int)HttpStatusCode.BadRequest,
-                    Content = JsonConvert.SerializeObject(ModelState.Values.SelectMany(v => v.Errors))
-                };
-            }
-
-            string addVendorUrl = $"http://{_billingsService}/api/vendor";
-            var response = await HttpHelper.PostAsync(addVendorUrl, new StringContent(
-                JsonConvert.SerializeObject(vendorDetails), Encoding.UTF8, "application/json"), this.Request);
-            if (response.IsSuccessStatusCode)
-            {
-                var addedVendorDetails = JsonConvert.DeserializeObject<Vendor>(await response.Content.ReadAsStringAsync());
-                return new JsonResult(addedVendorDetails);
-            }
-
-            return await HttpHelper.ReturnResponseResult(response);
-        }
-
         // PATCH: /api/billing/vendor
         [HttpPatch("vendor")]
         public async Task<IActionResult> UpdateVendor([FromBody] Vendor vendorDetails)
@@ -187,30 +137,6 @@ namespace app.Controllers
 
             var updatedVendorData = JsonConvert.DeserializeObject<Vendor>(await response.Content.ReadAsStringAsync());
             return Json(updatedVendorData);
-        }
-
-        // GET: /api/billing/reservation/{reservationId}/invoice
-        [HttpGet("reservation/{reservationId}/invoice")]
-        public async Task<IActionResult> GetInvoiceForReservationId(string reservationId)
-        {
-            if (!ModelState.IsValid)
-            {
-                return new ContentResult
-                {
-                    StatusCode = (int)HttpStatusCode.BadRequest,
-                    Content = JsonConvert.SerializeObject(ModelState.Values.SelectMany(v => v.Errors))
-                };
-            }
-
-            string getInvoiceForResUrl = $"http://{_billingsService}/api/reservation/{reservationId}/invoice";
-            var response = await HttpHelper.GetAsync(getInvoiceForResUrl, this.Request);
-            if (!response.IsSuccessStatusCode)
-            {
-                return await HttpHelper.ReturnResponseResult(response);
-            }
-
-            var invoice = JsonConvert.DeserializeObject<Invoice>(await response.Content.ReadAsStringAsync());
-            return Json(invoice);
         }
     }
 }

@@ -28,6 +28,12 @@ namespace app.Controllers
 
         private string _reservationEngineService { get; set; }
 
+        private string _billingService { get; set; }
+
+        private string _bikesService { get; set; }
+
+        private string _usersService { get; set; }
+
         private const string DateTimeFormat = "yyyy-MM-ddTHH:mm:ss";
 
         public ReservationController(IOptions<CustomConfiguration> customConfiguration)
@@ -35,6 +41,9 @@ namespace app.Controllers
             _customConfiguration = customConfiguration.Value;
             _reservationsService = Environment.GetEnvironmentVariable(Constants.ReservationsMicroserviceEnv) ?? _customConfiguration.Services.Reservations;
             _reservationEngineService = Environment.GetEnvironmentVariable(Constants.ReservationEngineMicroserviceEnv) ?? _customConfiguration.Services.ReservationEngine;
+            _billingService = Environment.GetEnvironmentVariable(Constants.BillingMicroserviceEnv) ?? _customConfiguration.Services.Billing;
+            _bikesService = Environment.GetEnvironmentVariable(Constants.BikesMicroserviceEnv) ?? _customConfiguration.Services.Bikes;
+            _usersService = Environment.GetEnvironmentVariable(Constants.UsersMicroserviceEnv) ?? _customConfiguration.Services.Users;
         }
 
         // POST: api/reservationengine
@@ -54,38 +63,32 @@ namespace app.Controllers
         /// <summary>
         /// Returns null on success
         /// </summary>
-        /// <param name="config">The config to use when creating the billing controller</param>
         /// <param name="res"></param>
         /// <returns></returns>
-        internal static async Task<IActionResult> _AddInvoiceDetailsToReservation(CustomConfiguration config, Reservation res)
+        internal static async Task<IActionResult> _AddInvoiceDetailsToReservation(string billingServiceUri, HttpRequest originRequest, Reservation res)
         {
-            var billingController = new BillingController(Options.Create(config));
-            var getInvoiceResponse = await billingController.GetInvoiceForReservationId(res.ReservationId);
-            if (!(getInvoiceResponse is JsonResult))
+            string getInvoiceForResUrl = $"http://{billingServiceUri}/api/reservation/{res.ReservationId}/invoice";
+            var response = await HttpHelper.GetAsync(getInvoiceForResUrl, originRequest);
+            if (!response.IsSuccessStatusCode)
             {
-                var getInvoiceContentResult = getInvoiceResponse as ContentResult;
-                if (getInvoiceContentResult == null)
+                if (response.StatusCode != HttpStatusCode.NotFound)
                 {
-                    return HttpHelper.Return500Result("Unexpected IActionResult when getting invoice for reservation id");
-                }
-                if (getInvoiceContentResult.StatusCode != (int)HttpStatusCode.NotFound)
-                {
-                    return getInvoiceContentResult;
+                    return await HttpHelper.ReturnResponseResult(response);
                 }
 
-                // Valid case
+                // Not found - Valid case
                 res.InvoiceId = string.Empty;
-                return null;
+                return null; // success
             }
 
-            var invoice = (getInvoiceResponse as JsonResult)?.Value as Invoice;
+            var invoice = JsonConvert.DeserializeObject<Invoice>(await response.Content.ReadAsStringAsync());
             if (invoice == null)
             {
                 return HttpHelper.Return500Result("Unexpected object returned when getting invoice for reservation id");
             }
 
             res.InvoiceId = invoice.Id;
-            return null;
+            return null; // success
         }
 
         // GET: api/reservation/1
@@ -101,7 +104,7 @@ namespace app.Controllers
             }
 
             var reservationDetails = JsonConvert.DeserializeObject<Reservation>(await response.Content.ReadAsStringAsync());
-            var addInvoiceDetailsResponse = await _AddInvoiceDetailsToReservation(this._customConfiguration, reservationDetails);
+            var addInvoiceDetailsResponse = await _AddInvoiceDetailsToReservation(_billingService, this.Request, reservationDetails);
             if (addInvoiceDetailsResponse != null)
             {
                 return addInvoiceDetailsResponse;
@@ -123,7 +126,7 @@ namespace app.Controllers
             var allReservations = JsonConvert.DeserializeObject<Reservation[]>(await response.Content.ReadAsStringAsync()) ?? new Reservation[0];
             foreach (var res in allReservations)
             {
-                var addInvoiceDetailsResponse = await _AddInvoiceDetailsToReservation(this._customConfiguration, res);
+                var addInvoiceDetailsResponse = await _AddInvoiceDetailsToReservation(_billingService, this.Request, res);
                 if (addInvoiceDetailsResponse != null)
                 {
                     return addInvoiceDetailsResponse;
@@ -161,13 +164,14 @@ namespace app.Controllers
             try
             {
                 // Check valid bike
-                var bikeController = new BikeController(Options.Create(this._customConfiguration));
-                var bikeResponse = await bikeController.GetBike(reservationDetails.BikeId);
-                if (!(bikeResponse is JsonResult))
+                string getBikeUrl = $"http://{_bikesService}/api/bikes/{reservationDetails.BikeId}";
+                var getBikeResponse = await HttpHelper.GetAsync(getBikeUrl, this.Request);
+                if (!getBikeResponse.IsSuccessStatusCode)
                 {
-                    return bikeResponse;
+                    return await HttpHelper.ReturnResponseResult(getBikeResponse);
                 }
-                var bike = (bikeResponse as JsonResult)?.Value as Bike;
+
+                var bike = JsonConvert.DeserializeObject<Bike>(await getBikeResponse.Content.ReadAsStringAsync());
                 if (bike == null)
                 {
                     return new ContentResult()
@@ -182,13 +186,14 @@ namespace app.Controllers
                 }
 
                 // Check valid customer
-                var userController = new UserController(Options.Create(this._customConfiguration));
-                var userResponse = await userController.GetUser(reservationDetails.UserId);
-                if (!(userResponse is JsonResult))
+                string getUserUrl = $"http://{_usersService}/api/users/{reservationDetails.UserId}";
+                var getUserResponse = await HttpHelper.GetAsync(getUserUrl, this.Request);
+                if (!getUserResponse.IsSuccessStatusCode)
                 {
-                    return userResponse;
+                    return await HttpHelper.ReturnResponseResult(getUserResponse);
                 }
-                var user = (userResponse as JsonResult)?.Value as UserResponse;
+
+                var user = JsonConvert.DeserializeObject<UserResponse>(await getUserResponse.Content.ReadAsStringAsync());
                 if (user == null)
                 {
                     return new ContentResult()
