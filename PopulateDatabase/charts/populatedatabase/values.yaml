@@ -1,0 +1,41 @@
+# Default values for populatedatabase.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+fullnameOverride: populatedatabase
+replicaCount: 1
+image:
+  repository: yanambia/contoso-bikerental-populatedatabase
+  tag: latest
+  pullPolicy: Always
+imagePullSecrets: []
+  # This uses credentials from secret "myRegistryKeySecretName".
+  # - name: myRegistryKeySecretName
+
+restartPolicy: Never
+backOffLimit: 4
+
+service:
+  type: ClusterIP
+  port: 80
+
+probes:
+  enabled: false
+
+ingress:
+  enabled: false
+  annotations:
+    kubernetes.io/ingress.class: addon-http-application-routing
+    # kubernetes.io/tls-acme: "true"
+  path: /
+
+secrets: 
+  gateway:
+    dnsname: gateway
+  
+resources: {}
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}

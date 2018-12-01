@@ -1,0 +1,10 @@
+version: '2'
+
+services:
+    populatedatabase:
+        build: .
+        ports:
+            - "8080:80"
+        environment:
+            - FILENAME_DATA=data.json
+            - GATEWAY_DNSNAME=apigateway:5000

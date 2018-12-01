@@ -1,0 +1,28 @@
+kind: helm-release
+apiVersion: 1.0
+build:
+  context: .
+  dockerfile: Dockerfile
+install:
+  chart: charts\databases
+  set:
+    replicaCount: 1
+    image:
+      repository: databases
+      tag: $(tag)
+      pullPolicy: Never
+    ingress:
+      hosts:
+      # This expands to [space.s.]populatedatabase.<guid>.<region>.aksapp.io
+      - $(spacePrefix)databases$(hostSuffix)
+configurations:
+  develop:
+    build:
+      useGitIgnore: true
+    container:
+      sync:
+      - "!**/package.json"
+      iterate:
+        processesToKill: [node]
+      values:
+      - "charts/databases/values.yaml"

@@ -1,0 +1,52 @@
+{
+    "customers": [
+      {
+        "username": "jedmonds",
+        "password": "mindaro",
+        "name": "John Edmonds",
+        "address": "132 Prospect St, Spokane, WA",
+        "phone": "9174567890",
+        "email": "john.edmonds@outlook.com",
+        "ccNumber": "1234567890123456",
+        "ccExpiry": "2020-01-01",
+        "ccccv": "1234"
+      },
+      {
+        "username": "user",
+        "password": "password",
+        "name": "Satya Nadella",
+        "address": "100 Microsoft St, Redmond, WA",
+        "phone": "9174567890",
+        "email": "snadella@outlook.com",
+        "ccNumber": "1234567890123456",
+        "ccExpiry": "2020-01-01",
+        "ccccv": "1234"
+      }
+    ],
+    "vendors": [
+      {
+        "id": "16a46619738a4865a5afcb5e18ffb138",
+        "username": "aedmonds",
+        "password": "mindaro",
+        "name": "Angela Edmonds",
+        "address": "14 Bramble Way, Seattle, WA",
+        "phone": "5084567890",
+        "email": "angelav@outlook.com",
+        "routingNumber": "0987",
+        "accountNumber": "6543"
+      }
+    ],
+    "bikes": [
+      {
+        "id": "5bedc8ebdd97c96c09a41b08",
+        "available": "true",
+        "manufacturer": "Van Raam",
+        "model": "VX4L",
+        "hourlyCost": 10,
+        "type": "tandem",
+        "ownerUserId": "16a46619738a4865a5afcb5e18ffb138",
+        "suitableHeightInMeters": 0.75,
+        "maximumWeightInKg": 5.5
+      }
+    ]
+  }
