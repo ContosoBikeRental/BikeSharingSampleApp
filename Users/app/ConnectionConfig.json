@@ -1,7 +1,12 @@
 {
     "config": {
-        "userName": "dummyuser",
-        "password": "dummypassword",
+        "authentication": {
+            "type": "default",
+            "options": {
+                "userName": "dummyuser",
+                "password": "dummypassword"
+            }
+        },
         "server": "dummydbserver",
         "options": {
             "encrypt": true,

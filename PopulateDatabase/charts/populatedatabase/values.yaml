@@ -11,6 +11,14 @@ imagePullSecrets: []
   # This uses credentials from secret "myRegistryKeySecretName".
   # - name: myRegistryKeySecretName
 
+env:
+  - name: GATEWAY_DNSNAME
+    value: gateway
+  - name: BIKES_DNSNAME
+    value: bikes
+  - name: USERS_DNSNAME
+    value: users
+
 restartPolicy: Never
 backOffLimit: 4
 
@@ -28,10 +36,8 @@ ingress:
     # kubernetes.io/tls-acme: "true"
   path: /
 
-secrets: 
-  gateway:
-    dnsname: gateway
-  
+secrets: {}
+
 resources: {}
 
 nodeSelector: {}
