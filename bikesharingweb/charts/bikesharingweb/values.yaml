@@ -3,7 +3,7 @@
 # Declare variables to be passed into your templates.
 
 # MUST CHANGE TO THE HOSTNAME FOR THE GATEWAY
-apiHost: CHANGE ME
+apiHost: CHANGE_ME
 
 fullnameOverride: bikesharingweb
 replicaCount: 1
