@@ -6,7 +6,7 @@ The docker-compose file defines all the necessary services to run the applicatio
 docker-compose up --build --abort-on-container-exit
 ```
 
-## Azure Dev Spaces Usage
+## Azure Dev Spaces usage
 This application can be run with Azure Dev Spaces (AZDS): [https://docs.microsoft.com/en-us/azure/dev-spaces/](https://docs.microsoft.com/en-us/azure/dev-spaces/). 
 
 ### Overriding default parameters
