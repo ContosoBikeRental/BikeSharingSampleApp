@@ -16,6 +16,7 @@ docker build -t "$1/ billing:$2" Billing/
 docker build -t "$1/ reservations:$2" Reservation/
 docker build -t "$1/ populatedatabase:$2" PopulateDatabase/
 docker build -t "$1/ databases:$2" Databases/
+docker build -t "$1/ bikesharingweb:$2" bikesharingweb/
 
 
 docker push "$1/ bikes:$2"
@@ -27,3 +28,4 @@ docker push "$1/ billing:$2"
 docker push "$1/ reservations:$2"
 docker push "$1/ populatedatabase:$2"
 docker push "$1/ databases:$2"
+docker push "$1/ bikesharingweb:$2"
