@@ -10,7 +10,7 @@ docker-compose up --build --abort-on-container-exit
 This application can be run with Azure Dev Spaces (AZDS): [https://docs.microsoft.com/en-us/azure/dev-spaces/](https://docs.microsoft.com/en-us/azure/dev-spaces/). 
 
 ### Overriding default parameters
-Before deploying, change `install.set.apiHost` in bikesharingweb/azds.yaml and `apiHost` bikesharingweb/value.yaml to the Gateway service's hostname. This is usually in the form of gateway.<AKS_Cluster_DNS_Zone>.<AKS_Cluster_Location>.aksapp.io.
+Before deploying, change `install.set.apiHost` in `bikesharingweb/azds.yaml` and `apiHost` in `bikesharingweb/value.yaml` to the Gateway service's hostname. 
 
 To deploy with AZDS, execute:
 ```
