@@ -9,6 +9,7 @@ spec:
       - name: {{ .Chart.Name }}
         image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
         env:
+{{ toYaml .Values.env | indent 8 }}
         {{- $root := . }}
         {{- range $ref, $values := .Values.secrets }}
         {{- range $key, $value := $values }}
@@ -20,5 +21,4 @@ spec:
         {{- end }}
         {{- end }}
       restartPolicy: {{ .Values.restartPolicy }}
-
   backoffLimit: {{ .Values.backOffLimit }}

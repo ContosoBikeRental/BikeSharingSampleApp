@@ -13,20 +13,69 @@ namespace app
 {
     public class Program
     {
-        private static string _gateway = Environment.GetEnvironmentVariable("GATEWAY_DNSNAME");
-        
+        private static HttpClient _httpClient = new HttpClient() { Timeout = TimeSpan.FromSeconds(10) };
+        private static string _gatewayUrl = $"http://{Environment.GetEnvironmentVariable("GATEWAY_DNSNAME")}";
+        private static string _bikesUrl = $"http://{Environment.GetEnvironmentVariable("BIKES_DNSNAME")}";
+        private static string _usersUrl = $"http://{Environment.GetEnvironmentVariable("USERS_DNSNAME")}";
 
         public static void Main(string[] args)
         {
-            _PopulateDatabase().Wait();
+            using (_httpClient)
+            {
+                _WaitForServiceReadiness().Wait();
+                _PopulateDatabase().Wait();
+            }
         }
 
+        private async static Task _WaitForServiceReadiness()
+        {
+            Console.WriteLine($"gatewayUrl: {_gatewayUrl}");
+            Console.WriteLine($"bikesUrl: {_bikesUrl}");
+            Console.WriteLine($"usersUrl: {_usersUrl}");
 
+            while (true)
+            {
+                Console.WriteLine("Checking to see if services are up...");
 
+                // Check bikes
+                bool bikesReady = false;
+                try { bikesReady = (await _httpClient.GetAsync($"{_bikesUrl}/hello")).IsSuccessStatusCode; } catch { }
+                if (!bikesReady)
+                {
+                    Console.WriteLine("Bikes not ready :(");
+                }
+
+                // Check users
+                bool usersReady = false;
+                try { usersReady = (await _httpClient.GetAsync($"{_usersUrl}/hello")).IsSuccessStatusCode; } catch { }
+                if (!usersReady)
+                {
+                    Console.WriteLine("Users not ready :(");
+                }
+
+                // Check gateway
+                bool gatewayReady = false;
+                try { gatewayReady = (await _httpClient.GetAsync($"{_gatewayUrl}/hello")).IsSuccessStatusCode; } catch { }
+                if (!gatewayReady)
+                {
+                    Console.WriteLine("Gateway not ready :(");
+                }
+
+                if (bikesReady && usersReady && gatewayReady)
+                {
+                    // Success!
+                    Console.WriteLine("Services are up!");
+                    break;
+                }
+
+                var sleep = TimeSpan.FromSeconds(10);
+                Console.WriteLine($"Sleeping for {sleep.TotalSeconds} and trying again...");
+                await Task.Delay(sleep);
+            }
+        }
 
         private async static Task _PopulateDatabase()
         {
-            await Task.Delay(60000);
             Console.WriteLine("Populating databases...");
 
             // Read JSON directly from a file
@@ -35,16 +84,10 @@ namespace app
             JToken vendors = (JToken)data.SelectToken("vendors");
             JToken bikes = (JToken)data.SelectToken("bikes");
 
-            // Define gateway url and HttpClient
-            var gatewayServiceUrl = "http://" + _gateway;
-            Console.WriteLine("gatewayServiceUrl : " + gatewayServiceUrl);
-
-            var httpClient = new HttpClient();
-
             // Add users and bikes
             foreach (var customer in customers)
             {
-                var response = await httpClient.PostAsync(gatewayServiceUrl + "/api/user/",
+                var response = await _httpClient.PostAsync(_gatewayUrl + "/api/user/",
                     new StringContent(customer.ToString(), Encoding.UTF8, "application/json"));
                 if (!response.IsSuccessStatusCode)
                 {
@@ -54,7 +97,7 @@ namespace app
             }
             foreach (var vendor in vendors)
             {
-                var response = await httpClient.PostAsync(gatewayServiceUrl + "/api/user/vendor",
+                var response = await _httpClient.PostAsync(_gatewayUrl + "/api/user/vendor",
                     new StringContent(vendor.ToString(), Encoding.UTF8, "application/json"));
                 if (!response.IsSuccessStatusCode)
                 {
@@ -64,7 +107,7 @@ namespace app
             }
             foreach (var bike in bikes)
             {
-                var response = await httpClient.PostAsync(gatewayServiceUrl + "/api/bike",
+                var response = await _httpClient.PostAsync(_gatewayUrl + "/api/bike",
                     new StringContent(bike.ToString(), Encoding.UTF8, "application/json"));
                 if (!response.IsSuccessStatusCode)
                 {
