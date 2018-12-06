@@ -1,6 +1,18 @@
-FROM microsoft/dotnet:2.1-sdk
-COPY /app /app
+FROM microsoft/dotnet:2.1-aspnetcore-runtime AS base
 WORKDIR /app
-RUN dotnet restore app.csproj
-RUN dotnet publish -o out app.csproj
-ENTRYPOINT ["dotnet", "out/app.dll"]
+EXPOSE 80
+
+FROM microsoft/dotnet:2.1-sdk AS build
+WORKDIR /src
+COPY ["app.csproj", "."]
+RUN dotnet restore "app.csproj"
+COPY . .
+RUN dotnet build "app.csproj" -c Release -o /app
+
+FROM build AS publish
+RUN dotnet publish "app.csproj" -c Release -o /app
+
+FROM base AS final
+WORKDIR /app
+COPY --from=publish /app .
+ENTRYPOINT ["dotnet", "app.dll"]
