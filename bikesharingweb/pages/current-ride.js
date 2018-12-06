@@ -35,10 +35,11 @@ class CurrentRideBase extends React.Component {
         }
 
         // get reservation
-        const reservation = await helpers.getReservationForUserAsync(user.id, this.apiHost);
+        var state = "Booked";
+        const reservation = await helpers.getReservationForUserAsync(user.id, this.apiHost, state);
         if (!reservation) {
             // Error, something's gone wrong, go home
-            console.error("couldn't find Booked reservation, going to Index");
+            console.error("couldn't find " + state + " reservation, going to Index");
             Router.push("/");
             return;
         }
@@ -75,8 +76,8 @@ class CurrentRideBase extends React.Component {
         const data = await res.json();
         console.log(data);
 
-        // navigate home
-        Router.push("/");
+        // navigate to complete-return
+        Router.push("/complete-return");
     }
 
     render() {
@@ -87,7 +88,6 @@ class CurrentRideBase extends React.Component {
                     <div className="row">
                         <div className="col-sm-6">
                             <img src={this.state.bike.imageUrl} alt="photo of bike" />
-                            {/* <img src='/static/sample-bike-1.jpg' alt="photo of bike" /> */}
                         </div>
                         <div className="col-sm-6">
                             <div className="details-container">
@@ -103,10 +103,7 @@ class CurrentRideBase extends React.Component {
                                         {/* <Field label="Total cost" value={"$" + reservation.totalCost} /> */}
                                     </div>
                                 </div>
-                                {/* <Field label="Pick-up instructions" value={reservation.pickupInstructions} /> */}
-                                {/* <Field label="Pick-up/return address" value={this.state.vendor.address} /> */}
                                 <Field label="Pick-up/return address" value={this.state.bike.address} />
-
                                 <MediaQuery minWidth={600}>
                                     <div className="divider">
                                         <FormButton primary url="/current-ride" onClick={this.handleClick.bind(this)}>Return bike</FormButton>

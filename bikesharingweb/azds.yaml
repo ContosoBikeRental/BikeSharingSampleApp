@@ -9,7 +9,7 @@ install:
   - values.dev.yaml?
   - secrets.dev.yaml?
   set:
-    apiHost: gateway.856bb3af715744c6810b.eastus.aksapp.io
+    apiHost: gateway.64b3949c8c0849ce89b5.eastus.aksapp.io
     replicaCount: 1
     image:
       tag: $(tag)
