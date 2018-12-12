@@ -7,11 +7,11 @@ if "%1%"=="" (set parent_space="default")
 echo [ %~nx0 ] : Setting parent space to %parent_space%...
 azds space select -n %parent_space%
 
-rem Run all services.
+rem Shut down all services.
 for /D %%s in (.\*) do (
-    cd %%s 
-    echo [ %~nx0 ] : Starting up %%s...
-    azds up -d
+    cd %%s
+    echo [ %~nx0 ] : Shutting down %%s...
+    azds down -y
     cd ..
 )
 

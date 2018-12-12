@@ -20,8 +20,8 @@ ingress:
   annotations:
     kubernetes.io/ingress.class: addon-http-application-routing
   path: /
-  hosts: 
-    # Unique for every cluster: gateway.<clusterDNSZone>
+  hosts:
+  - gateway.64b3949c8c0849ce89b5.eastus.aksapp.io
 
 secrets:
   users:
