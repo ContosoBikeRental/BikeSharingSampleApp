@@ -1,0 +1,76 @@
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+bikes:
+  secrets:
+    mongo:
+      collection: bikes 
+      connectionString: mongodb://databases-mongo
+
+bikesharingweb:
+  # MUST CHANGE TO THE HOSTNAME FOR THE GATEWAY
+  apiHost: gateway.64b3949c8c0849ce89b5.eastus.aksapp.io
+
+billing:
+  secrets:
+    mongo:
+      connectionString: mongodb://databases-mongo
+      dbName: billing
+
+databases:
+  fullnameOverride: databases
+  hostedSql:
+    enabled: true
+    password: "!DummyPassword123!"
+  hostedMongo:
+    enabled: true
+
+devsite:
+  secrets:
+    gateway:
+      dnsName: gateway
+
+gateway:
+  secrets:
+    users:
+      dnsName: users
+    bikes:
+      dnsName: bikes
+    reservation:
+      dnsName: reservation
+    reservationengine:
+      dnsName: reservationengine
+    billing:
+      dnsName: billing
+    applicationInsights:
+        instrumentationKey: 00000000-0000-0000-0000-000000000000
+
+reservations:
+  secrets:
+    mongo:
+      connectionString: mongodb://databases-mongo
+      dbName: resdb
+      collection: reservation
+
+reservationengine:
+  secrets:
+    bikes:
+      dnsName: bikes
+    billing:
+      dnsName: billing
+    mongo:
+      connectionString: mongodb://databases-mongo
+      dbName: resdb
+      collection: reservation
+
+users:
+  secrets:
+    sql:
+      username: SA
+      password: "!DummyPassword123!"
+      server: databases-sql
+      database: tempdb
+      table: myTable
+
+
+

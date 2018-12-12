@@ -14,11 +14,14 @@ Before deploying, change `install.set.apiHost` in `bikesharingweb/azds.yaml` and
 
 To deploy with AZDS, execute:
 ```
-Linux:
-./azdsup-bikesharing.sh
-
 Windows:
 ./azdsup-bikesharing.bat
+```
+
+To shutdown services with AZDS, execute:
+```
+Windows:
+./azdsdown-bikesharing.bat
 ```
 
 ## Kubernetes usage
