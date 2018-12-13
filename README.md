@@ -101,10 +101,6 @@ Linux:
 ./helmdeploy-bikesharing.sh
 
 Windows:
-<<<<<<< HEAD
-./azdsup-contoso-bikerental.bat
-``` -->
-=======
 ./helmdeploy-bikesharing.bat
 ```
 
@@ -112,4 +108,3 @@ Windows:
 Out-of-the-box, the Kubernetes Helm Chart uses purely in-cluster resources for databases and queues; similar to the docker-compose flow.  (Each infra service unique to each release.)  To use Azure PaaS services or other external services instead, simply override the relevant connection strings, etc, in the `values.yaml` file in the `contoso-bikerental/` Chart folder.  Also make sure to set `enabled: false` for any services you do not wish to host in the cluster. (At the top of the `values.yaml` file)
 
 
->>>>>>> c2ed510b60eecfc9bca42e362f35024ed6506158
