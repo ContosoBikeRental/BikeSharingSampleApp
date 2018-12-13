@@ -5,6 +5,9 @@ build:
   dockerfile: Dockerfile
 install:
   chart: charts/populatedatabase
+  values:
+  - values.dev.yaml?
+  - secrets.dev.yaml?
   set:
     replicaCount: 1
     image:
@@ -18,11 +21,18 @@ install:
 configurations:
   develop:
     build:
+      dockerfile: Dockerfile.develop
       useGitIgnore: true
+      args:
+        BUILD_CONFIGURATION: ${BUILD_CONFIGURATION:-Debug}
     container:
       sync:
-      - "!**/package.json"
+      - "**/Pages/**"
+      - "**/Views/**"
+      - "**/wwwroot/**"
+      - "!**/*.{sln,csproj}"
+      command: [dotnet, run, --no-restore, --no-build, --no-launch-profile, -c, "${BUILD_CONFIGURATION:-Debug}"]
       iterate:
-        processesToKill: [node]
-      values:
-      - "charts/populatedatabase/values.yaml"
+        processesToKill: [dotnet, vsdbg]
+        buildCommands:
+        - [dotnet, build, --no-restore, -c, "${BUILD_CONFIGURATION:-Debug}"]

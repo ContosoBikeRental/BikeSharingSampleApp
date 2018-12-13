@@ -54,7 +54,7 @@ const helpers = {
         }
         return bike;
     },
-    getReservationForUserAsync: async function(userId, apiHost) {
+    getReservationForUserAsync: async function(userId, apiHost, state) {
         if (!apiHost) {
             apiHost = await this.getApiHostAsync();
         }
@@ -65,9 +65,22 @@ const helpers = {
             console.log("user does not have any reservations");
             return;
         }
-        const reservation = reservations.find(function(r) { return r.state == 'Booked' }); 
+        const reservation = reservations.reverse().find(function(r) { return r.state == state }); 
         return reservation;
-    }
+    },
+    getInvoiceAsync: async function (invoiceId, apiHost) {
+        if (!apiHost) {
+            apiHost = await this.getApiHostAsync();
+        }
+        const url = apiHost + '/api/billing/invoice/' + invoiceId;
+        const res = await fetch(url);
+        const vendor = await res.json();
+        if (!res.ok) {
+            console.log("invoice does not exist");
+            vendor = null;
+        }
+        return vendor;
+    },
 }
 
 export default helpers;

@@ -19,7 +19,7 @@
     "express-api-validator": "0.1.0",
     "body-parser": "^1.16.1",
     "validate.js": "^0.11.1",
-    "tedious": "1.14.0",
+    "tedious": "4.1.1",
     "util": "0.10.3",
     "async": "^2.1.5"
   },

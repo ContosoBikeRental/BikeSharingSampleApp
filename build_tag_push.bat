@@ -11,6 +11,7 @@ docker build -t "%1/contoso-bikerental-billing:%2" Billing/
 docker build -t "%1/contoso-bikerental-reservations:%2" Reservation/
 docker build -t "%1/contoso-bikerental-populatedatabase:%2" PopulateDatabase/
 docker build -t "%1/contoso-bikerental-databases:%2" Databases/
+docker build -t "%1/contoso-bikerental-bikesharingweb:%2" bikesharingweb/
 
 
 docker push "%1/contoso-bikerental-bikes:%2"
@@ -22,5 +23,6 @@ docker push "%1/contoso-bikerental-billing:%2"
 docker push "%1/contoso-bikerental-reservations:%2"
 docker push "%1/contoso-bikerental-populatedatabase:%2"
 docker push "%1/contoso-bikerental-databases:%2"
+docker push "%1/contoso-bikerental-bikesharingweb:%2"
 
 :DONE

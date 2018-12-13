@@ -27,8 +27,8 @@ namespace app
             _database = Environment.GetEnvironmentVariable(Constants.MongoDbDatabaseEnv) ?? customConfiguration.MongoDBConnectionInfo.Database;
             _collection = Environment.GetEnvironmentVariable(Constants.MongoDbCollectionEnv) ?? customConfiguration.MongoDBConnectionInfo.Collection;
             _mongoClient = new MongoClient(_connectionString);
-            LogUtility.Log("MongoHelper init end");
             CheckConnectionLoop();
+            LogUtility.Log("MongoHelper init end");
         }
 
         private static async void CheckConnectionLoop()

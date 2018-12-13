@@ -24,6 +24,7 @@ cp -R Billing/charts/billing/. contoso-bikerental/charts/billing/
 cp -R Reservation/charts/reservation/. contoso-bikerental/charts/reservation/
 cp -R Databases/charts/databases/. contoso-bikerental/charts/databases/
 cp -R PopulateDatabase/charts/populatedatabase/. contoso-bikerental/charts/populatedatabase/
+cp -R bikesharingweb/charts/bikesharingweb/. contoso-bikerental/charts/bikesharingweb/
 
 
 # Deploy the contoso bikerental services and databases.
