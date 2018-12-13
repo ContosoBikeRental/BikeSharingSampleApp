@@ -4,7 +4,7 @@ build:
   context: .
   dockerfile: Dockerfile
 install:
-  chart: charts\populatedatabase
+  chart: charts/populatedatabase
   set:
     replicaCount: 1
     image:
