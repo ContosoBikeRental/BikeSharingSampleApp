@@ -8,24 +8,29 @@ if [ -z "$1" ]; then
 fi
 
 # Selecting azds namespace.
-echo Setting parent space to $parent_space...
 azds space select -n $parent_space
 
+# Run all services
+echo "******************************************"
+echo "Starting databases: SQL, Mongo"
+echo "******************************************"
+pushd Databases
+helm init --wait
+helm install charts/databases --wait
+popd
 
-# Shut down all services.
-for d in */ do (
-    cd "$d"
-    echo Shutting down %%s...
-    azds down -y
-    cd ..
-)
+declare -a arr=("Gateway" "bikesharingweb" "Bikes" "Billing" "Reservation" "ReservationEngine" "Users" "DevSite" "PopulateDatabase")
+for i in "${arr[@]}"
+do
+   echo "******************************************"
+   echo "Starting service $i"
+   echo "******************************************"
+   pushd $i
+   azds up -d
+   popd
+done
 
-# Run all services.
-for d in */ do (
-    cd "$d"
-    echo Shutting down %%s...
-    azds up
-    cd ..
-)
 
-echo Script completed.
+echo "******************************************"
+echo "BikeSharing endpoints: "
+azds list-uris
