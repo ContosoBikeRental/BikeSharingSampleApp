@@ -4,7 +4,7 @@ build:
   context: .
   dockerfile: Dockerfile
 install:
-  chart: charts\databases
+  chart: charts/databases
   set:
     replicaCount: 1
     image:

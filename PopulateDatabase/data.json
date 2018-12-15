@@ -38,16 +38,125 @@
     ],
     "bikes": [
       {
-        "id": "5bedc8ebdd97c96c09a41b08",
-        "available": "true",
-        "manufacturer": "Van Raam",
-        "model": "VX4L",
-        "hourlyCost": 10,
+        "manufacturer": "Schwinn",
+        "model": "Schwinn Women's Cruiser",
+        "hourlyCost": 1,
         "type": "tandem",
         "address": "1 Microsoft Way, Redmond, WA",
         "ownerUserId": "16a46619738a4865a5afcb5e18ffb138",
         "suitableHeightInMeters": 0.75,
-        "maximumWeightInKg": 5.5
+        "maximumWeightInKg": 5.5,
+        "imageUrl": "https://contosobikerental.blob.core.windows.net/public/images/sample-bike-02.jpg"
+      },
+      {
+        "manufacturer": "Huffy",
+        "model": "Huffy Men's Comfort",
+        "hourlyCost": 1,
+        "type": "tandem",
+        "address": "1 Microsoft Way, Redmond, WA",
+        "ownerUserId": "16a46619738a4865a5afcb5e18ffb138",
+        "suitableHeightInMeters": 0.75,
+        "maximumWeightInKg": 5.5,
+        "imageUrl": "https://contosobikerental.blob.core.windows.net/public/images/sample-bike-11.jpg"
+      },
+      {
+        "manufacturer": "Schwinn",
+        "model": "Schwinn Men's Cruiser",
+        "hourlyCost": 1,
+        "type": "tandem",
+        "address": "1 Microsoft Way, Redmond, WA",
+        "ownerUserId": "16a46619738a4865a5afcb5e18ffb138",
+        "suitableHeightInMeters": 0.75,
+        "maximumWeightInKg": 5.5,
+        "imageUrl": "https://contosobikerental.blob.core.windows.net/public/images/sample-bike-01.jpg"
+      },
+      {
+        "manufacturer": "Huffy",
+        "model": "Huffy Men's Comfort",
+        "hourlyCost": 1,
+        "type": "tandem",
+        "address": "1 Microsoft Way, Redmond, WA",
+        "ownerUserId": "16a46619738a4865a5afcb5e18ffb138",
+        "suitableHeightInMeters": 0.75,
+        "maximumWeightInKg": 5.5,
+        "imageUrl": "https://contosobikerental.blob.core.windows.net/public/images/sample-bike-14.jpg"
+      },
+      {
+        "manufacturer": "Schwinn",
+        "model": "Schwinn Men's Cruiser",
+        "hourlyCost": 1,
+        "type": "tandem",
+        "address": "1 Microsoft Way, Redmond, WA",
+        "ownerUserId": "16a46619738a4865a5afcb5e18ffb138",
+        "suitableHeightInMeters": 0.75,
+        "maximumWeightInKg": 5.5,
+        "imageUrl": "https://contosobikerental.blob.core.windows.net/public/images/sample-bike-03.jpg"
+      },
+      {
+        "manufacturer": "Schwinn",
+        "model": "Schwinn Girl's Cruiser",
+        "hourlyCost": 1,
+        "type": "tandem",
+        "address": "1 Microsoft Way, Redmond, WA",
+        "ownerUserId": "16a46619738a4865a5afcb5e18ffb138",
+        "suitableHeightInMeters": 0.75,
+        "maximumWeightInKg": 5.5,
+        "imageUrl": "https://contosobikerental.blob.core.windows.net/public/images/sample-bike-09.jpg"
+      },
+      {
+        "manufacturer": "Schwinn",
+        "model": "Schwinn Women's Cruiser",
+        "hourlyCost": 1,
+        "type": "tandem",
+        "address": "1 Microsoft Way, Redmond, WA",
+        "ownerUserId": "16a46619738a4865a5afcb5e18ffb138",
+        "suitableHeightInMeters": 0.75,
+        "maximumWeightInKg": 5.5,
+        "imageUrl": "https://contosobikerental.blob.core.windows.net/public/images/sample-bike-10.jpg"
+      },
+      {
+        "manufacturer": "Schwinn",
+        "model": "Schwinn Women's Cruiser",
+        "hourlyCost": 1,
+        "type": "tandem",
+        "address": "1 Microsoft Way, Redmond, WA",
+        "ownerUserId": "16a46619738a4865a5afcb5e18ffb138",
+        "suitableHeightInMeters": 0.75,
+        "maximumWeightInKg": 5.5,
+        "imageUrl": "https://contosobikerental.blob.core.windows.net/public/images/sample-bike-08.jpg"
+      },
+      {
+        "manufacturer": "Huffy",
+        "model": "Huffy Men's Racing",
+        "hourlyCost": 1,
+        "type": "tandem",
+        "address": "1 Microsoft Way, Redmond, WA",
+        "ownerUserId": "16a46619738a4865a5afcb5e18ffb138",
+        "suitableHeightInMeters": 0.75,
+        "maximumWeightInKg": 5.5,
+        "imageUrl": "https://contosobikerental.blob.core.windows.net/public/images/sample-bike-15.jpg"
+      },
+      {
+        "manufacturer": "Schwinn",
+        "model": "Schwinn Men's Cruiser",
+        "hourlyCost": 1,
+        "type": "tandem",
+        "address": "1 Microsoft Way, Redmond, WA",
+        "ownerUserId": "16a46619738a4865a5afcb5e18ffb138",
+        "suitableHeightInMeters": 0.75,
+        "maximumWeightInKg": 5.5,
+        "imageUrl": "https://contosobikerental.blob.core.windows.net/public/images/sample-bike-04.jpg"
+      },
+      {
+        "manufacturer": "Schwinn",
+        "model": "Schwinn Women's Racer",
+        "hourlyCost": 1,
+        "type": "tandem",
+        "address": "1 Microsoft Way, Redmond, WA",
+        "ownerUserId": "16a46619738a4865a5afcb5e18ffb138",
+        "suitableHeightInMeters": 0.75,
+        "maximumWeightInKg": 5.5,
+        "imageUrl": "https://contosobikerental.blob.core.windows.net/public/images/sample-bike-05.jpg"
       }
     ]
   }
