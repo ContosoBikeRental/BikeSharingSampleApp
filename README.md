@@ -16,7 +16,7 @@
     
     `az aks show -g $AKS_NAME -n $AKS_NAME -o json --query addonProfiles.httpApplicationRouting.config.HTTPApplicationRoutingZoneName`
 
-    b) Open the web frontend's azds.yaml: `code ./bikesharingweb/azds.yaml`
+    b) Open the web frontend's azds.yaml: [bikesharingweb/azds.yaml](bikesharingweb/azds.yaml)
 
     c) Change the `apiHost` line to use your AKS zone name. It will look something like:
         
@@ -37,7 +37,7 @@
 
     **Note:** You may need to wait several minutes for the DNS entry to be propagated, you can check back by running `azds list-uris`
 
-    Sign into the web app using one of the sample customer accounts, as defined in the file `PopulateDatabase/app/data.json`.
+    Sign into the web app using one of the sample customer accounts, as defined in the file [PopulateDatabase/data.json](PopulateDatabase/data.json).
 
 
 <!-- ## Docker-Compose usage
