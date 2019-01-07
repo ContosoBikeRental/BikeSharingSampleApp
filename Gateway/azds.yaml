@@ -5,7 +5,7 @@ build:
   dockerfile: Dockerfile.develop
   # dockerfile: Dockerfile
 install:
-  chart: charts\gateway
+  chart: charts/gateway
   values:
   - values.dev.yaml?
   - secrets.dev.yaml?
