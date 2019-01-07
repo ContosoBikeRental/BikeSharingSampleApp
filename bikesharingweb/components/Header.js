@@ -59,6 +59,7 @@ const Header = (props) => (
         }
         .logo {
             cursor: pointer;
+            text-align: center;
         }
       `}</style>
     </div>
