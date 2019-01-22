@@ -1,6 +1,10 @@
 # Bike Sharing Sample Application
 
-## Azure Dev Spaces
+## Demo with Azure Dev Spaces
+A full walkthrough for iteratively developing and debugging code with Azure Dev Spaces is available in the **demo** branch. `git checkout demo`.
+
+
+## Run app with Azure Dev Spaces
 
 1. Create an AKS cluster with Azure Dev Spaces by running the following script, specifying the AKS name and region:
     
