@@ -8,14 +8,14 @@
     "express": "^4.16.4",
     "isomorphic-fetch": "^2.2.1",
     "next": "^7.0.2",
-    "react": "^16.6.1",
-    "react-dom": "^16.6.1",
-    "react-rating": "^1.5.0",
+    "react": "^16.7.0",
+    "react-dom": "^16.7.0",
+    "react-rating": "^1.6.2",
     "react-responsive": "^6.0.1",
-    "universal-cookie": "^3.0.6"
+    "universal-cookie": "^3.0.7"
   },
   "devDependencies": {
-    "nodemon": "^1.18.6"
+    "nodemon": "^1.18.9"
   },
   "scripts": {
     "dev": "nodemon server.js -w server.js -w server -w universal -w next.config.js -w config.js -w package.json",
