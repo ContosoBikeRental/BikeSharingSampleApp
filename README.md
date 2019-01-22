@@ -47,7 +47,7 @@ Here we set up the app state to uncover a bug in the app: bikes are still (incor
 1. Open the app's web frontend in the browser.
 1. Sign into the app using one of the sample user accounts (e.g. username=*dsmith*).
 1. Select a bike and rent it. Remember the bike, as we'll refer to it later.
-1. Sign out of app by clicking the hamburger icon (top left).
+1. Navigate back to sign-in page by appening "/signin" to the base URL.
 
 ## Add multiple dev spaces to the same cluster
 We'll demonstrate how multiple developers on a team can use the same cluster, so let's create multiple child dev spaces:
@@ -60,7 +60,7 @@ azds space select -n default\lisa
 ## Demo Script
  
 1. My team is building a Bike Sharing app where you can open our web app, view available bikes in your area, rent a bike, and then later return it to a designated spot. On return, you're billed for the time you used the bike.
-    1. Sign into the web app as a different user (e.g. username=*jedmonds*)
+    1. Sign into the web app as a different user, for example username=**jedmonds**
     1. Select a bike, then click "Rent".
     1. Now show the experience for returning a bike: click "Return bike", then "Confirm return". Optionally submit a review.
 1. Most of the time this process works, but we currently seem to have a bug where, sometimes, a bike can't be rented.
