@@ -2,7 +2,7 @@
   "name": "bikesharingweb",
   "version": "1.0.0",
   "description": "BikeSharing web app",
-  "main": "index.js",
+  "main": "server.js",
   "dependencies": {
     "classnames": "^2.2.6",
     "express": "^4.16.4",
