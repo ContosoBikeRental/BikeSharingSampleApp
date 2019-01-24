@@ -6,7 +6,6 @@ const port = parseInt(process.env.PORT, 10) || 3000
 const dev = process.env.NODE_ENV !== 'production'
 const app = next({ dev })
 const handle = app.getRequestHandler()
-const baseApiHost = process.env.API_HOST
 
 app.prepare()
   .then(() => {
@@ -15,8 +14,10 @@ app.prepare()
     server.get('/api/host', (req, res) => {
       var apiHost = url.format({
         protocol: req.protocol,
-        hostname: getDevSpacePrefix(req.get('host')) + baseApiHost,
+        hostname: getApiUrl(req.get('host'))
       });
+
+      console.log("API_HOST = " + apiHost);
 
       res.status(200).send({
         apiHost: apiHost
@@ -49,4 +50,25 @@ function getDevSpacePrefix(host) {
   }
 
   return "";
+}
+
+function getApiUrl(host) {
+  // break up hostname parts into array
+  var hostArr = host.split(".");
+
+  // find prefix
+  var prefix = "";
+  if (hostArr.indexOf("s") >= 0) {
+    prefix = hostArr[0] + ".s."
+  }
+
+  // find base hostname
+  var start = 1;
+  if (prefix !== "" && prefix !== null) {
+    var start = 3;
+  }
+  var baseHost = hostArr.slice(start, hostArr.length).join('.');
+
+  // return full URL of API service
+  return prefix + process.env.API_NAME + "." + baseHost;
 }

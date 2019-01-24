@@ -12,30 +12,14 @@
 
     This sets up an AKS cluster named `bikesharing01` in resource group `bikesharing01` in the `eastus2` region.
 
-2. Set the environment variable for Gateway API Service URL.
-
-    a) Check your AKS cluster's zone name: 
-    
-    `az aks show -g $AKS_NAME -n $AKS_NAME -o json --query addonProfiles.httpApplicationRouting.config.HTTPApplicationRoutingZoneName`
-
-    b) Open the web frontend's azds.yaml: [bikesharingweb/azds.yaml](bikesharingweb/azds.yaml)
-
-    c) Change the `apiHost` line to use your AKS zone name. It will look something like:
-        
-    ```
-    set:
-        apiHost: gateway.3974a66c33074d1eb8d1.eastus2.aksapp.io
-    ```
-    d) Close and save the file.
-
-3. Run the app's API and Data services, including setting up sample data.
+2. Run the app's API and Data services, including setting up sample data.
 
     ```
     source ./azdsup-contoso-bikerental.sh
     ``` 
     Tip: Ensure you run the above command from the source repository's root folder.
 
-4. Open the web frontend in a browser (the previous command will display the web frontend's url in its output, e.g. http://bikesharingweb...aksapp.io). 
+3. Open the web frontend in a browser (the previous command will display the web frontend's url in its output, e.g. http://bikesharingweb...aksapp.io). 
 
     **Note:** You may need to wait several minutes for the DNS entry to be propagated, you can check back by running `azds list-uris`
 

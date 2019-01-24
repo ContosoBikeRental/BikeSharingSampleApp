@@ -2,8 +2,7 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
-# MUST CHANGE TO THE HOSTNAME FOR THE GATEWAY
-apiHost: gateway.64b3949c8c0849ce89b5.eastus.aksapp.io
+apiName: gateway
 
 fullnameOverride: bikesharingweb
 replicaCount: 1
@@ -26,7 +25,7 @@ ingress:
     kubernetes.io/ingress.class: addon-http-application-routing
   path: /
   hosts:
-    - bikesharingweb.64b3949c8c0849ce89b5.eastus.aksapp.io
+    - bikesharingweb.<guid>.<region>.aksapp.io
   
 secrets: {}
 

@@ -19,8 +19,3 @@ az aks create -g $AKS_NAME -n $AKS_NAME --location $AKS_REGION --kubernetes-vers
 echo "===================================="
 echo "enabling Dev Spaces for AKS cluster: " $AKS_NAME
 az aks use-dev-spaces -g $AKS_NAME -n $AKS_NAME -s default -y
-
-echo "===================================="
-echo "Open ./bikesharingweb/azds.yaml, and change the apiHost line to point to your AKS cluster's zone name:"
-az aks show -g $AKS_NAME -n $AKS_NAME -o json --query addonProfiles.httpApplicationRouting.config.HTTPApplicationRoutingZoneName
-echo "===================================="
