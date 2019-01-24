@@ -42,8 +42,8 @@ spec:
               port: http
           {{- end }}
           env:
-            - name: API_HOST
-              value: {{ .Values.apiHost | quote }}
+            - name: API_NAME
+              value: {{ .Values.apiName | quote }}
             {{- $root := . }}
             {{- range $ref, $values := .Values.secrets }}
             {{- range $key, $value := $values }}
