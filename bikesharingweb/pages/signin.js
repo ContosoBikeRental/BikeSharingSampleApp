@@ -97,7 +97,6 @@ export default class Signin extends Component {
                                 onChange={this.handlePassword}/>
                             
                             <br />
-                            {/* <FormButton primary>Sign in</FormButton> */}
                             <FormButton primary onClick={this.handleClick.bind(this)}>Sign in</FormButton>
                             <div>
                                 <Link href="/"><a>Sign up</a></Link>
