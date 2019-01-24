@@ -2,6 +2,12 @@
 
 **IMPORTANT**: Make sure you've checked out the `demo` branch after cloning this repo: `git checkout demo`
 
+## Prerequisites
+1. An Azure subscription. If you don't have one, you can create a [free account](https://azure.microsoft.com/free).
+1. [Visual Studio Code](https://code.visualstudio.com/download).
+1. [Azure CLI](https://docs.microsoft.com/cli/azure/install-azure-cli?view=azure-cli-latest) version 2.0.43 or higher.
+1. [Helm](https://github.com/helm/helm/blob/master/docs/install.md)
+
 ## Demo Prep
 
 1. Create an AKS cluster with Azure Dev Spaces by running the following script, specifying the AKS name and region:
