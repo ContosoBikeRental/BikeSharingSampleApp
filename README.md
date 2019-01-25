@@ -17,7 +17,7 @@ A full walkthrough for iteratively developing and debugging code with Azure Dev 
 2. Run the app's API and Data services, including setting up sample data.
 
     ```
-    source ./azdsup-contoso-bikerental.sh
+    source ./azdsup-contoso-bikesharing.sh
     ``` 
     Tip: Ensure you run the above command from the source repository's root folder.
 

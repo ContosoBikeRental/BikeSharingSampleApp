@@ -1,14 +1,11 @@
 kind: helm-release
-apiVersion: 1.0
+apiVersion: 1.1
 build:
   context: .
   dockerfile: Dockerfile.develop
   # dockerfile: Dockerfile
 install:
   chart: charts/gateway
-  values:
-  - values.dev.yaml?
-  - secrets.dev.yaml?
   set:
     replicaCount: 1
     image:
@@ -16,9 +13,14 @@ install:
       tag: $(tag)
       pullPolicy: Never
     ingress:
+      annotations:
+        kubernetes.io/ingress.class: traefik-azds
       hosts:
       # This expands to [space.s.]gateway.<guid>.<region>.aksapp.io
       - $(spacePrefix)gateway$(hostSuffix)
+  values:
+  - values.dev.yaml?
+  - secrets.dev.yaml?
 configurations:
   develop:
     build:
