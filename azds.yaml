@@ -1,22 +1,24 @@
+      # This expands to [space.s.]package.<guid>.<region>.aksapp.io
 kind: helm-release
-apiVersion: 1.0
+apiVersion: 1.1
 build:
   context: .
   dockerfile: Dockerfile
 install:
   chart: charts/package
-  values:
-  - values.dev.yaml?
-  - secrets.dev.yaml?
   set:
     replicaCount: 1
     image:
       tag: $(tag)
       pullPolicy: IfNotPresent
     ingress:
+      annotations:
+        kubernetes.io/ingress.class: traefik-azds
       hosts:
-      # This expands to [space.s.]package.<guid>.<region>.aksapp.io
       - $(spacePrefix)package$(hostSuffix)
+  values:
+  - values.dev.yaml?
+  - secrets.dev.yaml?
 configurations:
   develop:
     build:
