@@ -8,7 +8,7 @@
 1. [Azure CLI](https://docs.microsoft.com/cli/azure/install-azure-cli?view=azure-cli-latest) version 2.0.43 or higher.
 1. [Helm](https://github.com/helm/helm/blob/master/docs/install.md)
 
-## Demo Prep
+## Demo rep
 
 1. Create an AKS cluster with Azure Dev Spaces by running the following script, specifying the AKS name and region:
     
@@ -103,3 +103,13 @@ azds space select -n default\lisa
     1. Notice that if we remove the `john.s.` prefix in the browser's URL, then we see the original behavior (our modified `bikes` service in `default/john` is not hit).
 
 Our next step would be to continue testing our fix, then commit and push to the source repo. If we have a CI/CD pipeline set up, we can have triggered to update the team's baseline (the 'default' namespace). At that point, everyone working in our AKS cluster will automatically see the fixed behavior (this is another benefit of working in a shared team cluster, because the team always work with up to date dependencies).
+
+## Clean up cloud resources
+Delete the AKS cluster's **resource group** to permanently delete all Azure resources created in this walkthrough.
+```bash
+# View AKS clusters
+az aks list -o table
+
+# Delete all resources in group `bikesharing01`
+az group delete -n bikesharing01 --no-wait
+```
