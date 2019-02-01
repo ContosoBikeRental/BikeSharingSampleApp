@@ -8,7 +8,7 @@
 1. [Azure CLI](https://docs.microsoft.com/cli/azure/install-azure-cli?view=azure-cli-latest) version 2.0.43 or higher.
 1. [Helm](https://github.com/helm/helm/blob/master/docs/install.md)
 
-## Demo rep
+## Demo Prep
 
 1. Create an AKS cluster with Azure Dev Spaces by running the following script, specifying the AKS name and region:
     
