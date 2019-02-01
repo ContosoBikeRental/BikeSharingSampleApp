@@ -14,7 +14,7 @@ az group create --name $AKS_NAME --location $AKS_REGION
 
 echo "===================================="
 echo "creating AKS cluster: " $AKS_NAME
-az aks create -g $AKS_NAME -n $AKS_NAME --location $AKS_REGION --kubernetes-version 1.10.9 --enable-addons http_application_routing --node-vm-size Standard_DS2_v2 --node-count 3 --generate-ssh-keys --disable-rbac
+az aks create -g $AKS_NAME -n $AKS_NAME --location $AKS_REGION --kubernetes-version 1.12.4 --enable-addons http_application_routing --node-vm-size Standard_DS2_v2 --node-count 3 --generate-ssh-keys --disable-rbac
 
 echo "===================================="
 echo "enabling Dev Spaces for AKS cluster: " $AKS_NAME
