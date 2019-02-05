@@ -148,7 +148,8 @@ function createTableIfNotExists(callbackFunc) {
 
 // api -------------------------------------------------------------
 app.get('/hello', function (req, res) {
-  res.send("Hello!")
+  console.log("saying hello...");
+  res.send("Hello from Users")
 });
 
 app.get('/api/users/:userId', function (req, res) {
@@ -229,13 +230,16 @@ app.put('/api/users/:userId', function (req, res) {
 app.post('/api/users/auth', function (req, res) {
   // authenticate username and password
   // returns 200 or 401 depending on password match
+  console.log("Trying to authenticate...");
   var selectStatement = util.format("SELECT TOP 1 Id FROM %s WHERE UserName='%s' AND PasswordHash=HASHBYTES('SHA2_512', CAST('%s' AS NVARCHAR))", tableName, req.body.username, req.body.password);
   execSelect(selectStatement, function (result, err) {
     if (err) {
+      console.log("Error happened: " + err);
       res.status(500).send(err);
       return;
     }
     if (result == null) {
+      console.log("Unauthorized for " + req.body.username);
       res.status(401).send('Unauthorized.')
     } else {
       res.status(200).send(result[0]);
