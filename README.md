@@ -21,7 +21,7 @@
 2. Run the app's API and Data services, including setting up sample data.
 
     ```
-    source ./azdsup-contoso-bikerental.sh
+    source ./build-run-app.sh
     ``` 
     Tip: Ensure you run the above command from the source repository's root folder.
 
