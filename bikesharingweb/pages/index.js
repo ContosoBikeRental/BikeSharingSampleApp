@@ -81,7 +81,7 @@ export default class Index extends Component {
                 <Header />
                 <Content>
                     {/* Demo hot reloading */}
-                    {/* <h1>Hot reloading...</h1> */}
+                    {/* <h3>Bikes in your area</h3> */}
                     <div className="row">
                         <div className="col-md-6">
                             {listBikes(this.state.bikes, isOdd)}
@@ -92,8 +92,8 @@ export default class Index extends Component {
                     </div>
                 </Content>
                 <style jsx>{`
-                    h1, h2 {
-                        color: red;
+                    h3 {
+                        margin-top: 15px;
                         // background-color: yellow;
                     }
                 `}</style>
