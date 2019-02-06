@@ -1,6 +1,4 @@
-# Demo: Iteratively Develop and Debug in Kubenertes with Azure Dev Spaces
-
-**IMPORTANT**: Make sure you've checked out the `demo` branch after cloning this repo: `git checkout demo`
+# Bike Sharing Sample: Iteratively Develop and Debug Microservices in Kubenertes
 
 ## Prerequisites
 1. An Azure subscription. If you don't have one, you can create a [free account](https://azure.microsoft.com/free).
@@ -8,7 +6,8 @@
 1. [Azure CLI](https://docs.microsoft.com/cli/azure/install-azure-cli?view=azure-cli-latest) version 2.0.43 or higher.
 1. [Helm](https://github.com/helm/helm/blob/master/docs/install.md)
 
-## Demo Prep
+
+## Setup
 
 1. Create an AKS cluster with Azure Dev Spaces by running the following script, specifying the AKS name and region:
     
@@ -18,41 +17,36 @@
 
     This sets up an AKS cluster named `bikesharing01` in resource group `bikesharing01` in the `eastus2` region.
 
-2. Run the app's API and Data services, including setting up sample data.
+2. Run the app's API and Data services.
 
     ```
     source ./build-run-app.sh
     ``` 
-    Tip: Ensure you run the above command from the source repository's root folder.
+    Tip: Ensure you run this command from the source repository's root folder.
 
-3. Open the web frontend in a browser (the previous command will display the web frontend's url in its output, e.g. http://bikesharingweb...aksapp.io). 
-
-    **Note:** You may need to wait several minutes for the DNS entry to be propagated, you can check back by running `azds list-uris`
-
-    Sign into the web app using one of the sample customer accounts, as defined in the file [PopulateDatabase/data.json](PopulateDatabase/data.json).
+3. Open the web frontend in a browser (the previous script displays the webapp's url, or run `azds list-uris`). Sign into the web app using one of the sample customer accounts, as defined in the file [PopulateDatabase/data.json](PopulateDatabase/data.json).
 
 
 ## Set the app's state for the demo
-Here we set up the app state to uncover a bug in the app: bikes are still (incorrectly) displayed as available even if the bike is currently in use.
-1. Open the app's web frontend in the browser.
-1. Sign into the app using one of the sample user accounts (e.g. username=*dsmith*).
+If you want to demo finding and fixing a bug: bikes are still (incorrectly) displayed as available even if the bike is currently in use.
+1. Open the webapp in the browser, and sign in with one of the sample user accounts (e.g. username=*dsmith*).
 1. Select a bike and rent it. Remember the bike, as we'll refer to it later.
-1. Navigate back to sign-in page by appening "/signin" to the base URL.
+1. Navigate back to the sign-in page by clicking the top left hamburger icon.
 
 ## Add multiple dev spaces to the same cluster
 We'll demonstrate how multiple developers on a team can use the same cluster, so let's create multiple child dev spaces:
 ```
-azds space select -n default\john
 azds space select -n default\stephen
 azds space select -n default\lisa
+azds space select -n default\john
 ```
 
-## Demo Script
+## Walkthrough
  
-1. My team is building a Bike Sharing app where you can open our web app, view available bikes in your area, rent a bike, and then later return it to a designated spot. On return, you're billed for the time you used the bike.
+1. Our team is building a Bike Sharing app where you can view available bikes in your area, rent a bike, and then later return it to a designated location. You're billed for the time you used the bike when you return it.
     1. Sign into the web app as a different user, for example username=**jedmonds**
     1. Select a bike, then click "Rent".
-    1. Now show the experience for returning a bike: click "Return bike", then "Confirm return". Optionally submit a review.
+    1. Click through the experience for returning a bike: click "Return bike", then "Confirm return". Optionally submit a review.
 1. Most of the time this process works, but we currently seem to have a bug where, sometimes, a bike can't be rented.
     1. Select the bike that *dsmith* has checked out.
     1. Click "Rent" - nothing happens: no confirmation, no error.

@@ -5,6 +5,9 @@ build:
   dockerfile: Dockerfile
 install:
   chart: charts/users
+  values:
+  - values.dev.yaml?
+  - secrets.dev.yaml?
   set:
     replicaCount: 1
     image:
@@ -17,16 +20,12 @@ install:
       hosts:
       # This expands to [space.s.]users.<guid>.<region>.aksapp.io
       - $(spacePrefix)users$(hostSuffix)
-  values:
-  - values.dev.yaml?
-  - secrets.dev.yaml?
 configurations:
   develop:
     build:
       useGitIgnore: true
     container:
       sync:
-      - '!**/package.json'
+      - "!**/package.json"
       iterate:
-        processesToKill:
-        - node
+        processesToKill: [node]
