@@ -43,6 +43,7 @@ namespace app
                 if (!bikesReady)
                 {
                     Console.WriteLine("Bikes not ready :(");
+                    Console.WriteLine($"{_bikesUrl}/hello");
                 }
 
                 // Check users
@@ -51,6 +52,7 @@ namespace app
                 if (!usersReady)
                 {
                     Console.WriteLine("Users not ready :(");
+                    Console.WriteLine($"{_usersUrl}/hello");
                 }
 
                 // Check gateway
@@ -59,6 +61,7 @@ namespace app
                 if (!gatewayReady)
                 {
                     Console.WriteLine("Gateway not ready :(");
+                    Console.WriteLine($"{_gatewayUrl}/hello");
                 }
 
                 if (bikesReady && usersReady && gatewayReady)
@@ -85,8 +88,10 @@ namespace app
             JToken bikes = (JToken)data.SelectToken("bikes");
 
             // Add users and bikes
+            Console.WriteLine("\n********************************************\nADDING USERS");
             foreach (var customer in customers)
             {
+                Console.WriteLine("Adding user: " + customer.ToString());
                 var response = await _httpClient.PostAsync(_gatewayUrl + "/api/user/",
                     new StringContent(customer.ToString(), Encoding.UTF8, "application/json"));
                 if (!response.IsSuccessStatusCode)
@@ -95,8 +100,11 @@ namespace app
                     Console.WriteLine(response.StatusCode + "  " + await response.Content.ReadAsStringAsync());
                 }
             }
+
+            Console.WriteLine("\n********************************************\nADDING VENDORS");
             foreach (var vendor in vendors)
             {
+                Console.WriteLine("Adding vendor: " + vendor.ToString());
                 var response = await _httpClient.PostAsync(_gatewayUrl + "/api/user/vendor",
                     new StringContent(vendor.ToString(), Encoding.UTF8, "application/json"));
                 if (!response.IsSuccessStatusCode)
@@ -105,8 +113,11 @@ namespace app
                     Console.WriteLine(response.StatusCode + "  " + await response.Content.ReadAsStringAsync());
                 }
             }
+
+            Console.WriteLine("\n********************************************\nADDING BIKES");
             foreach (var bike in bikes)
             {
+                Console.WriteLine("Adding bike: " + bike.ToString());
                 var response = await _httpClient.PostAsync(_gatewayUrl + "/api/bike",
                     new StringContent(bike.ToString(), Encoding.UTF8, "application/json"));
                 if (!response.IsSuccessStatusCode)

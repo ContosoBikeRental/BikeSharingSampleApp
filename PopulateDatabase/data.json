@@ -6,20 +6,20 @@
         "name": "John Edmonds",
         "address": "132 Prospect St, Spokane, WA",
         "phone": "9174567890",
-        "email": "john.edmonds@outlook.com",
+        "email": "john.edmonds19281@outlook.com",
         "ccNumber": "1234567890123456",
-        "ccExpiry": "2020-01-01",
+        "ccExpiry": "2022-01-01",
         "ccccv": "1234"
       },
       {
-        "username": "user",
+        "username": "dsmith",
         "password": "password",
-        "name": "Satya Nadella",
-        "address": "100 Microsoft St, Redmond, WA",
+        "name": "Daniella Smith",
+        "address": "100 Microsoft Way, Redmond, WA",
         "phone": "9174567890",
-        "email": "snadella@outlook.com",
+        "email": "daniella.smith.192011@outlook.com",
         "ccNumber": "1234567890123456",
-        "ccExpiry": "2020-01-01",
+        "ccExpiry": "2022-01-01",
         "ccccv": "1234"
       }
     ],
