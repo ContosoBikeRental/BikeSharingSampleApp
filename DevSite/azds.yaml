@@ -1,5 +1,5 @@
 kind: helm-release
-apiVersion: 1.0
+apiVersion: 1.1
 build:
   context: .
   dockerfile: Dockerfile
@@ -11,6 +11,8 @@ install:
       tag: $(tag)
       pullPolicy: Never
     ingress:
+      annotations:
+        kubernetes.io/ingress.class: traefik-azds
       hosts:
       # This expands to [space.s.]devsite.<guid>.<region>.aksapp.io
       - $(spacePrefix)devsite$(hostSuffix)
@@ -20,8 +22,7 @@ configurations:
       useGitIgnore: true
     container:
       sync:
-      - "!**/package.json"
+      - '!**/package.json'
       iterate:
-        processesToKill: [node]
-      values:
-      - "charts/devsite/values.yaml"
+        processesToKill:
+        - node
