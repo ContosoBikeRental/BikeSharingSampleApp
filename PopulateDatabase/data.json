@@ -1,23 +1,23 @@
 {
     "customers": [
       {
-        "username": "jedmonds",
-        "password": "mindaro",
-        "name": "John Edmonds",
+        "username": "percy",
+        "password": "Password1!",
+        "name": "Percy Bowman",
         "address": "132 Prospect St, Spokane, WA",
         "phone": "9174567890",
-        "email": "john.edmonds19281@outlook.com",
+        "email": "percy.bowman@contoso.com",
         "ccNumber": "1234567890123456",
         "ccExpiry": "2022-01-01",
         "ccccv": "1234"
       },
       {
-        "username": "dsmith",
-        "password": "password",
-        "name": "Daniella Smith",
+        "username": "holly",
+        "password": "Password2!",
+        "name": "Holly Kearney",
         "address": "100 Microsoft Way, Redmond, WA",
         "phone": "9174567890",
-        "email": "daniella.smith.192011@outlook.com",
+        "email": "holly.kearney@contoso.com",
         "ccNumber": "1234567890123456",
         "ccExpiry": "2022-01-01",
         "ccccv": "1234"
@@ -26,12 +26,12 @@
     "vendors": [
       {
         "id": "16a46619738a4865a5afcb5e18ffb138",
-        "username": "aedmonds",
-        "password": "mindaro",
-        "name": "Angela Edmonds",
+        "username": "tiffany",
+        "password": "Password3!",
+        "name": "Tiffany Mach",
         "address": "14 Bramble Way, Seattle, WA",
         "phone": "5084567890",
-        "email": "angelav@outlook.com",
+        "email": "tiffany.mach@contoso.com",
         "routingNumber": "0987",
         "accountNumber": "6543"
       }
