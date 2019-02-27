@@ -16,7 +16,7 @@ install:
         kubernetes.io/ingress.class: traefik-azds
       hosts:
       # This expands to [space.s.]populatedatabase.<guid>.<region>.aksapp.io
-      - $(spacePrefix)databases$(hostSuffix)
+      - $(spacePrefix)$(rootSpacePrefix)databases$(hostSuffix)
 configurations:
   develop:
     build:

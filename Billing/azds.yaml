@@ -15,7 +15,7 @@ install:
         kubernetes.io/ingress.class: traefik-azds
       hosts:
       # This expands to [space.s.]billing.<guid>.<region>.aksapp.io
-      - $(spacePrefix)billing$(hostSuffix)
+      - $(spacePrefix)$(rootSpacePrefix)billing$(hostSuffix)
 configurations:
   develop:
     build:

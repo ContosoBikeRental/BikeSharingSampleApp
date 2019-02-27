@@ -15,7 +15,7 @@ install:
         kubernetes.io/ingress.class: traefik-azds
       hosts:
       # This expands to [space.s.]bikesharingweb.<guid>.<region>.aksapp.io
-      - $(spacePrefix)bikesharingweb$(hostSuffix)
+      - $(spacePrefix)$(rootSpacePrefix)bikesharingweb$(hostSuffix)
   values:
   - values.dev.yaml?
   - secrets.dev.yaml?

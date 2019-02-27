@@ -63,12 +63,14 @@ function getApiUrl(host) {
   }
 
   // find base hostname
-  var start = 1;
+  var root = 0;
+  var start = 2;
   if (prefix !== "" && prefix !== null) {
-    var start = 3;
+    root += 2;
+    start += 2;
   }
   var baseHost = hostArr.slice(start, hostArr.length).join('.');
 
-  // return full URL of API service
-  return prefix + process.env.API_NAME + "." + baseHost;
+  // return full URL of API service (spacePrefix + rootSpace + apiName + host)
+  return prefix + hostArr[root] + "." + process.env.API_NAME + "." + baseHost;
 }

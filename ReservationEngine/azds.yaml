@@ -16,7 +16,7 @@ install:
         kubernetes.io/ingress.class: traefik-azds
       hosts:
       # This expands to [space.s.]reservationengine.<guid>.<region>.aksapp.io
-      - $(spacePrefix)reservationengine$(hostSuffix)
+      - $(spacePrefix)$(rootSpacePrefix)reservationengine$(hostSuffix)
   values:
   - values.dev.yaml?
   - secrets.dev.yaml?
