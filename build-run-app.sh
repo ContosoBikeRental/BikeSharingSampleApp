@@ -4,7 +4,7 @@
 # Select parent space. If space is not defined, set parent space to default.
 parent_space="$1"
 if [ -z "$1" ]; then
-    parent_space="default"
+    parent_space="dev"
 fi
 
 # Selecting azds namespace.
@@ -16,7 +16,7 @@ echo "Starting databases: SQL, Mongo"
 echo "******************************************"
 pushd Databases
 helm init --wait
-helm install charts/databases --wait
+helm install charts/databases --wait --namespace $parent_space
 popd
 
 declare -a arr=("Gateway" "bikesharingweb" "Bikes" "Billing" "Reservation" "ReservationEngine" "Users" "DevSite" "PopulateDatabase")
