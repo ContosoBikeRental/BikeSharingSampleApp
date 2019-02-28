@@ -36,9 +36,9 @@ If you want to demo finding and fixing a bug: bikes are still (incorrectly) disp
 ## Add multiple dev spaces to the same cluster
 We'll demonstrate how multiple developers on a team can use the same cluster, so let's create multiple child dev spaces:
 ```
-azds space select -n default\stephen
-azds space select -n default\lisa
-azds space select -n default\john
+azds space select -n dev\stephen
+azds space select -n dev\lisa
+azds space select -n dev\john
 ```
 
 ## Walkthrough
@@ -52,7 +52,7 @@ azds space select -n default\john
     1. Click "Rent" - nothing happens: no confirmation, no error.
 1. Our app consists of several services -- users, bikes, reservations, billing, reviews, etc -- and I've been asked to track the bug down. I'll start with the *`Bikes`* service, as maybe I can glean some clues about what's different about this particular problem bike. First, let's connect to the cluster where the full app is running:
     1. Open a terminal window, and run: `az aks use-dev-spaces -g bikesharing01 -n bikesharing01` (Your resource group and cluster name may be different.)
-    1. When prompted, select a child dev space, for example: `default/john` (you can always change selection via `azds space select`).
+    1. When prompted, select a child dev space, for example: `dev/john` (you can always change selection via `azds space select`).
     
 1. Now let's debug the `bikes` service:
     1. Open VS Code on the `./Bikes` folder.
@@ -94,9 +94,9 @@ azds space select -n default\john
         ```
     1. Save the code file.
     1. Refresh the page in the browser. Our problem bike is filtered out! Notice how seeing the updated behavior is fast - the container image didn't need to be recreated; instead, the updated code was synced directly to the running container and `nodemon` was restarted (for compiled languages like C# or Java then a re-compilation is kicked off inside the container instance).
-    1. Notice that if we remove the `john.s.` prefix in the browser's URL, then we see the original behavior (our modified `bikes` service in `default/john` is not hit).
+    1. Notice that if we remove the `john.s.` prefix in the browser's URL, then we see the original behavior (our modified `bikes` service in `dev/john` is not hit).
 
-Our next step would be to continue testing our fix, then commit and push to the source repo. If we have a CI/CD pipeline set up, we can have triggered to update the team's baseline (the 'default' namespace). At that point, everyone working in our AKS cluster will automatically see the fixed behavior (this is another benefit of working in a shared team cluster, because the team always work with up to date dependencies).
+Our next step would be to continue testing our fix, then commit and push to the source repo. If we have a CI/CD pipeline set up, we can have triggered to update the team's baseline (the 'dev' namespace). At that point, everyone working in our AKS cluster will automatically see the fixed behavior (this is another benefit of working in a shared team cluster, because the team always work with up to date dependencies).
 
 ## Clean up cloud resources
 Delete the AKS cluster's **resource group** to permanently delete all Azure resources created in this walkthrough.
