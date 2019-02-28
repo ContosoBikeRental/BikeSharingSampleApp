@@ -23,7 +23,11 @@
     source ./build-run-app.sh
     ``` 
     Tip: Ensure you run this command from the source repository's root folder.
+3. Select an Azure Dev Spaces controller. 
 
+    ```
+    az aks use-dev-spaces --name bikesharing01 --resource-group bikesharing01 
+    ```
 3. Open the web frontend in a browser (the previous script displays the webapp's url, or run `azds list-uris`). Sign into the web app using one of the sample customer accounts, as defined in the file [PopulateDatabase/data.json](PopulateDatabase/data.json).
 
 
