@@ -31,14 +31,14 @@
 If you want to demo finding and fixing a bug: bikes are still (incorrectly) displayed as available even if the bike is currently in use.
 1. Open the webapp in the browser, and sign in with one of the sample user accounts (e.g. username=*holly*).
 1. Select a bike and rent it. Remember the bike, as we'll refer to it later.
-1. Navigate back to the sign-in page by clicking the top left hamburger icon.
+1. Navigate to the sign-in page by appending '/signin' to the root URL.
 
 ## Add multiple dev spaces to the same cluster
 We'll demonstrate how multiple developers on a team can use the same cluster, so let's create multiple child dev spaces:
 ```
-azds space select -n dev\stephen
-azds space select -n dev\lisa
-azds space select -n dev\john
+azds space select -n dev/stephen
+azds space select -n dev/lisa
+azds space select -n dev/john
 ```
 
 ## Walkthrough
@@ -55,7 +55,7 @@ azds space select -n dev\john
     1. When prompted, select a child dev space, for example: `dev/john` (you can always change selection via `azds space select`).
     
 1. Now let's debug the `bikes` service:
-    1. Open VS Code on the `./Bikes` folder.
+    1. Open VS Code on the `./Bikes` folder. If prompted by the Dev Spaces extension, click 'Yes' to generate debug configuration.
     1. Set a debug breakpoint in `server.js` inside `GET bike` (around line 228).
         ``` javascript
         // get bike ------------------------------------------------------------
@@ -64,17 +64,17 @@ azds space select -n dev\john
     1. Enzure the AZDS debugger profile is selected: **Attach to server (AZDS)**.
     1. Hit F5 - this syncs code to AKS, builds the container image, deploys it in a pod, and attaches the debugger to it.
     1. Open the browser to the page that displays available bikes, and then select the "problem bike". Our debug breakpoint is not hit - that's a good sign that shows how anyone else working in the same cluster will be unaffected by our activity in our own dev space. 
-    1. To reach our specific instance of the `Bikes` service, prefix the web app's URL  with `<dev-space-name>.s.` For example: `http://john.s.bikesharingweb...aksapp.io`. This will route requests to `http://bikes` to our version of the `bikes` service running in the `john` dev space.
+    1. To reach our specific instance of the `Bikes` service, prefix the web app's URL  with `<dev-space-name>.s.` For example: `http://john.s.dev.bikesharingweb...aksapp.io`. This will route requests to `http://bikes` to our version of the `bikes` service running in the `john` namespace.
         1. Prefix the URL appropriately in the browser and refresh the page - the debug breakpoint in VS Code will activate.
-        1. Step through the code - even though the container we're debugging is running in AKS, you'll notice that it is still fairly responsive. And, we have access to the full richness of data in the debugger: local variables, call stacks, streaming logs, etc.
-    1. Stepping through the code we notice that a Mongo database request is made to retrieve bike details. We can inspect the local varilable `theBike` to glean detailed bike info.
+        1. Step through the code - even though the container we're debugging is running in AKS, you'll notice that the debugger is reasonably responsive. And, we have access to the full richness of data in the debugger: local variables, call stacks, streaming logs, etc.
+    1. Stepping through the code we notice that a Mongo database request is made to retrieve bike details. We can inspect the local variable `theBike` to glean detailed bike info.
         1. Set another breakpoint on the last line of code (because it's part of a separate callback function):
             ``` javascript
             res.send(theBike);
             ```
         1. Continue execution to hit this last breakpoint. 
         1. Inspecting `theBike` in the debugger, we notice something doesn't seem right: `theBike.available = false`. 
-1. It may be that this bike shouldn't have been displayed as an *available bike* on the proceeding page.
+1. It may be that this bike shouldn't have been displayed as an *available bike* in the app's preceeding page.
     1. Navigate to the function that handles `GET availableBikes` (around line 99):
         ``` javascript
         // find bike ------------------------------------------------------------
@@ -84,7 +84,7 @@ azds space select -n dev\john
         ``` javascript
         res.send(data);
         ```
-    1. In the web app, navigate to view list of available bikes (click on the app's logo in the header).
+    1. In the web app, navigate to view the list of available bikes (click on the app's logo in the header).
     1. In the debugger, view the `data` variable. We notice that aside from our "problem bike", the other bikes are `availabe = true`.
 1. Let's experiment with a fix. 
     1. Uncomment line 104 that modifies the `query` filter object that is passed to mongo. 
@@ -96,7 +96,7 @@ azds space select -n dev\john
     1. Refresh the page in the browser. Our problem bike is filtered out! Notice how seeing the updated behavior is fast - the container image didn't need to be recreated; instead, the updated code was synced directly to the running container and `nodemon` was restarted (for compiled languages like C# or Java then a re-compilation is kicked off inside the container instance).
     1. Notice that if we remove the `john.s.` prefix in the browser's URL, then we see the original behavior (our modified `bikes` service in `dev/john` is not hit).
 
-Our next step would be to continue testing our fix, then commit and push to the source repo. If we have a CI/CD pipeline set up, we can have triggered to update the team's baseline (the 'dev' namespace). At that point, everyone working in our AKS cluster will automatically see the fixed behavior (this is another benefit of working in a shared team cluster, because the team always work with up to date dependencies).
+Our next step would be to continue testing our fix, then commit and push to the source repo. If we have a CI/CD pipeline set up, it will be triggered to update the team's baseline (the 'dev' namespace). At that point, everyone working in our AKS cluster will automatically see the updated behavior (this is another benefit of working in a shared team cluster, because the team always work with up to date dependencies).
 
 ## Clean up cloud resources
 Delete the AKS cluster's **resource group** to permanently delete all Azure resources created in this walkthrough.
