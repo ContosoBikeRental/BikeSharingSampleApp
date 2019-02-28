@@ -3,7 +3,7 @@
 fullnameOverride: bikes
 replicaCount: 1
 image:
-  repository: yanambia/contoso-bikerental-bikes
+  repository: azdspublic/bikesharing-bikes
   tag: latest
   pullPolicy: Always
 imagePullSecrets: []

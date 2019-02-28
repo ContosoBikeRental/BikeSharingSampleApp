@@ -3,7 +3,7 @@
 fullnameOverride: reservationengine
 replicaCount: 1
 image:
-  repository: yanambia/contoso-bikerental-reservationengine
+  repository: azdspublic/bikesharing-reservationengine
   tag: latest
   pullPolicy: Always
 imagePullSecrets: []

@@ -4,7 +4,7 @@
 fullnameOverride: populatedatabase
 replicaCount: 1
 image:
-  repository: yanambia/contoso-bikerental-populatedatabase
+  repository: azdspublic/bikesharing-populatedatabase
   tag: latest
   pullPolicy: Always
 imagePullSecrets: []

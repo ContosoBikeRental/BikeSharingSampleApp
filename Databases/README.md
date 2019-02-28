@@ -1,2 +1,2 @@
-# PopulateDatabase
-Populate Database service: Populates databases with preloaded data.
+# Databases
+In-cluster development databases for the BikeSharing sample app.

@@ -4,7 +4,7 @@ fullnameOverride: devsite
 replicaCount: 1
 image: 
   image:
-  repository: yanambia/contoso-bikerental-devsite
+  repository: azdspublic/bikesharing-devsite
   tag: latest
   pullPolicy: Always
 imagePullSecrets: []
@@ -22,7 +22,7 @@ ingress:
     kubernetes.io/ingress.class: addon-http-application-routing
   path: /
   hosts:
-    - devsite.64b3949c8c0849ce89b5.eastus.aksapp.io
+    - dev.devsite.<UPDATE_ME>
 
 secrets:
   gateway:
