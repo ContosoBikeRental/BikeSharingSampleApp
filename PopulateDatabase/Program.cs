@@ -13,10 +13,10 @@ namespace app
 {
     public class Program
     {
-        private static HttpClient _httpClient = new HttpClient() { Timeout = TimeSpan.FromSeconds(10) };
-        private static string _gatewayUrl = $"http://{Environment.GetEnvironmentVariable("GATEWAY_DNSNAME")}";
-        private static string _bikesUrl = $"http://{Environment.GetEnvironmentVariable("BIKES_DNSNAME")}";
-        private static string _usersUrl = $"http://{Environment.GetEnvironmentVariable("USERS_DNSNAME")}";
+        private static readonly HttpClient _httpClient = new HttpClient() { Timeout = TimeSpan.FromSeconds(10) };
+        private static readonly string _gatewayUrl = $"http://{Environment.GetEnvironmentVariable("GATEWAY_DNSNAME")}";
+        private static readonly string _bikesUrl = $"http://{Environment.GetEnvironmentVariable("BIKES_DNSNAME")}";
+        private static readonly string _usersUrl = $"http://{Environment.GetEnvironmentVariable("USERS_DNSNAME")}";
 
         public static void Main(string[] args)
         {
