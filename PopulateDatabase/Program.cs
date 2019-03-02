@@ -24,6 +24,7 @@ namespace app
             {
                 _WaitForServiceReadiness().Wait();
                 _PopulateDatabase().Wait();
+                Console.WriteLine("Shutting down.");
             }
         }
 
@@ -72,7 +73,7 @@ namespace app
                 }
 
                 var sleep = TimeSpan.FromSeconds(10);
-                Console.WriteLine($"Sleeping for {sleep.TotalSeconds} and trying again...");
+                Console.WriteLine($"Sleeping for {sleep.TotalSeconds} seconds and trying again...");
                 await Task.Delay(sleep);
             }
         }
