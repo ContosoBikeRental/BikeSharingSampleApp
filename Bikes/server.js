@@ -32,10 +32,6 @@ var incomingBikeSchema = {
     available: {
         illegal: true
     },
-    manufacturer: {
-        presence: true,
-        length: { minimum: 1 }
-    },
     model: {
         presence: true,
         length: { minimum: 1 }
