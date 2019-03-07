@@ -25,7 +25,7 @@ ingress:
     kubernetes.io/ingress.class: addon-http-application-routing
   path: /
   hosts:
-    - dev.bikesharingweb.<UPDATE_ME>
+    - dev.bikesharingweb.<REPLACE_ME_BY_HOST_SUFFIX>
   
 secrets: {}
 

@@ -9,22 +9,60 @@
 
 ## Setup
 
-1. Create an AKS cluster with Azure Dev Spaces by running the following script, specifying the AKS name and region:
+1. Create an AKS resource group, specifying its name and region:
+
+    ```
+    az group create --name bikesharinggroup --location eastus2
+    ```
+
+2. Create a Kubernetes cluster in AKS:
+
+    ```
+    az aks create -g bikesharinggroup -n bikesharingcluster --location eastus2 --kubernetes-version 1.12.5 --node-vm-size Standard_DS2_v2 --node-count 1 --generate-ssh-keys --disable-rbac
+    ```
+
+3. Enable Azure Dev Spaces for the cluster we just created:
+
+    ```
+    az aks use-dev-spaces -g bikesharinggroup -n bikesharingcluster --space dev --yes
+    ```
+
+    We now have an AKS cluster named `bikesharingcluster` in resource group `bikesharinggroup` in the `eastus2` region with Azure Dev Spaces enabled.
+
+4. Select the `dev` parent space:
     
     ```
-    source ./create-aks.sh bikesharing01 eastus2
+    azds space select -n dev
     ```
 
-    This sets up an AKS cluster named `bikesharing01` in resource group `bikesharing01` in the `eastus2` region.
-
-2. Run the app's API and Data services.
+5. We now need to retrieve the host suffix. To do this, run the following command and note the `HostSuffix` field's value:
 
     ```
-    source ./build-run-app.sh
-    ``` 
-    Tip: Ensure you run this command from the source repository's root folder.
+    azds show-context
+    ```
 
-3. Open the web frontend in a browser (the previous script displays the webapp's url, or run `azds list-uris`). Sign into the web app using one of the sample customer accounts, as defined in the file [PopulateDatabase/data.json](PopulateDatabase/data.json).
+6. We have to update some of our code with this host suffix. Search for `<REPLACE_ME_BY_HOST_SUFFIX>` strings in the repository, and replace them by the host suffix. Here are the paths of the `values.yaml` files where such replacements should be made:
+
+    ```
+    .\bikesharingweb\charts\bikesharingweb\values.yaml
+    .\chart\values.yaml
+    .\Gateway\charts\gateway\values.yaml
+    ```
+
+7. From the source repository's root folder, navigate to the `chart` folder:
+
+    ```
+    cd chart
+    ```
+
+8. Run the app's API and Data services:
+
+    ```
+    helm init --wait
+    helm install -n bikesharing . --dep-up --namespace dev --wait
+    ```
+
+9. Run `azds list-uris` to display the web frontend's url, and open it in a browser. Sign into the web app using one of the sample customer accounts, as defined in the file [PopulateDatabase/data.json](PopulateDatabase/data.json).
 
 
 ## Set the app's state for the demo

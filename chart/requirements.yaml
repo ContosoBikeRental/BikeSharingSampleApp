@@ -8,9 +8,6 @@ dependencies:
   - name: billing
     version: 0.1.0
     repository: "file://../Billing/charts/billing"
-  - name: devsite
-    version: 0.1.0
-    repository: "file://../DevSite/charts/devsite"
   - name: databases
     version: 0.1.0
     repository: "file://../Databases/charts/databases"
