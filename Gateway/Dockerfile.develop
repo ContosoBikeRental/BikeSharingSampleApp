@@ -4,9 +4,6 @@ ENV ASPNETCORE_ENVIRONMENT=Development
 ENV DOTNET_USE_POLLING_FILE_WATCHER=true
 EXPOSE 80
 
-ENV ASPNETCORE_URLS http://*:5000
-EXPOSE 5000
-
 WORKDIR /src
 COPY ["app.csproj", "./"]
 RUN dotnet restore "app.csproj"
