@@ -26,12 +26,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/johnsta/bikesharingweb.git"
+    "url": "git+https://github.com/ContosoBikeRental/BikeSharingSampleApp.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/johnsta/bikesharingweb/issues"
+    "url": "https://github.com/ContosoBikeRental/BikeSharingSampleApp/issues"
   },
-  "homepage": "https://github.com/johnsta/bikesharingweb#readme"
+  "homepage": "https://github.com/ContosoBikeRental/BikeSharingSampleApp#readme"
 }
