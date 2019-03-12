@@ -6,14 +6,14 @@ import Link from 'next/link'
 import BikeCard from "../components/BikeCard"
 import fetch from 'isomorphic-fetch'
 import Router from 'next/router'
-import Cookies from 'universal-cookie'
 import helpers from './helpers.js'
 
 export default class Index extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            userId: '',
+            userId: undefined,
+            userName: undefined,
             bikes: []
         };
     }
@@ -26,11 +26,11 @@ export default class Index extends Component {
             return;
         }
 
-        // User exists
-        this.setState({ userId: user.id });
+        // User exists.
+        this.setState({ userId: user.id, userName: user.name });
         console.log(this.state.userId);
 
-        // fetch user state, then navigate appropriately
+        // Fetch user state, then navigate appropriately.
         var url = this.apiHost + '/api/user/' + this.state.userId + '/reservations';
 
         const reservationsResponse = await fetch(url);
@@ -67,7 +67,6 @@ export default class Index extends Component {
                             <Link href={`/preview/${bike.id}`} key={bike.id}>
                                 <div>
                                     <BikeCard id={bike.id} name={bike.model} address={bike.address} rate={bike.hourlyCost} imageUrl={bike.imageUrl} />
-
                                 </div>
                             </Link>
                         );
@@ -78,10 +77,8 @@ export default class Index extends Component {
 
         return (
             <Page>
-                <Header />
+                <Header userName={this.state.userName} />
                 <Content>
-                    {/* Demo hot reloading */}
-                    {/* <h3>Bikes in your area</h3> */}
                     <div className="row">
                         <div className="col-md-6">
                             {listBikes(this.state.bikes, isOdd)}
@@ -91,12 +88,6 @@ export default class Index extends Component {
                         </div>
                     </div>
                 </Content>
-                <style jsx>{`
-                    h3 {
-                        margin-top: 15px;
-                        // background-color: yellow;
-                    }
-                `}</style>
             </Page>
         );
     }
