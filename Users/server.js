@@ -17,10 +17,10 @@ app.use(bodyParser.json());
 var Request = require('tedious').Request;
 var TYPES = require('tedious').TYPES;
 var config = JSON.parse(fs.readFileSync('ConnectionConfig.json', 'utf8')).config;
-config.authentication.options.userName = process.env.SQL_USERNAME || config.authentication.options.userName;
-config.authentication.options.password = process.env.SQL_PASSWORD || config.authentication.options.password;
-config.server = process.env.SQL_SERVER || config.server;
-config.options.database = process.env.SQL_DATABASE || config.options.database;
+config.authentication.options.userName = process.env.SQL_USERNAME;
+config.authentication.options.password = process.env.SQL_PASSWORD;
+config.server = process.env.SQL_SERVER;
+config.options.database = process.env.SQL_DATABASE;
 var dbConnection = Connection.prototype;  // Will be initialized below
 
 var tableName = process.env.SQL_TABLE || 'Users'
