@@ -41,13 +41,7 @@
     azds show-context
     ```
 
-6. We have to update some of our code with this host suffix. Search for `<REPLACE_ME_BY_HOST_SUFFIX>` strings in the repository, and replace them by the host suffix. Here are the paths of the `values.yaml` files where such replacements should be made:
-
-    ```
-    .\bikesharingweb\charts\bikesharingweb\values.yaml
-    .\chart\values.yaml
-    .\Gateway\charts\gateway\values.yaml
-    ```
+6. We have to update some of our code with this host suffix. Open the `./chart/values.yaml` file and replace the occurrences of `<REPLACE_ME_WITH_HOST_SUFFIX>` in this file with the host suffix.
 
 7. From the source repository's root folder, navigate to the `chart` folder:
 

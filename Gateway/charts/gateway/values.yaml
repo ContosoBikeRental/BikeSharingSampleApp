@@ -21,7 +21,7 @@ ingress:
     kubernetes.io/ingress.class: addon-http-application-routing
   path: /
   hosts:
-  - dev.gateway.<REPLACE_ME_BY_HOST_SUFFIX>
+  - dev.gateway.<REPLACE_ME_WITH_HOST_SUFFIX>
 
 secrets:
   users:
