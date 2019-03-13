@@ -24,8 +24,12 @@ export default class Signin extends Component {
         // Retrieves all users that can be selected for sign-in.
         this.apiHost = await helpers.getApiHostAsync();
         const usersResponse = await fetch(`${this.apiHost}/api/user/allUsers`);
-        const users = await usersResponse.json();
+        let users = await usersResponse.json();
         console.log("Users retrieved", users);
+
+        // Filtering out vendors, as we don't provide any vendors experience for now.
+        users = users.filter(user => user.type != "vendor");
+
         this.setState({users: users});
     }
 
