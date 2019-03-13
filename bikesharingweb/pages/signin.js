@@ -5,7 +5,6 @@ import SigninFormLayout from '../components/SigninFormLayout'
 import Logo from '../components/Logo'
 import FormButton from '../components/FormButton'
 import Router from 'next/router'
-import Cookies from 'universal-cookie'
 import helpers from './helpers';
 
 export default class Signin extends Component {
@@ -19,7 +18,7 @@ export default class Signin extends Component {
 
     async componentDidMount() {
         // Clears any login information the user may still have.
-        helpers.logoutUser();
+        helpers.clearUserCookie();
 
         // Retrieves all users that can be selected for sign-in.
         this.apiHost = await helpers.getApiHostAsync();
@@ -36,15 +35,8 @@ export default class Signin extends Component {
     async handleClick(context) {
         const userId = arguments[0];
         const userName = arguments[1];
-
         console.log(`User selected: ${userName} - ${userId}`);
-
-        const cookies = new Cookies();
-        cookies.set('user', {
-            id: userId
-        }, {
-            path: "/"
-        });
+        helpers.storeUserCookie(userId);
 
         // Navigate to index.
         Router.push("/");

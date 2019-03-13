@@ -24,11 +24,19 @@ const helpers = {
         }
 
         // User stored locally isn't valid anymore. Let's clear the local data.
-        logoutUser();
+        clearUserCookie();
         return null;
     },
-    logoutUser: function() {
-        var cookies = new Cookies();
+    storeUserCookie: function(userId) {
+        const cookies = new Cookies();
+        cookies.set('user', {
+            id: userId
+        }, {
+            path: "/"
+        });
+    },
+    clearUserCookie: function() {
+        const cookies = new Cookies();
         cookies.remove('user');
     },
     getVendorAsync: async function(ownerUserId, apiHost) {

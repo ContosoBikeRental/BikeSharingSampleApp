@@ -9,7 +9,7 @@ export default class Signout extends Component {
     }
 
     async componentDidMount() {
-        helpers.logoutUser();
+        helpers.clearUserCookie();
         Router.push('/signin');
     }
 
