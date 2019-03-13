@@ -19,7 +19,8 @@ export default class CompleteReturn extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            userId: '',
+            userId: undefined,
+            userName: undefined,
             reservation: {},
             bike: {},
             invoice: {}
@@ -53,6 +54,7 @@ export default class CompleteReturn extends Component {
         // set state
         this.setState({
             userId: user.id,
+            userName: user.name,
             reservation: reservation,
             bike: bike,
             invoice: invoice
@@ -71,7 +73,7 @@ export default class CompleteReturn extends Component {
     render() {
         return (
             <Page>
-                <Header cmd="back" />
+                <Header userName={this.state.userName} />
                 <Content>
                     <div className="details-container">
                         <Map />

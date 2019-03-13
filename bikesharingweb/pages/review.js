@@ -2,13 +2,8 @@ import React, { Component } from 'react'
 import Page from "../components/Page"
 import Header from "../components/Header"
 import Content from "../components/Content"
-import Field from "../components/Field"
-import FormNote from "../components/FormNote"
 import FormButton from "../components/FormButton"
-import Map from "../components/Map"
-import Link from 'next/link'
 import Footer from '../components/Footer'
-import { withRouter } from 'next/router'
 import MediaQuery from 'react-responsive'
 import helpers from './helpers';
 import Router from 'next/router'
@@ -16,7 +11,25 @@ import ReviewControl from "../components/ReviewControl"
 
 
 export default class Review extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            userName: undefined
+        };
+    }
 
+    async componentDidMount() {
+        this.apiHost = await helpers.getApiHostAsync();
+        var user = await helpers.verifyUserAsync(this.apiHost);
+        if (!user) {
+            Router.push('/signin');
+            return;
+        }
+
+        this.setState({
+            userName: user.name
+        });
+    }
 
     // handle return bike
     async handleClick(context) {
@@ -27,11 +40,10 @@ export default class Review extends Component {
         Router.push("/");
     }
 
-
     render() {
         return (
             <Page>
-                <Header cmd="back" />
+                <Header userName={this.state.userName} />
                 <Content>
                     <div className="container-fluid details-container">
                         <div className="review-control">

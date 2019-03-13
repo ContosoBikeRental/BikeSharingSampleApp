@@ -19,7 +19,8 @@ class CurrentRideBase extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            userId: '',
+            userId: undefined,
+            userName: undefined,
             reservation: {},
             bike: {},
             vendor: {}
@@ -53,6 +54,7 @@ class CurrentRideBase extends React.Component {
         // set state
         this.setState({
             userId: user.id,
+            userName: user.name,
             reservation: reservation,
             bike: bike,
             vendor: vendor
@@ -83,7 +85,7 @@ class CurrentRideBase extends React.Component {
     render() {
         return (
             <Page>
-                <Header cmd="back" />
+                <Header userName={this.state.userName} />
                 <Content>
                     <div className="row">
                         <div className="col-sm-6">

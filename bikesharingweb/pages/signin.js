@@ -1,15 +1,10 @@
 import React, { Component } from 'react'
 import Page from "../components/Page"
-import Header from "../components/Header"
-import Footer from "../components/Footer"
 import Content from "../components/Content"
-import Link from 'next/link'
 import SigninFormLayout from '../components/SigninFormLayout'
 import Logo from '../components/Logo'
-import FormTextbox from '../components/FormTextbox'
 import FormButton from '../components/FormButton'
 import Router from 'next/router'
-import Cookies from 'universal-cookie'
 import helpers from './helpers';
 
 export default class Signin extends Component {
@@ -17,62 +12,34 @@ export default class Signin extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            username: '',
-            password: ''
+            users: []
         };
-        const cookies = new Cookies();
-        const user = cookies.get('user');
-        if (user) {
-            console.log('current userId: ' + user.id);
-        } else {
-            console.log('not logged in');
-        }
-
-        this.handleUsername = this.handleUsername.bind(this);
-        this.handlePassword = this.handlePassword.bind(this);
     }
 
     async componentDidMount() {
+        // Clears any login information the user may still have.
+        helpers.clearUserCookie();
+
+        // Retrieves all users that can be selected for sign-in.
         this.apiHost = await helpers.getApiHostAsync();
+        const usersResponse = await fetch(`${this.apiHost}/api/user/allUsers`);
+        let users = await usersResponse.json();
+        console.log("Users retrieved", users);
+
+        // Filtering out vendors, as we don't provide any vendors experience for now.
+        users = users.filter(user => user.type != "vendor");
+
+        this.setState({users: users});
     }
 
-    handleUsername(event) { 
-        this.setState({username: event.target.value});
-    }
-
-    handlePassword(event) { 
-        this.setState({password: event.target.value });
-    }
-    
     async handleClick(context) {
-        // Sign in
-        console.log("signing in...");
+        const userId = arguments[0];
+        const userName = arguments[1];
+        console.log(`User selected: ${userName} - ${userId}`);
+        helpers.storeUserCookie(userId);
 
-        var url = this.apiHost + '/api/user/auth';
-        
-        const res = await fetch(url, {
-            method: 'POST',
-            cache: 'no-cache',
-            headers: {
-                "Content-Type": "application/json; charset=utf-8"
-            },
-            body: JSON.stringify({
-                username: this.state.username,
-                password: this.state.password
-            }),
-           }  
-        )
-        
-        // get user id
-        const user = await res.json();
-        console.log(user);
-        
-        const cookies = new Cookies();
-        cookies.set('user', user);
-        // TODO: authorization confirmation
-        
-        // navigate to index
-        Router.push("/index");
+        // Navigate to index.
+        Router.push("/");
     }
 
     render() {
@@ -81,36 +48,29 @@ export default class Signin extends Component {
                 <Content>
                     <SigninFormLayout>
                         <Logo />
-                        <br /><br /><br />
-                        <form>
-                            <FormTextbox 
-                                inputType="email" 
-                                inputID="inputEmail" 
-                                placeholder="Username" 
-                                value={this.state.username} 
-                                onChange={this.handleUsername}/>
-                            <FormTextbox 
-                                inputType="password" 
-                                inputID="inputPassword" 
-                                placeholder="Password" 
-                                value={this.state.password} 
-                                onChange={this.handlePassword}/>
-                            
-                            <br />
-                            <FormButton primary onClick={this.handleClick.bind(this)}>Sign in</FormButton>
-                            <div>
-                                <Link href="/"><a>Sign up</a></Link>
-                            </div>
-                        </form>
+                        <br /><br />
+                        {this.state.users.length > 0 &&
+                            <form>
+                                <div className={"userSelectionHeader"}>Select current user:</div>
+                                {this.state.users.map((user, index) => (
+                                    <FormButton key={index} primary onClick={this.handleClick.bind(this, user.id, user.name)}>{user.name} ({user.type})</FormButton>
+                                ))}
+                            </form>
+                        }
                     </SigninFormLayout>
                 </Content>
                 <style jsx>{`
-                form {
-                    width: 85%;
-                    margin-left: auto;
-                    margin-right: auto;
-                }
-                `}</style>
+                    form {
+                        width: 85%;
+                        margin-left: auto;
+                        margin-right: auto;
+                    }
+
+                    .userSelectionHeader {
+                        margin-bottom: 10px;
+                    }
+                `}
+                </style>
             </Page>
         );
     }

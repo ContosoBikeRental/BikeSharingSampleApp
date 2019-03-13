@@ -10,22 +10,33 @@ const helpers = {
     verifyUserAsync: async function(apiHost) {
         var cookies = new Cookies();
         var user = cookies.get('user');
-        if (user && user.id) {
-            if (!apiHost) {
-                apiHost = await this.getApiHostAsync();
-            }
-            const url = apiHost + '/api/user/' + user.id;
-            const res = await fetch(url);
-            if (!res.ok) {
-                cookies.remove('user');
-                user = null;
-            }
+        if (!user || !user.id) {
+            return null;
+        }
+        
+        if (!apiHost) {
+            apiHost = await this.getApiHostAsync();
+        }
+        const url = apiHost + '/api/user/' + user.id;
+        const userResponse = await fetch(url);
+        if (userResponse.ok) {
+            return await userResponse.json();
         }
 
-        return user;
+        // User stored locally isn't valid anymore. Let's clear the local data.
+        clearUserCookie();
+        return null;
     },
-    logoutUser: function() {
-        var cookies = new Cookies();
+    storeUserCookie: function(userId) {
+        const cookies = new Cookies();
+        cookies.set('user', {
+            id: userId
+        }, {
+            path: "/"
+        });
+    },
+    clearUserCookie: function() {
+        const cookies = new Cookies();
         cookies.remove('user');
     },
     getVendorAsync: async function(ownerUserId, apiHost) {
