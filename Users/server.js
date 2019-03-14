@@ -125,7 +125,7 @@ function execStatement(sqlStatement, callbackAffectedRows) {
 function createTableIfNotExists(callbackFunc) {
   sqlStatement = util.format(
     "IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].%s') AND type in (N'U')) BEGIN CREATE TABLE %s(Id NVARCHAR(100) NOT NULL PRIMARY KEY, Name NVARCHAR(100) NOT NULL, Address NVARCHAR(500) NOT NULL, Phone NVARCHAR(22) NULL, Email NVARCHAR(100) NOT NULL, Type NVARCHAR(20) NOT NULL)END",
-    tableName, tableName, tableName)
+    tableName, tableName)
   var request = new Request(sqlStatement, function (err, rowCount) {
     if (err) {
       console.log('Statement failed: ' + err);
