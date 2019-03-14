@@ -56,12 +56,12 @@
     helm install -n bikesharing . --dep-up --namespace dev --wait
     ```
 
-9. Run `azds list-uris` to display the web frontend's url, and open it in a browser. Sign into the web app using one of the sample customer accounts, as defined in the file [PopulateDatabase/data.json](PopulateDatabase/data.json).
+9. Run `azds list-uris` to display the web frontend's url, and open it in a browser. Select one of the sample customer accounts to sign into the web app.
 
 
 ## Set the app's state for the demo
 If you want to demo finding and fixing a bug: bikes are still (incorrectly) displayed as available even if the bike is currently in use.
-1. Open the webapp in the browser, and sign in with one of the sample user accounts (e.g. username=*holly*).
+1. Open the webapp in the browser, and select one of the sample user accounts (e.g. *Holly Kearney*).
 1. Select a bike and rent it. Remember the bike, as we'll refer to it later.
 1. Navigate to the sign-in page by appending '/signin' to the root URL.
 
@@ -76,7 +76,7 @@ azds space select -n dev/john
 ## Walkthrough
  
 1. Our team is building a Bike Sharing app where you can view available bikes in your area, rent a bike, and then later return it to a designated location. You're billed for the time you used the bike when you return it.
-    1. Sign into the web app as a different user, for example username=**Percy**
+    1. Select another use to sign into the web app, for example **Percy Bowman**
     1. Select a bike, then click "Rent".
     1. Click through the experience for returning a bike: click "Return bike", then "Confirm return". Optionally submit a review.
 1. Most of the time this process works, but we currently seem to have a bug where, sometimes, a bike can't be rented.

@@ -30,13 +30,6 @@ var userSchema = {
   id: {
     presence: true
   },
-  username: {
-    presence: true
-  },
-  password: {
-    presence: true,
-    length: { minimum: 3 }
-  },
   name: {
     presence: true,
     length: { minimum: 1 }
@@ -62,7 +55,7 @@ var userSchema = {
 
 function execInsert(params, callbackAffectedRows) {
   var sqlStatement = util.format(
-    "INSERT INTO %s (Id, UserName, PasswordHash, Name, Address, Phone, Email, Type) VALUES (@Id, @UserName, HASHBYTES('SHA2_512', @Password), @Name, @Address, @Phone, @Email, @Type)",
+    "INSERT INTO %s (Id, Name, Address, Phone, Email, Type) VALUES (@Id, @Name, @Address, @Phone, @Email, @Type)",
     tableName)
   var request = new Request(sqlStatement, function (err, rowCount) {
     if (err) {
@@ -73,8 +66,6 @@ function execInsert(params, callbackAffectedRows) {
     callbackAffectedRows(rowCount);
   });
   request.addParameter('Id', TYPES.NVarChar, params.id);
-  request.addParameter('UserName', TYPES.NVarChar, params.username);
-  request.addParameter('Password', TYPES.NVarChar, params.password);
   request.addParameter('Name', TYPES.NVarChar, params.name);
   request.addParameter('Address', TYPES.NVarChar, params.address);
   request.addParameter('Phone', TYPES.NVarChar, params.phone);
@@ -133,7 +124,7 @@ function execStatement(sqlStatement, callbackAffectedRows) {
 
 function createTableIfNotExists(callbackFunc) {
   sqlStatement = util.format(
-    "IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].%s') AND type in (N'U')) BEGIN CREATE TABLE %s(Id NVARCHAR(100) NOT NULL PRIMARY KEY, UserName NVARCHAR(100) NOT NULL, PasswordHash BINARY(64) NOT NULL, Name NVARCHAR(100) NOT NULL, Address NVARCHAR(500) NOT NULL, Phone NVARCHAR(22) NULL, Email NVARCHAR(100) NOT NULL, Type NVARCHAR(20) NOT NULL, CONSTRAINT Unique_Username_%s UNIQUE(Username))END",
+    "IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].%s') AND type in (N'U')) BEGIN CREATE TABLE %s(Id NVARCHAR(100) NOT NULL PRIMARY KEY, Name NVARCHAR(100) NOT NULL, Address NVARCHAR(500) NOT NULL, Phone NVARCHAR(22) NULL, Email NVARCHAR(100) NOT NULL, Type NVARCHAR(20) NOT NULL)END",
     tableName, tableName, tableName)
   var request = new Request(sqlStatement, function (err, rowCount) {
     if (err) {
@@ -154,8 +145,7 @@ app.get('/hello', function (req, res) {
 
 app.get('/api/users/:userId', function (req, res) {
   // get user details
-  var selectStatement = util.format("SELECT Id,UserName,Name,Address,Phone,Email,Type FROM %s WHERE Id='%s'", tableName, req.params.userId);
-  // var selectStatement = util.format("SELECT Id,UserName,Name,Address,Phone,Type FROM %s WHERE Id='%s'", tableName, req.params.userId);
+  var selectStatement = util.format("SELECT Id,Name,Address,Phone,Email,Type FROM %s WHERE Id='%s'", tableName, req.params.userId);
   execSelect(selectStatement, function (result, err) {
     if (err) {
       res.status(500).send(err);
@@ -172,7 +162,7 @@ app.get('/api/users/:userId', function (req, res) {
 });
 
 app.get('/api/allUsers', function (req, res) {
-  var selectStatement = util.format("SELECT Id,UserName,Name,Address,Phone,Email,Type FROM %s", tableName);
+  var selectStatement = util.format("SELECT Id,Name,Address,Phone,Email,Type FROM %s", tableName);
   execSelect(selectStatement, function (result, err) {
     if (err) {
       res.status(500).send(err);
@@ -224,26 +214,6 @@ app.put('/api/users/:userId', function (req, res) {
     } else {
       res.status(200).send();
     };
-  });
-});
-
-app.post('/api/users/auth', function (req, res) {
-  // authenticate username and password
-  // returns 200 or 401 depending on password match
-  console.log("Trying to authenticate...");
-  var selectStatement = util.format("SELECT TOP 1 Id FROM %s WHERE UserName='%s' AND PasswordHash=HASHBYTES('SHA2_512', CAST('%s' AS NVARCHAR))", tableName, req.body.username, req.body.password);
-  execSelect(selectStatement, function (result, err) {
-    if (err) {
-      console.log("Error happened: " + err);
-      res.status(500).send(err);
-      return;
-    }
-    if (result == null) {
-      console.log("Unauthorized for " + req.body.username);
-      res.status(401).send('Unauthorized.')
-    } else {
-      res.status(200).send(result[0]);
-    }
   });
 });
 

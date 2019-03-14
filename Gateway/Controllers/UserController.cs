@@ -422,31 +422,6 @@ namespace app.Controllers
             return await GetUser(userId);
         }
 
-        // POST: /api/user/auth
-        [HttpPost("auth")]
-        public async Task<IActionResult> Authenticate([FromBody] AuthenticateUserRequest credentials)
-        {
-            if (!ModelState.IsValid)
-            {
-                return new ContentResult
-                {
-                    StatusCode = (int)HttpStatusCode.BadRequest,
-                    Content = JsonConvert.SerializeObject(ModelState.Values.SelectMany(v => v.Errors))
-                };
-            }
-
-            string authUserUrl = $"http://{_usersService}/api/users/auth";
-            var response = await HttpHelper.PostAsync(authUserUrl, new StringContent(
-                JsonConvert.SerializeObject(credentials), Encoding.UTF8, "application/json"), this.Request);
-            if (response.IsSuccessStatusCode)
-            {
-                var user = JsonConvert.DeserializeObject<UserResponse>(await response.Content.ReadAsStringAsync());
-                return await GetUser(user.Id);
-            }
-
-            return await HttpHelper.ReturnResponseResult(response);
-        }
-
         // GET: /api/user/{userId}/bikes
         [HttpGet(@"{userId}/bikes")]
         public async Task<IActionResult> GetAllBikes(string userId)
