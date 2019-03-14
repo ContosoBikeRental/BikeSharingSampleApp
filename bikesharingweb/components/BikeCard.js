@@ -6,7 +6,7 @@ const BikeCard = (props) => (
         {/* <div>{props.id}</div> */}
         <div className="mt-0 bike-name">{props.name}</div>
         <div>{props.address}</div>
-        <div>${props.rate}.00/hour</div>
+        <div>${props.rate}/hour</div>
       </div>
     </div>
     <style jsx>{`

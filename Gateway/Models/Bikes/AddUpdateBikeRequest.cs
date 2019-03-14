@@ -5,10 +5,6 @@ namespace app.Models
 {
     public class AddUpdateBikeRequest
     {
-        [JsonProperty("manufacturer")]
-        [Required]
-        public string Manufacturer { get; set; }
-
         [JsonProperty("model")]
         [Required]
         public string Model { get; set; }

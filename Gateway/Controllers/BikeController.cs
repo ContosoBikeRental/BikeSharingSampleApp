@@ -66,7 +66,6 @@ namespace app.Controllers
                 var existingBikeDetails = JsonConvert.DeserializeObject<Bike>(await getResponse.Content.ReadAsStringAsync());
                 var updatedBikeDetails = new AddUpdateBikeRequest
                 {
-                    Manufacturer = string.IsNullOrEmpty(newBikeDetails.Manufacturer) ? existingBikeDetails.Manufacturer : newBikeDetails.Manufacturer,
                     Model = string.IsNullOrEmpty(newBikeDetails.Model) ? existingBikeDetails.Model : newBikeDetails.Model,
                     HourlyCost = newBikeDetails.HourlyCost ?? existingBikeDetails.HourlyCost,
                     ImageUrl = newBikeDetails.ImageUrl ?? existingBikeDetails.ImageUrl,

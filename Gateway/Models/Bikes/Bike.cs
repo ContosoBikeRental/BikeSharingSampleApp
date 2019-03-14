@@ -10,9 +10,6 @@ namespace app.Models
         [JsonProperty("available")]
         public string Available { get; private set; }
 
-        [JsonProperty("manufacturer")]
-        public string Manufacturer { get; private set; }
-
         [JsonProperty("model")]
         public string Model { get; private set; }
 
