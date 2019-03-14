@@ -10,14 +10,6 @@ namespace app.Models
         [JsonProperty("id")]
         string Id { get; set; }
 
-        [JsonProperty("username")]
-        [Required]
-        string Username { get; set; }
-
-        [JsonProperty("password")]
-        [Required]
-        string Password { get; set; }
-
         [JsonProperty("name")]
         [Required]
         string Name { get; set; }
@@ -36,8 +28,6 @@ namespace app.Models
         [JsonProperty("type")]
         [JsonConverter(typeof(StringEnumConverter))]
         UserType Type { get; set; }
-
-        bool ShouldSerializePassword();
     }
 
     public enum UserType

@@ -1,8 +1,6 @@
 {
     "customers": [
       {
-        "username": "percy",
-        "password": "Password1!",
         "name": "Percy Bowman",
         "address": "132 Prospect St, Spokane, WA",
         "phone": "9174567890",
@@ -12,8 +10,6 @@
         "ccccv": "1234"
       },
       {
-        "username": "holly",
-        "password": "Password2!",
         "name": "Holly Kearney",
         "address": "100 Microsoft Way, Redmond, WA",
         "phone": "9174567890",
@@ -26,8 +22,6 @@
     "vendors": [
       {
         "id": "16a46619738a4865a5afcb5e18ffb138",
-        "username": "tiffany",
-        "password": "Password3!",
         "name": "Tiffany Mach",
         "address": "14 Bramble Way, Seattle, WA",
         "phone": "5084567890",

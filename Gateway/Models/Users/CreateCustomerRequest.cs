@@ -7,8 +7,6 @@ namespace app.Models
     public class CreateCustomerRequest : IUser, ICustomer
     {
         public string Id { get; set; }
-        public string Username { get; set; }
-        public string Password { get; set; }
         public string Name { get; set; }
         public string Address { get; set; }
         public string Phone { get; set; }
@@ -18,10 +16,5 @@ namespace app.Models
         public string CCExpiry { get; set; }
         public string CCCCV { get; set; }
         public UserType Type { get; set; }
-
-        public bool ShouldSerializePassword()
-        {
-            return true;
-        }
     }
 }
