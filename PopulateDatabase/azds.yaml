@@ -5,6 +5,9 @@ build:
   dockerfile: Dockerfile
 install:
   chart: charts/populatedatabase
+  values:
+  - values.dev.yaml?
+  - secrets.dev.yaml?
   set:
     replicaCount: 1
     image:
@@ -15,39 +18,23 @@ install:
       annotations:
         kubernetes.io/ingress.class: traefik-azds
       hosts:
-      # This expands to [space.s.]populatedatabase.<guid>.<region>.aksapp.io
+      # This expands to [space.s.][rootSpace.]populatedatabase.<random suffix>.<region>.azds.io
       - $(spacePrefix)$(rootSpacePrefix)populatedatabase$(hostSuffix)
-  values:
-  - values.dev.yaml?
-  - secrets.dev.yaml?
 configurations:
   develop:
     build:
-      useGitIgnore: true
       dockerfile: Dockerfile.develop
+      useGitIgnore: true
       args:
         BUILD_CONFIGURATION: ${BUILD_CONFIGURATION:-Debug}
     container:
       sync:
-      - '**/Pages/**'
-      - '**/Views/**'
-      - '**/wwwroot/**'
-      - '!**/*.{sln,csproj}'
-      command:
-      - dotnet
-      - run
-      - --no-restore
-      - --no-build
-      - --no-launch-profile
-      - -c
-      - ${BUILD_CONFIGURATION:-Debug}
+      - "**/Pages/**"
+      - "**/Views/**"
+      - "**/wwwroot/**"
+      - "!**/*.{sln,csproj}"
+      command: [dotnet, run, --no-restore, --no-build, --no-launch-profile, -c, "${BUILD_CONFIGURATION:-Debug}"]
       iterate:
-        processesToKill:
-        - dotnet
-        - vsdbg
+        processesToKill: [dotnet, vsdbg]
         buildCommands:
-        - - dotnet
-          - build
-          - --no-restore
-          - -c
-          - ${BUILD_CONFIGURATION:-Debug}
+        - [dotnet, build, --no-restore, -c, "${BUILD_CONFIGURATION:-Debug}"]

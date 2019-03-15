@@ -5,31 +5,31 @@ build:
   dockerfile: Dockerfile
 install:
   chart: charts/bikesharingweb
+  values:
+  - values.dev.yaml?
+  - secrets.dev.yaml?
   set:
     replicaCount: 1
     image:
+      repository: bikesharingweb
       tag: $(tag)
       pullPolicy: Never
     ingress:
       annotations:
         kubernetes.io/ingress.class: traefik-azds
       hosts:
-      # This expands to [space.s.]bikesharingweb.<guid>.<region>.aksapp.io
+      # This expands to [space.s.][rootSpace.]bikesharingweb.<random suffix>.<region>.azds.io
       - $(spacePrefix)$(rootSpacePrefix)bikesharingweb$(hostSuffix)
-  values:
-  - values.dev.yaml?
-  - secrets.dev.yaml?
 configurations:
   develop:
     build:
       useGitIgnore: true
     container:
       sync:
-      - '!**/package.json'
+      - "!**/package.json"
       command:
       - npm
       - run
       - dev
       iterate:
-        processesToKill:
-        - node
+        processesToKill: [node]
