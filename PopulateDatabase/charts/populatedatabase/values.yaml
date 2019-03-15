@@ -16,11 +16,11 @@ imagePullSecrets: []
   # - name: myRegistryKeySecretName
 
 env:
-  - name: GATEWAY_DNSNAME
+  - name: gateway_dnsname
     value: gateway
-  - name: BIKES_DNSNAME
+  - name: bikes_dnsname
     value: bikes
-  - name: USERS_DNSNAME
+  - name: users_dnsname
     value: users
 
 restartPolicy: Never

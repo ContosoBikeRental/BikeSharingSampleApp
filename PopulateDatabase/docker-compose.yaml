@@ -6,5 +6,5 @@ services:
         ports:
             - "8080:80"
         environment:
-            - FILENAME_DATA=data.json
-            - GATEWAY_DNSNAME=apigateway:5000
+            - filename_data=data.json
+            - gateway_dnsname=apigateway:5000

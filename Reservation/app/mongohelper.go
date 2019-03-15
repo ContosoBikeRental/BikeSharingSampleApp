@@ -21,7 +21,7 @@ type MongoHelper struct {
 
 // Connect to the MongoDB
 func CreateMongoConnection() *MongoHelper {
-	uri := os.Getenv("MONGO_CONNECTIONSTRING")
+	uri := os.Getenv("mongo_connectionstring")
 	if uri == "" {
 		uri = reservationMongoDBConnectionString
 	}
@@ -72,12 +72,12 @@ func CreateMongoConnection() *MongoHelper {
 	//mongoSession.SetMode(mgo.PrimaryPreferred, true)
 	//mongoSession.SetSafe(&mgo.Safe{WMode: "majority"})
 
-	db := os.Getenv("MONGO_DBNAME")
+	db := os.Getenv("mongo_dbname")
 	if db == "" {
 		db = reservationMongoDBDatabase
 	}
 
-	collection := os.Getenv("MONGO_COLLECTION")
+	collection := os.Getenv("mongo_collection")
 	if collection == "" {
 		collection = reservationMongoDBCollection
 	}

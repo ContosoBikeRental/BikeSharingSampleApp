@@ -33,6 +33,18 @@ ingress:
     #   hosts:
     #     - chart-example.local
 secrets:
+  users:
+    dnsname: users
+  bikes:
+    dnsname: bikes
+  reservation:
+    dnsname: reservation
+  reservationengine:
+    dnsname: reservationengine
+  billing:
+    dnsname: billing
+  applicationinsights:
+    instrumentationkey: 00000000-0000-0000-0000-000000000000
   # Optionally specify a set of secret objects whose values
   # will be injected as environment variables by default.
   # You should add this section to a file like secrets.yaml
@@ -44,18 +56,6 @@ secrets:
   # as the environment variable mysecret_mypassword=password.
   # mysecret:
   #   mypassword: password
-  users:
-    dnsName: users
-  bikes:
-    dnsName: bikes
-  reservation:
-    dnsName: reservation
-  reservationengine:
-    dnsName: reservationengine
-  billing:
-    dnsName: billing
-  applicationInsights:
-    instrumentationKey: 00000000-0000-0000-0000-000000000000
 resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious
   # choice for the user. This also increases chances charts run on environments with little

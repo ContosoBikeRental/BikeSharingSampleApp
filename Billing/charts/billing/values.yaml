@@ -32,7 +32,10 @@ ingress:
     # - secretName: chart-example-tls
     #   hosts:
     #     - chart-example.local
-secrets: 
+secrets:
+  mongo:
+    connectionstring: mongodb://databases-mongo
+    dbname: billing
   # Optionally specify a set of secret objects whose values
   # will be injected as environment variables by default.
   # You should add this section to a file like secrets.yaml
@@ -44,9 +47,6 @@ secrets:
   # as the environment variable mysecret_mypassword=password.
   # mysecret:
   #   mypassword: password
-  mongo:
-    connectionString: mongodb://databases-mongo
-    dbName: billing
 resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious
   # choice for the user. This also increases chances charts run on environments with little
