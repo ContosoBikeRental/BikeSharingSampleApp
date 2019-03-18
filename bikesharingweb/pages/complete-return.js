@@ -12,6 +12,7 @@ import { withRouter } from 'next/router'
 import MediaQuery from 'react-responsive'
 import helpers from './helpers';
 import Router from 'next/router'
+import ErrorPanel from '../components/ErrorPanel'
 
 export default class CompleteReturn extends Component {
 
@@ -23,33 +24,66 @@ export default class CompleteReturn extends Component {
             userName: undefined,
             reservation: {},
             bike: {},
-            invoice: {}
+            invoice: {},
+            errorMessage: undefined
         };
     }
 
     async componentDidMount() {
-        this.apiHost = await helpers.getApiHostAsync();
-        var user = await helpers.verifyUserAsync(this.apiHost);
-        if (!user) {
-            Router.push('/signin');
+        let user = null;
+        try {
+            this.apiHost = await helpers.getApiHostAsync();
+            user = await helpers.verifyUserAsync(this.apiHost);
+            if (!user) {
+                Router.push('/signin');
+                return;
+            }
+        }
+        catch (error) {
+            console.error(error);
+            this.setState({errorMessage: `Error while retrieving current user's data. Make sure that your Gateway and Users services are up and running (run "azds list-up"). Details: ${error.message}`});
             return;
         }
 
-        // get reservation
-        var state = "Completed";
-        const reservation = await helpers.getReservationForUserAsync(user.id, this.apiHost, state);
-        if (!reservation) {
-            // Error, something's gone wrong, go home
-            console.error("couldn't find " + state + " reservation, going to Index");
-            Router.push("/");
+        let reservation = null;
+        try {
+            // get reservation
+            var state = "Completed";
+            reservation = await helpers.getReservationForUserAsync(user.id, this.apiHost, state);
+            if (!reservation) {
+                // Error, something's gone wrong, go home
+                console.error("couldn't find " + state + " reservation, going to Index");
+                Router.push("/");
+                return;
+            }
+        }
+        catch (error) {
+            console.error(error);
+            this.setState({errorMessage: `Error while retrieving current reservation's data. Make sure that your Gateway and Reservation services are up and running (run "azds list-up"). Details: ${error.message}`});
             return;
         }
 
-        // get bike
-        const bike = await helpers.getBikeAsync(reservation.bikeId, this.apiHost);
+        let bike = null;
+        try {
+            // get bike
+            bike = await helpers.getBikeAsync(reservation.bikeId, this.apiHost);
+        }
+        catch (error) {
+            console.error(error);
+            this.setState({errorMessage: `Error while retrieving bike's data. Make sure that your Gateway and Bikes services are up and running (run "azds list-up"). Details: ${error.message}`});
+            return;
+        }
 
-        // get invoice
-        const invoice = await helpers.getInvoiceAsync(reservation.invoiceId, this.apiHost);
+        let invoice = null;
+        try {
+            // get invoice
+            invoice = await helpers.getInvoiceAsync(reservation.invoiceId, this.apiHost);
+        }
+        catch (error) {
+            console.error(error);
+            this.setState({errorMessage: `Error while retrieving invoice's data. Make sure that your Gateway and Billing services are up and running (run "azds list-up"). Details: ${error.message}`});
+            return;
+        }
 
         // set state
         this.setState({
@@ -94,6 +128,7 @@ export default class CompleteReturn extends Component {
                             </div>
                         </MediaQuery>
                     </div>
+                    <ErrorPanel errorMessage={this.state.errorMessage} />
                 </Content>
                 <MediaQuery maxWidth={600}>
                     <Footer>

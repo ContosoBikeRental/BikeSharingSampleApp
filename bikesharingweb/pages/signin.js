@@ -6,30 +6,39 @@ import Logo from '../components/Logo'
 import FormButton from '../components/FormButton'
 import Router from 'next/router'
 import helpers from './helpers';
+import ErrorPanel from '../components/ErrorPanel'
 
 export default class Signin extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            users: []
+            users: [],
+            errorMessage: undefined
         };
     }
 
     async componentDidMount() {
-        // Clears any login information the user may still have.
-        helpers.clearUserCookie();
+        try {
+            // Clears any login information the user may still have.
+            helpers.clearUserCookie();
+    
+            // Retrieves all users that can be selected for sign-in.
+            this.apiHost = await helpers.getApiHostAsync();
+            const usersResponse = await fetch(`${this.apiHost}/api/user/allUsers`);
+            let users = await usersResponse.json();
+            console.log("Users retrieved", users);
 
-        // Retrieves all users that can be selected for sign-in.
-        this.apiHost = await helpers.getApiHostAsync();
-        const usersResponse = await fetch(`${this.apiHost}/api/user/allUsers`);
-        let users = await usersResponse.json();
-        console.log("Users retrieved", users);
-
-        // Filtering out vendors, as we don't provide any vendors experience for now.
-        users = users.filter(user => user.type != "vendor");
-
-        this.setState({users: users});
+            // Filtering out vendors, as we don't provide any vendors experience for now.
+            users = users.filter(user => user.type != "vendor");
+    
+            this.setState({users: users});
+        }
+        catch (error) {
+            console.error(error);
+            this.setState({errorMessage: `Error while retrieving users to select. Make sure that your Gateway and Users services are up and running (run "azds list-up"). Details: ${error.message}`});
+            return;
+        }
     }
 
     async handleClick(context) {
@@ -58,6 +67,7 @@ export default class Signin extends Component {
                             </form>
                         }
                     </SigninFormLayout>
+                    <ErrorPanel errorMessage={this.state.errorMessage} />
                 </Content>
                 <style jsx>{`
                     form {

@@ -13,6 +13,7 @@ import fetch from 'isomorphic-fetch'
 import Router from 'next/router'
 import Cookies from 'universal-cookie'
 import helpers from './helpers.js'
+import ErrorPanel from '../components/ErrorPanel'
 
 class PreviewBase extends React.Component {
 
@@ -22,23 +23,48 @@ class PreviewBase extends React.Component {
             userId: undefined,
             userName: undefined,
             bike: {},
-            vendor: {}
+            vendor: {},
+            errorMessage: undefined
         };
     }
 
     async componentDidMount() {
-        this.apiHost = await helpers.getApiHostAsync();
-        var user = await helpers.verifyUserAsync(this.apiHost);
-        if (!user) {
-            Router.push('/signin');
+        let user = null;
+        try {
+            this.apiHost = await helpers.getApiHostAsync();
+            user = await helpers.verifyUserAsync(this.apiHost);
+            if (!user) {
+                Router.push('/signin');
+                return;
+            }
+        }
+        catch (error) {
+            console.error(error);
+            this.setState({errorMessage: `Error while retrieving current user's data. Make sure that your Gateway and Users services are up and running (run "azds list-up"). Details: ${error.message}`});
             return;
         }
 
-        // get bike
-        const bikeData = await helpers.getBikeAsync(this.props.bikeId, this.apiHost);
+        let bikeData = null;
+        try {
+            // get bike
+            bikeData = await helpers.getBikeAsync(this.props.bikeId, this.apiHost);
+        }
+        catch (error) {
+            console.error(error);
+            this.setState({errorMessage: `Error while retrieving bike's data. Make sure that your Gateway and Bikes services are up and running (run "azds list-up"). Details: ${error.message}`});
+            return;
+        }
 
-        // set vendor 
-        const vendorData = await helpers.getVendorAsync(bikeData.ownerUserId, this.apiHost);
+        let vendorData = null;
+        try {
+            // get vendor
+            vendorData = await helpers.getVendorAsync(bikeData.ownerUserId, this.apiHost);
+        }
+        catch (error) {
+            console.error(error);
+            this.setState({errorMessage: `Error while retrieving bike's vendor's data. Make sure that your Gateway and Users services are up and running (run "azds list-up"). Details: ${error.message}`});
+            return;
+        }
 
         // set state
         this.setState({
@@ -57,23 +83,35 @@ class PreviewBase extends React.Component {
 
     async handleClick(context) {
         // reserve bike
-        console.log("reserving bike...");
-        var url = this.apiHost + '/api/reservation';
-        const res = await fetch(url,      
-        {
-            method: 'POST',
-            cache: 'no-cache',
-            headers: {
-                "Content-Type": "application/json; charset=utf-8"
-            },
-            body: JSON.stringify({
-                userId: this.state.userId,
-                bikeId: this.state.bike.id })
-        });
+        console.log("Reserving bike...");
+        try {
+            var url = this.apiHost + '/api/reservation';
+            const res = await fetch(url,
+            {
+                method: 'POST',
+                cache: 'no-cache',
+                headers: {
+                    "Content-Type": "application/json; charset=utf-8"
+                },
+                body: JSON.stringify({
+                    userId: this.state.userId,
+                    bikeId: this.state.bike.id
+                })
+            });
 
-        // confirm reservation
-        const data = await res.json();
-        console.log(data);
+            if (!res.ok) {
+                throw new Error(await res.text());
+            }
+
+            // confirm reservation
+            const data = await res.json();
+            console.log("Reservation data:", data);
+        }
+        catch (error) {
+            console.error(error);
+            this.setState({errorMessage: `Error while creating a reservation for the bike. Make sure that your Gateway and ReservationEngine services are up and running (run "azds list-up"). Details: ${error.message}`});
+            return;
+        }
 
         // navigate to current-ride
         Router.push("/current-ride");
@@ -112,6 +150,7 @@ class PreviewBase extends React.Component {
                             <Map />
                         </div>
                     </div>
+                    <ErrorPanel errorMessage={this.state.errorMessage} />
                 </Content>
                 <MediaQuery maxWidth={600}>
                     <Footer>

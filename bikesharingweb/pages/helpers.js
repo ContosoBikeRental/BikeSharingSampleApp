@@ -45,12 +45,10 @@ const helpers = {
         }
         const url = apiHost + '/api/user/' + ownerUserId;
         const res = await fetch(url);
-        const vendor = await res.json();
         if (!res.ok) {
-            console.log("vendor does not exist");
-            vendor = null;
+            throw new Error(await res.text());
         }
-        return vendor;
+        return await res.json();
     },
     getBikeAsync: async function(bikeId, apiHost) {
         if (!apiHost) {
@@ -58,12 +56,10 @@ const helpers = {
         }
         const url = apiHost + '/api/bike/' + bikeId;
         const res = await fetch(url);
-        const bike = await res.json();
         if (!res.ok) {
-            console.log("bike does not exist");
-            bike = null;
+            throw new Error(await res.text());
         }
-        return bike;
+        return await res.json();
     },
     getReservationForUserAsync: async function(userId, apiHost, state) {
         if (!apiHost) {
@@ -71,11 +67,10 @@ const helpers = {
         }
         const url = apiHost + '/api/user/' + userId + '/reservations';
         const res = await fetch(url);
-        const reservations = await res.json();
         if (!res.ok) {
-            console.log("user does not have any reservations");
-            return;
+            throw new Error(await res.text());
         }
+        const reservations = await res.json();
         const reservation = reservations.reverse().find(function(r) { return r.state == state }); 
         return reservation;
     },
@@ -85,12 +80,10 @@ const helpers = {
         }
         const url = apiHost + '/api/billing/invoice/' + invoiceId;
         const res = await fetch(url);
-        const vendor = await res.json();
         if (!res.ok) {
-            console.log("invoice does not exist");
-            vendor = null;
+            throw new Error(await res.text());
         }
-        return vendor;
+        return await res.json();
     },
 }
 
