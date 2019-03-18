@@ -83,7 +83,7 @@ azds space select -n dev/john
     1. Select the bike that *Aurelia* has checked out.
     1. Click "Rent" - nothing happens: no confirmation, no error.
 1. Our app consists of several services -- users, bikes, reservations, billing, reviews, etc -- and I've been asked to track the bug down. I'll start with the *`Bikes`* service, as maybe I can glean some clues about what's different about this particular problem bike. First, let's connect to the cluster where the full app is running:
-    1. Open a terminal window, and run: `az aks use-dev-spaces -g bikesharing01 -n bikesharing01` (Your resource group and cluster name may be different.)
+    1. Open a terminal window, and run: `az aks use-dev-spaces -g bikesharinggroup -n bikesharingcluster` (Your resource group and cluster name may be different.)
     1. When prompted, select a child dev space, for example: `dev/john` (you can always change selection via `azds space select`).
     
 1. Now let's debug the `bikes` service:
@@ -136,6 +136,6 @@ Delete the AKS cluster's **resource group** to permanently delete all Azure reso
 # View AKS clusters
 az aks list -o table
 
-# Delete all resources in group `bikesharing01`
-az group delete -n bikesharing01 --no-wait
+# Delete all resources in group `bikesharinggroup`
+az group delete -n bikesharinggroup --no-wait
 ```
