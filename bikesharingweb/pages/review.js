@@ -8,21 +8,31 @@ import MediaQuery from 'react-responsive'
 import helpers from './helpers';
 import Router from 'next/router'
 import ReviewControl from "../components/ReviewControl"
+import ErrorPanel from '../components/ErrorPanel'
 
 
 export default class Review extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            userName: undefined
+            userName: undefined,
+            errorMessage: undefined
         };
     }
 
     async componentDidMount() {
-        this.apiHost = await helpers.getApiHostAsync();
-        var user = await helpers.verifyUserAsync(this.apiHost);
-        if (!user) {
-            Router.push('/signin');
+        let user = null;
+        try {
+            this.apiHost = await helpers.getApiHostAsync();
+            user = await helpers.verifyUserAsync(this.apiHost);
+            if (!user) {
+                Router.push('/signin');
+                return;
+            }
+        }
+        catch (error) {
+            console.error(error);
+            this.setState({errorMessage: `Error while retrieving current user's data. Make sure that your Gateway and Users services are up and running (run "azds list-up"). Details: ${error.message}`});
             return;
         }
 
@@ -63,6 +73,7 @@ export default class Review extends Component {
                             </div>
                         </MediaQuery>
                     </div>
+                    <ErrorPanel errorMessage={this.state.errorMessage} />
                 </Content>
                 <MediaQuery maxWidth={600}>
                     <Footer>
