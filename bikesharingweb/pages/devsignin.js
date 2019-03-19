@@ -8,7 +8,7 @@ import Router from 'next/router'
 import helpers from './helpers';
 import ErrorPanel from '../components/ErrorPanel'
 
-export default class Signin extends Component {
+export default class DevSignin extends Component {
 
     constructor(props) {
         super(props);

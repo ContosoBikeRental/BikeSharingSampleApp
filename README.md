@@ -63,7 +63,7 @@
 If you want to demo finding and fixing a bug: bikes are still (incorrectly) displayed as available even if the bike is currently in use.
 1. Open the webapp in the browser, and select one of the sample user accounts (e.g. *Aurelia Briggs*).
 1. Select a bike and rent it. Remember the bike, as we'll refer to it later.
-1. Navigate to the sign-in page by appending '/signin' to the root URL.
+1. Navigate to the sign-in page by appending '/devsignin' to the root URL.
 
 ## Add multiple dev spaces to the same cluster
 We'll demonstrate how multiple developers on a team can use the same cluster, so let's create multiple child dev spaces:

@@ -35,7 +35,7 @@ export default class CompleteReturn extends Component {
             this.apiHost = await helpers.getApiHostAsync();
             user = await helpers.verifyUserAsync(this.apiHost);
             if (!user) {
-                Router.push('/signin');
+                Router.push('/devsignin');
                 return;
             }
         }
