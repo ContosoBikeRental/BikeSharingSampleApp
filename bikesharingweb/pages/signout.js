@@ -10,7 +10,7 @@ export default class Signout extends Component {
 
     async componentDidMount() {
         helpers.clearUserCookie();
-        Router.push('/signin');
+        Router.push('/devsignin');
     }
 
     render() {

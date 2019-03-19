@@ -8,7 +8,7 @@ import Router from 'next/router'
 import helpers from './helpers';
 import ErrorPanel from '../components/ErrorPanel'
 
-export default class Signin extends Component {
+export default class DevSignin extends Component {
 
     constructor(props) {
         super(props);
@@ -60,7 +60,7 @@ export default class Signin extends Component {
                         <br /><br />
                         {this.state.users.length > 0 &&
                             <form>
-                                <div className={"userSelectionHeader"}>Select current user:</div>
+                                <div className={"userSelectionHeader"}>Select a test user:</div>
                                 {this.state.users.map((user, index) => (
                                     <FormButton key={index} primary onClick={this.handleClick.bind(this, user.id, user.name)}>{user.name} ({user.type})</FormButton>
                                 ))}
