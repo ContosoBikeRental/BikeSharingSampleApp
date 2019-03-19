@@ -17,8 +17,8 @@ import (
 )
 
 const (
-	mongoDbConnectionStringEnvName = "MONGO_CONNECTIONSTRING"
-	mongoDbNameEnvName             = "MONGO_DBNAME"
+	mongoDbConnectionStringEnvName = "mongo_connectionstring"
+	mongoDbNameEnvName             = "mongo_dbname"
 )
 
 var (

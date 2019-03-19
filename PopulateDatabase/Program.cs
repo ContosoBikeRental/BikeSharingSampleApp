@@ -14,9 +14,9 @@ namespace app
     public class Program
     {
         private static readonly HttpClient _httpClient = new HttpClient() { Timeout = TimeSpan.FromSeconds(10) };
-        private static readonly string _gatewayUrl = $"http://{Environment.GetEnvironmentVariable("GATEWAY_DNSNAME")}";
-        private static readonly string _bikesUrl = $"http://{Environment.GetEnvironmentVariable("BIKES_DNSNAME")}";
-        private static readonly string _usersUrl = $"http://{Environment.GetEnvironmentVariable("USERS_DNSNAME")}";
+        private static readonly string _gatewayUrl = $"http://{Environment.GetEnvironmentVariable("gateway_dnsname")}";
+        private static readonly string _bikesUrl = $"http://{Environment.GetEnvironmentVariable("bikes_dnsname")}";
+        private static readonly string _usersUrl = $"http://{Environment.GetEnvironmentVariable("users_dnsname")}";
 
         public static void Main(string[] args)
         {

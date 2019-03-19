@@ -10,4 +10,6 @@ RUN dotnet restore "app.csproj"
 COPY . .
 RUN dotnet build --no-restore -c $BUILD_CONFIGURATION
 
-ENTRYPOINT ["dotnet", "out/app.dll"]
+RUN echo "exec dotnet run --no-build --no-launch-profile -c $BUILD_CONFIGURATION -- \"\$@\"" > /entrypoint.sh
+
+ENTRYPOINT ["/bin/bash", "/entrypoint.sh"]

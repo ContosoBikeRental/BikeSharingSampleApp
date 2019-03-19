@@ -6,15 +6,15 @@ namespace app
 {
     public class Constants
     {
-        public const string MongoDbConnectionStringEnv = "MONGO_CONNECTIONSTRING";
+        public const string MongoDbConnectionStringEnv = "mongo_connectionstring";
 
-        public const string MongoDbDatabaseEnv = "MONGO_DBNAME";
+        public const string MongoDbDatabaseEnv = "mongo_dbname";
 
-        public const string MongoDbCollectionEnv = "MONGO_COLLECTION";
+        public const string MongoDbCollectionEnv = "mongo_collection";
 
-        public const string BikesMicroserviceEnv = "BIKES_DNSNAME";
+        public const string BikesMicroserviceEnv = "bikes_dnsname";
 
-        public const string BillingMicroserviceEnv = "BILLING_DNSNAME";
+        public const string BillingMicroserviceEnv = "billing_dnsname";
 
         public const string RequestIdHeaderName = "x-contoso-request-id";
 

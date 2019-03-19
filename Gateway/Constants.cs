@@ -6,20 +6,20 @@ namespace app
 {
     public class Constants
     {
-        public const string UsersMicroserviceEnv = "USERS_DNSNAME";
+        public const string UsersMicroserviceEnv = "users_dnsname";
 
-        public const string BikesMicroserviceEnv = "BIKES_DNSNAME";
+        public const string BikesMicroserviceEnv = "bikes_dnsname";
 
-        public const string ReservationsMicroserviceEnv = "RESERVATION_DNSNAME";
+        public const string ReservationsMicroserviceEnv = "reservation_dnsname";
 
-        public const string ReservationEngineMicroserviceEnv = "RESERVATIONENGINE_DNSNAME";
+        public const string ReservationEngineMicroserviceEnv = "reservationengine_dnsname";
 
-        public const string BillingMicroserviceEnv = "BILLING_DNSNAME";
+        public const string BillingMicroserviceEnv = "billing_dnsname";
 
         public const string RequestIdHeaderName = "x-contoso-request-id";
 
         public const string RouteAsHeaderName = "azds-route-as";
 
-        public const string ApplicationInsightsKeyEnv = "APPLICATIONINSIGHTS_INSTRUMENTATIONKEY";
+        public const string ApplicationInsightsKeyEnv = "applicationinsights_instrumentationkey";
     }
 }

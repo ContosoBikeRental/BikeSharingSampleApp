@@ -12,6 +12,12 @@ import (
 	"gopkg.in/mgo.v2/bson"
 )
 
+const (
+	mongoDbConnectionStringEnvName = "mongo_connectionstring"
+	mongoDbNameEnvName             = "mongo_dbname"
+	mongoDbCollectionEnvName       = "mongo_collection"
+)
+
 // MongoDB details with session, db and collection
 type MongoHelper struct {
 	session    *mgo.Session
@@ -21,7 +27,7 @@ type MongoHelper struct {
 
 // Connect to the MongoDB
 func CreateMongoConnection() *MongoHelper {
-	uri := os.Getenv("MONGO_CONNECTIONSTRING")
+	uri := os.Getenv(mongoDbConnectionStringEnvName)
 	if uri == "" {
 		uri = reservationMongoDBConnectionString
 	}
@@ -72,12 +78,12 @@ func CreateMongoConnection() *MongoHelper {
 	//mongoSession.SetMode(mgo.PrimaryPreferred, true)
 	//mongoSession.SetSafe(&mgo.Safe{WMode: "majority"})
 
-	db := os.Getenv("MONGO_DBNAME")
+	db := os.Getenv(mongoDbNameEnvName)
 	if db == "" {
 		db = reservationMongoDBDatabase
 	}
 
-	collection := os.Getenv("MONGO_COLLECTION")
+	collection := os.Getenv(mongoDbCollectionEnvName)
 	if collection == "" {
 		collection = reservationMongoDBCollection
 	}
