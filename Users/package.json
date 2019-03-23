@@ -24,7 +24,7 @@
     "async": "^2.1.5"
   },
   "devDependencies": {
-    "nodemon": "^1.18.9"
+    "nodemon": "^1.18.10"
   },
   "bugs": {
     "url": "https://github.com/ContosoBikeRental/BikeSharingSampleApp/issues"
