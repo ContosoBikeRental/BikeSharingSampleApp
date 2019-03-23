@@ -29,34 +29,28 @@
 
     We now have an AKS cluster named `bikesharingcluster` in resource group `bikesharinggroup` in the `eastus2` region with Azure Dev Spaces enabled.
 
-4. Select the `dev` parent space:
-    
-    ```
-    azds space select -n dev
-    ```
-
-5. We now need to retrieve the host suffix. To do this, run the following command and note the `HostSuffix` field's value:
+4. We now need to retrieve the host suffix. To do this, run the following command and note the `HostSuffix` field's value:
 
     ```
     azds show-context
     ```
 
-6. We have to update some of our code with this host suffix. Open the `./chart/values.yaml` file and replace the occurrences of `<REPLACE_ME_WITH_HOST_SUFFIX>` in this file with the host suffix.
+5. We have to update some of our code with this host suffix. Open the `./chart/values.yaml` file and replace the occurrences of `<REPLACE_ME_WITH_HOST_SUFFIX>` in this file with the host suffix.
 
-7. From the source repository's root folder, navigate to the `chart` folder:
+6. From the source repository's root folder, navigate to the `chart` folder:
 
     ```
     cd chart
     ```
 
-8. Run the app's API and Data services:
+7. Run the app's API and Data services:
 
     ```
     helm init --wait
     helm install -n bikesharing . --dep-up --namespace dev --wait
     ```
 
-9. Run `azds list-uris` to display the web frontend's url, and open it in a browser. Select one of the sample customer accounts to sign into the web app.
+8. Run `azds list-uris` to display the web frontend's url, and open it in a browser. Select one of the sample customer accounts to sign into the web app.
 
 
 ## Set the app's state for the demo
