@@ -24,7 +24,7 @@ const helpers = {
         }
 
         // User stored locally isn't valid anymore. Let's clear the local data.
-        clearUserCookie();
+        this.clearUserCookie();
         return null;
     },
     storeUserCookie: function(userId) {
