@@ -61,7 +61,7 @@ export default class Review extends Component {
                         </div>
                         <div className="row">
                             <div className="col col-sm-3"><FormButton>Comfortable</FormButton></div>
-                            <div className="col col-sm-3"><FormButton>Good breaks</FormButton></div>
+                            <div className="col col-sm-3"><FormButton>Good brakes</FormButton></div>
                             <div className="col col-sm-3"><FormButton>Easy pick-up</FormButton></div>
                             <div className="col col-sm-3"><FormButton>Smooth ride</FormButton></div>
                         </div>

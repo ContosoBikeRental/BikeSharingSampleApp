@@ -100,6 +100,8 @@ export default class Index extends Component {
             <Page>
                 <Header userName={this.state.userName} />
                 <Content>
+                    <div className="bikesListTitle">Bikes available in Seattle area</div>
+                    <div className="bikesListSubtitle">A selection of bikes that are best suited for your preferences.</div>
                     <div className="row">
                         <div className="col-md-6">
                             {listBikes(this.state.bikes, isOdd)}
@@ -110,6 +112,17 @@ export default class Index extends Component {
                     </div>
                     <ErrorPanel errorMessage={this.state.errorMessage} />
                 </Content>
+                <style jsx>{`
+                    .bikesListTitle {
+                        font-size: 20px;
+                        font-weight: bold;
+                    }
+
+                    .bikesListSubtitle {
+                        font-size: 16px;
+                        margin-bottom: 12px;
+                    }
+                `}</style>
             </Page>
         );
     }

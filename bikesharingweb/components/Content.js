@@ -4,7 +4,7 @@ const Content = (props) => (
     <br /><br /><br /><br />
     <style jsx>{`
       .content-container {
-        padding-top: 10px;
+        padding-top: 28px;
         padding-bottom: 10px;
         margin:auto;
         width: 90%;
