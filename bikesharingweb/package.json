@@ -19,9 +19,8 @@
   },
   "scripts": {
     "dev": "nodemon server.js -w server.js -w server -w universal -w next.config.js -w config.js -w package.json",
-    "build": "next build",
     "export": "next export -o html",
-    "start": "NODE_ENV=production node server.js",
+    "start": "next build && NODE_ENV=production node server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
