@@ -1,7 +1,6 @@
-import React, { Component } from 'react'
-import Router from 'next/router'
+import { Component } from 'react'
 
-export default class FormButton extends React.Component {
+export default class FormButton extends Component {
 
     constructor (props) {
         super(props);
@@ -22,6 +21,7 @@ export default class FormButton extends React.Component {
                         font-size: 14px;
                         max-width: 250px;
                     }
+
                     .primary {
                         background-color: #E67938;
                         border-color: #E67938;

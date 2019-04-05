@@ -75,9 +75,6 @@ func CreateMongoConnection() *MongoHelper {
 	}
 	fmt.Println("Connected to Mongo")
 
-	//mongoSession.SetMode(mgo.PrimaryPreferred, true)
-	//mongoSession.SetSafe(&mgo.Safe{WMode: "majority"})
-
 	db := os.Getenv(mongoDbNameEnvName)
 	if db == "" {
 		db = reservationMongoDBDatabase

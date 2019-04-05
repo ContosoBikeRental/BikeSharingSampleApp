@@ -3,7 +3,6 @@
 // --------------------------------------------------------------------------------------------
 
 using System;
-using Amqp;
 using app.Logging;
 using app.Middleware;
 using Microsoft.AspNetCore.Builder;
@@ -11,7 +10,6 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 
 namespace app
 {
@@ -59,8 +57,6 @@ namespace app
             Configuration.GetSection("ApplicationInsights").Bind(applicationInsights);
             var instrumentationKey = Environment.GetEnvironmentVariable(Constants.ApplicationInsightsKeyEnv) ?? applicationInsights.InstrumentationKey;
             services.AddApplicationInsightsTelemetry(instrumentationKey);
-
-
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

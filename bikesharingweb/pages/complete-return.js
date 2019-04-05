@@ -6,16 +6,13 @@ import Field from "../components/Field"
 import FormNote from "../components/FormNote"
 import FormButton from "../components/FormButton"
 import Map from "../components/Map"
-import Link from 'next/link'
 import Footer from '../components/Footer'
-import { withRouter } from 'next/router'
 import MediaQuery from 'react-responsive'
 import helpers from './helpers';
 import Router from 'next/router'
 import ErrorPanel from '../components/ErrorPanel'
 
 export default class CompleteReturn extends Component {
-
 
     constructor(props) {
         super(props);
@@ -136,29 +133,32 @@ export default class CompleteReturn extends Component {
                     </Footer>
                 </MediaQuery>
                 <style jsx>{`
-            .divider {
-                padding-top: 10px;
-            }
-            img {
-                width: 100%;
-                max-width: 400px;
-            }
-            .details-container {
-                padding-top: 11px;
-                letter-spacing: 0.5px;
-            }
-            .title {
-                font-size: 18px;
-                padding-top: 10px;
-                letter-spacing: 1px;
-                font-weight: 600;
-            }
-            .owner {
-                font-size: 13px;
-            }
-        `}</style>
+                    .divider {
+                        padding-top: 10px;
+                    }
+
+                    img {
+                        width: 100%;
+                        max-width: 400px;
+                    }
+
+                    .details-container {
+                        padding-top: 11px;
+                        letter-spacing: 0.5px;
+                    }
+
+                    .title {
+                        font-size: 18px;
+                        padding-top: 10px;
+                        letter-spacing: 1px;
+                        font-weight: 600;
+                    }
+
+                    .owner {
+                        font-size: 13px;
+                    }
+                `}</style>
             </Page>
         )
     }
-
-    }
+}

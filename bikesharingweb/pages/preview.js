@@ -1,3 +1,4 @@
+import { Component } from 'react'
 import Page from "../components/Page"
 import Header from "../components/Header"
 import Content from "../components/Content"
@@ -5,17 +6,15 @@ import Field from "../components/Field"
 import FormNote from "../components/FormNote"
 import FormButton from "../components/FormButton"
 import Map from "../components/Map"
-import Link from 'next/link'
 import Footer from '../components/Footer'
 import { withRouter } from 'next/router'
 import MediaQuery from 'react-responsive'
 import fetch from 'isomorphic-fetch'
 import Router from 'next/router'
-import Cookies from 'universal-cookie'
 import helpers from './helpers.js'
 import ErrorPanel from '../components/ErrorPanel'
 
-class PreviewBase extends React.Component {
+class PreviewBase extends Component {
 
     constructor(props) {
         super(props);
@@ -130,7 +129,6 @@ class PreviewBase extends React.Component {
                         <div className="col-sm-6">
                             <div className="details-container">
                                 <div className="title">{this.state.bike.model}</div>
-                                {/* <div className="owner">Owned by {this.state.bike.ownerUserId}</div> */}
                                 <div className="owner">Owned by {this.state.vendor.name}</div>
                                 <Field label="Price per hour" value={"$" + this.state.bike.hourlyCost} />
                                 <FormNote text="Charging card ending with 1732" />
@@ -159,44 +157,47 @@ class PreviewBase extends React.Component {
                     </Footer>
                 </MediaQuery>
                 <style jsx>{`
-            .footer-content {
-                width: 80%;
-                margin-left: auto;
-                margin-right: auto;
-            }
-        `}</style>
-                <style jsx>{`
-            .divider {
-                padding-top: 10px;
-            }
-            img {
-                padding-top: 11px;
-                width: 100%;
-                max-width: 400px;
-            }
-            .details-container {
-                padding-top: 11px;
-                letter-spacing: 0.5px;
-            }
-            .title {
-                font-size: 18px;
-                padding-top: 10px;
-                letter-spacing: 1px;
-                font-weight: 600;
-            }
-            .owner {
-                font-size: 13px;
-            }
-            @media only screen and (min-width: 600px) {
-                .title {
-                    font-size: 18px;
-                    padding-top: 0px;
-                    letter-spacing: 1px;
-                    font-weight: 600;
-                }   
-            }
+                    .footer-content {
+                        width: 80%;
+                        margin-left: auto;
+                        margin-right: auto;
+                    }
 
-        `}</style>
+                    .divider {
+                        padding-top: 10px;
+                    }
+
+                    img {
+                        padding-top: 11px;
+                        width: 100%;
+                        max-width: 400px;
+                    }
+
+                    .details-container {
+                        padding-top: 11px;
+                        letter-spacing: 0.5px;
+                    }
+
+                    .title {
+                        font-size: 18px;
+                        padding-top: 10px;
+                        letter-spacing: 1px;
+                        font-weight: 600;
+                    }
+
+                    .owner {
+                        font-size: 13px;
+                    }
+
+                    @media only screen and (min-width: 600px) {
+                        .title {
+                            font-size: 18px;
+                            padding-top: 0px;
+                            letter-spacing: 1px;
+                            font-weight: 600;
+                        }   
+                    }
+                `}</style>
             </Page>
         )
     }

@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 
 export default class ErrorPanel extends Component {
+
     constructor(props) {
         super(props);
     }

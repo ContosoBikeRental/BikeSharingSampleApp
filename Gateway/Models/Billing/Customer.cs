@@ -1,7 +1,3 @@
-using Newtonsoft.Json;
-using System.ComponentModel.DataAnnotations;
-using System;
-
 namespace app.Models
 {
     public class Customer : ICustomer

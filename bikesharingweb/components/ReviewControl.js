@@ -1,8 +1,7 @@
-import React, { Component } from 'react'
-import Router from 'next/router'
+import { Component } from 'react'
 import Rating from 'react-rating'
 
-export default class ReviewControl extends React.Component {
+export default class ReviewControl extends Component {
 
     constructor(props) {
         super(props);
@@ -25,10 +24,12 @@ export default class ReviewControl extends React.Component {
                     h1 {
                         text-align: center;
                     }
+
                     .far, .fas {
                         margin: 6px;
                         margin-bottom: 15px;
                     }
+
                     @media only screen and (max-width: 340px) {
                         h1 {
                             font-size: 34px;

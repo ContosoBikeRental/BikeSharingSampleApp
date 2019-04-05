@@ -1,5 +1,3 @@
-using System;
-
 namespace app
 {
     public class Services
@@ -9,6 +7,7 @@ namespace app
         public string Bikes { get; set; }
 
         public string Reservations { get; set; }
+
         public string ReservationEngine { get; set; }
 
         public string Billing { get; set; }

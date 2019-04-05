@@ -146,11 +146,6 @@ app.get('/api/allbikes', function(req, res) {
 
 // new bike ------------------------------------------------------------
 app.post('/api/bikes', function (req, res) {
-    // TEMPORARY If ImageUrl is not set, set a temp image
-    if (!req.body || !req.body.imageUrl) {
-        req.body.imageUrl = "https://contosobikerental.blob.core.windows.net/public/images/sample-bike-3.jpg"
-    }
-
     var requestID = req.header(requestIDHeaderName);
     var validationErrors = validate(req.body, incomingBikeSchema);
     if (validationErrors) {
@@ -176,11 +171,6 @@ app.post('/api/bikes', function (req, res) {
 
 // update bike ------------------------------------------------------------
 app.put('/api/bikes/:bikeId', function(req, res) {
-    // TEMPORARY If ImageUrl is not set, set a temp image
-    if (!req.body || !req.body.imageUrl) {
-        req.body.imageUrl = "https://contosobikerental.blob.core.windows.net/public/images/sample-bike-3.jpg"
-    }
-
     var requestID = req.header(requestIDHeaderName);
     var validationErrors = validate(req.body, incomingBikeSchema);
     if (validationErrors) {

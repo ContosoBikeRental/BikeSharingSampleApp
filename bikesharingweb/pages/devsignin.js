@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import { Component } from 'react'
 import Page from "../components/Page"
 import Content from "../components/Content"
 import SigninFormLayout from '../components/SigninFormLayout'

@@ -13,16 +13,16 @@ const Page = (props) => (
         </Head>
         {props.children}
         <style jsx global>{`
-        html, body { 
-            font-family: 'Heebo', san-serif;
-            color: #688379;
-            min-width: 385px;
-        }
+            html, body { 
+                font-family: 'Heebo', san-serif;
+                color: #688379;
+                min-width: 385px;
+            }
 
-        a, p, div, br {
-            font-size: 14px;
-        }
-      `}</style>
+            a, p, div, br {
+                font-size: 14px;
+            }
+        `}</style>
     </div>
 )
 
