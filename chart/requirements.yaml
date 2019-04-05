@@ -4,7 +4,7 @@ dependencies:
     repository: "file://../Bikes/charts/bikes"
   - name: bikesharingweb
     version: 0.1.0
-    repository: "file://../bikesharingweb/charts/bikesharingweb"
+    repository: "file://../BikeSharingWeb/charts/bikesharingweb"
   - name: billing
     version: 0.1.0
     repository: "file://../Billing/charts/billing"
