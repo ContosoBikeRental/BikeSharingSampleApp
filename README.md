@@ -35,12 +35,12 @@
     azds show-context
     ```
 
-1. We have to update some of our code with this host suffix. Open the `./chart/values.yaml` file and replace the occurrences of `<REPLACE_ME_WITH_HOST_SUFFIX>` in this file with the host suffix.
+1. We have to update some of our code with this host suffix. Open the `./charts/values.yaml` file and replace the occurrences of `<REPLACE_ME_WITH_HOST_SUFFIX>` in this file with the host suffix.
 
-1. From the source repository's root folder, navigate to the `chart` folder:
+1. From the source repository's root folder, navigate to the `charts` folder:
 
     ```
-    cd chart
+    cd charts
     ```
 
 1. Run the app's API and Data services:
