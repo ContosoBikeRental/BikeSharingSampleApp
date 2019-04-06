@@ -149,7 +149,7 @@ class CurrentRideBase extends Component {
                                 <Field label="Pick-up/return address" value={this.state.bike.address} />
                                 <MediaQuery minWidth={600}>
                                     <div className="divider">
-                                        <FormButton primary url="/current-ride" onClick={this.handleClick.bind(this)}>Return bike</FormButton>
+                                        <FormButton primary onClick={this.handleClick.bind(this)}>Return bike</FormButton>
                                     </div>
                                 </MediaQuery>
                             </div>
@@ -162,7 +162,7 @@ class CurrentRideBase extends Component {
                 </Content>
                 <MediaQuery maxWidth={600}>
                     <Footer>
-                        <FormButton primary url="/current-ride" onClick={this.handleClick.bind(this)}>Return bike</FormButton>
+                        <FormButton primary onClick={this.handleClick.bind(this)}>Return bike</FormButton>
                     </Footer>
                 </MediaQuery>
                 <style jsx>{`

@@ -60,16 +60,16 @@ export default class Review extends Component {
                             <ReviewControl />
                         </div>
                         <div className="row">
-                            <div className="col col-sm-3"><FormButton>Comfortable</FormButton></div>
-                            <div className="col col-sm-3"><FormButton>Good brakes</FormButton></div>
-                            <div className="col col-sm-3"><FormButton>Easy pick-up</FormButton></div>
-                            <div className="col col-sm-3"><FormButton>Smooth ride</FormButton></div>
+                            <div className="col col-sm-3"><FormButton onClick={this.handleClick.bind(this)}>Comfortable</FormButton></div>
+                            <div className="col col-sm-3"><FormButton onClick={this.handleClick.bind(this)}>Good brakes</FormButton></div>
+                            <div className="col col-sm-3"><FormButton onClick={this.handleClick.bind(this)}>Easy pick-up</FormButton></div>
+                            <div className="col col-sm-3"><FormButton onClick={this.handleClick.bind(this)}>Smooth ride</FormButton></div>
                         </div>
                         <textarea placeholder="Additional notes"></textarea>
 
                         <MediaQuery minWidth={600}>
                             <div className="divider">
-                                <FormButton primary url="/index" onClick={this.handleClick.bind(this)}>Submit</FormButton>
+                                <FormButton primary onClick={this.handleClick.bind(this)}>Submit</FormButton>
                             </div>
                         </MediaQuery>
                     </div>
@@ -77,7 +77,7 @@ export default class Review extends Component {
                 </Content>
                 <MediaQuery maxWidth={600}>
                     <Footer>
-                        <FormButton primary url="/index" onClick={this.handleClick.bind(this)}>Submit</FormButton>
+                        <FormButton primary onClick={this.handleClick.bind(this)}>Submit</FormButton>
                     </Footer>
                 </MediaQuery>
                 <style jsx>{`
