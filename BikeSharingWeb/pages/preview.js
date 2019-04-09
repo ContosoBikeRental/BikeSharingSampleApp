@@ -1,3 +1,6 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
 import { Component } from 'react'
 import Page from "../components/Page"
 import Header from "../components/Header"

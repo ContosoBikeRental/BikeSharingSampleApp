@@ -1,4 +1,7 @@
-﻿namespace app.Models.Reservations
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+namespace app.Models.Reservations
 {
     public enum ReservationState
     {

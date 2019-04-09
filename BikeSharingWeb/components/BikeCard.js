@@ -1,3 +1,6 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
 const BikeCard = (props) => (
     <div className="outer">
         <div className="media">

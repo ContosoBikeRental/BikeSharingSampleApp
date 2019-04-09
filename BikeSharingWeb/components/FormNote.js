@@ -1,3 +1,6 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
 const FormNote = (props) => (
     <div className="fine-label">{props.text}
     <style jsx>{`

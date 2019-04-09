@@ -1,3 +1,6 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
 var os = require('os');
 var request = require('request');
 var morgan = require('morgan');

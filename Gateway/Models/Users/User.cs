@@ -1,4 +1,7 @@
-﻿namespace app.Models
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+namespace app.Models
 {
     public class User : IUser
     {
