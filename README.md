@@ -18,7 +18,7 @@
 1. Create a Kubernetes cluster in AKS:
 
     ```
-    az aks create -g bikesharinggroup -n bikesharingcluster --location eastus2 --kubernetes-version 1.12.5 --node-vm-size Standard_DS2_v2 --node-count 1 --generate-ssh-keys --disable-rbac
+    az aks create -g bikesharinggroup -n bikesharingcluster --location eastus2 --node-vm-size Standard_DS2_v2 --node-count 1 --generate-ssh-keys --disable-rbac
     ```
 
 1. Enable Azure Dev Spaces for the cluster we just created:
