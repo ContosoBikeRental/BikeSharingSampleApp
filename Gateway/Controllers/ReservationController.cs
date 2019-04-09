@@ -15,8 +15,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-
 namespace app.Controllers
 {
     [Route("api/reservation")]
@@ -49,7 +47,6 @@ namespace app.Controllers
         // POST: api/reservationengine
         private async Task<IActionResult> _UpdateReservation(Reservation reservationDetails)
         {
-            // return await HttpHelper.ReturnResponseResult(response);
             string updateReservationUrl = $"http://{_reservationEngineService}/api/reservationengine";
             var response = await HttpHelper.PostAsync(updateReservationUrl, new StringContent(
                 JsonConvert.SerializeObject(reservationDetails), Encoding.UTF8, "application/json"), this.Request);

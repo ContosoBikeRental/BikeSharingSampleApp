@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import { Component } from 'react'
 import Page from "../components/Page"
 import Header from "../components/Header"
 import Content from "../components/Content"
@@ -10,8 +10,8 @@ import Router from 'next/router'
 import ReviewControl from "../components/ReviewControl"
 import ErrorPanel from '../components/ErrorPanel'
 
-
 export default class Review extends Component {
+
     constructor(props) {
         super(props);
         this.state = {
@@ -81,30 +81,34 @@ export default class Review extends Component {
                     </Footer>
                 </MediaQuery>
                 <style jsx>{`
-            .divider {
-                padding-top: 30px;
-            }
-            textarea {
-                width: 100%;
-                height: 295px;
-                border-color: #C4C4C4;
-                margin-top: 10px;
-                resize: none;
-                padding: 5px;
-            }
-            .review-control {
-                padding-top: 25px;
-                padding-bottom: 8px;
-            }
-            .details-container {
-                text-align: center;
-            }
-            @media only screen and (min-width: 1024px) {
-                .details-container {
-                    max-width: 800px;
-                }   
-            }
-        `}</style>
+                    .divider {
+                        padding-top: 30px;
+                    }
+
+                    textarea {
+                        width: 100%;
+                        height: 295px;
+                        border-color: #C4C4C4;
+                        margin-top: 10px;
+                        resize: none;
+                        padding: 5px;
+                    }
+
+                    .review-control {
+                        padding-top: 25px;
+                        padding-bottom: 8px;
+                    }
+
+                    .details-container {
+                        text-align: center;
+                    }
+
+                    @media only screen and (min-width: 1024px) {
+                        .details-container {
+                            max-width: 800px;
+                        }   
+                    }
+                `}</style>
             </Page>
         )
     }

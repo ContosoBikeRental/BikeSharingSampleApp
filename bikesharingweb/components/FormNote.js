@@ -9,6 +9,6 @@ const FormNote = (props) => (
         }
     `}</style>
     </div >
-  )
+)
 
 export default FormNote

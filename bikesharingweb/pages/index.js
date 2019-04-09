@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import { Component } from 'react'
 import Page from "../components/Page"
 import Header from "../components/Header"
 import Content from "../components/Content"
@@ -10,6 +10,7 @@ import helpers from './helpers.js'
 import ErrorPanel from '../components/ErrorPanel'
 
 export default class Index extends Component {
+
     constructor(props) {
         super(props);
         this.state = {

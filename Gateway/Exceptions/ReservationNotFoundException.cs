@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace app.Exceptions
 {
@@ -9,8 +6,6 @@ namespace app.Exceptions
     {
         public ReservationNotFoundException(string reservationId)
             : base($"Couldn't find reservation with ID: {reservationId}")
-        {
-
-        }
+        {}
     }
 }

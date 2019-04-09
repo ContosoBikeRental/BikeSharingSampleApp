@@ -30,9 +30,6 @@ func ValidateVendor(ven Vendor) error {
 	var errorSlice []string
 	var zeroString string
 
-	// if ven.ID != zeroString {
-	// 	errorSlice = append(errorSlice, "Must not specify ID string")
-	// }
 	if ven.UserID == zeroString {
 		errorSlice = append(errorSlice, "Must specify UserID string")
 	}

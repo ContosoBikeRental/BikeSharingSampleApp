@@ -14,7 +14,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 namespace app.Controllers
 {
     [Route("api/bike")]
@@ -170,26 +169,10 @@ namespace app.Controllers
         // GET: /api/bike/availableBikes
         // TODO: Add query filters.
         [HttpGet("availableBikes")]
-        public async Task<IActionResult> FindAvailableBike()
+        public async Task<IActionResult> FindAvailableBikes()
         {
             string findAvailableBikesUrl = $"http://{_bikesService}/api/availableBikes";
             var response = await HttpHelper.GetAsync(findAvailableBikesUrl, this.Request);
-            if (response.IsSuccessStatusCode)
-            {
-                var foundBikes = JsonConvert.DeserializeObject<List<Bike>>(await response.Content.ReadAsStringAsync());
-                return new JsonResult(foundBikes);
-            }
-
-            return await HttpHelper.ReturnResponseResult(response);
-        }
-
-        // GET: /api/bike/allBikes
-        // TODO: remove
-        [HttpGet("allBikes")]
-        public async Task<IActionResult> GetAllBikes()
-        {
-            string getAllBikesUrl = $"http://{_bikesService}/api/allbikes";
-            var response = await HttpHelper.GetAsync(getAllBikesUrl, this.Request);
             if (response.IsSuccessStatusCode)
             {
                 var foundBikes = JsonConvert.DeserializeObject<List<Bike>>(await response.Content.ReadAsStringAsync());

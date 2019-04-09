@@ -16,39 +16,39 @@ const Header = (props) => (
         }
         </div>
         <style jsx>{`
-        .row {
-            background-color: #fff;
-            min-height: 48px;
-            box-shadow:0px 2px 10px rgba(65, 65, 65, 0.25);
-        }
+            .row {
+                background-color: #fff;
+                min-height: 48px;
+                box-shadow:0px 2px 10px rgba(65, 65, 65, 0.25);
+            }
 
-        div {
-            padding: 0;
-            margin: 0;
-        }
-        
-        .userMenu {
-            padding-top: 13px;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-            text-align: right;
-        }
+            div {
+                padding: 0;
+                margin: 0;
+            }
+            
+            .userMenu {
+                padding-top: 13px;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                text-align: right;
+            }
 
-        .userSignOut {
-            margin-right: 14px;
-            margin-left: 10px;
-            cursor: pointer;
-            color: #000000;
-            letter-spacing: 0.05em;
-            font-size: 16px;
-        }
+            .userSignOut {
+                margin-right: 14px;
+                margin-left: 10px;
+                cursor: pointer;
+                color: #000000;
+                letter-spacing: 0.05em;
+                font-size: 16px;
+            }
 
-        .logo {
-            padding-top: 12px;
-            text-align: center;
-        }
-      `}</style>
+            .logo {
+                padding-top: 12px;
+                text-align: center;
+            }
+        `}</style>
     </div>
 )
 

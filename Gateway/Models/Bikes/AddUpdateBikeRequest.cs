@@ -14,7 +14,7 @@ namespace app.Models
         public float? HourlyCost { get; set; }
 
         [JsonProperty("imageUrl")]
-        //TODO [Required]
+        [Required]
         public string ImageUrl { get; set; }
 
         [JsonProperty("address")]

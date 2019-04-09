@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using app.Logging;
 using Microsoft.AspNetCore.Http;
@@ -21,7 +17,6 @@ namespace app.Middleware
 
         public async Task Invoke(HttpContext context)
         {
-            //LogUtility.LogWithContext("Beginning request");
             Stopwatch stopWatch = Stopwatch.StartNew();
             var responseStream = context.Response.Body;
             string responseBody = null;
