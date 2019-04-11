@@ -1,3 +1,6 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
 const Logo = (props) => (
     <div>
         <img src="/static/logo.svg" alt="Adventure Works Cycles" />

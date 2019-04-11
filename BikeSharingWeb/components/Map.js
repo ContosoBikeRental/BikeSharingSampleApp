@@ -1,3 +1,6 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
 const Map = (props) => (
     <div>
         <img src="/static/sample-map.png" alt="map of bike location" />
