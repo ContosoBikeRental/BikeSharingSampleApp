@@ -6,11 +6,8 @@
     "express": "^4.13.4",
     "morgan": "^1.7.0",
     "mongodb": "^2.2.24",
-    "request": "^2.71.0",
     "body-parser": "^1.16.1",
-    "flat": "^2.0.1",
     "validate.js": "^0.11.1",
-    "underscore": "^1.8.3",
     "async": "^2.1.5"
   },
   "devDependencies": {
