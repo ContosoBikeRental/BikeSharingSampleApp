@@ -5,7 +5,7 @@ fullnameOverride: billing
 replicaCount: 1
 image:
   repository: azdspublic/bikesharing-billing
-  tag: latest
+  tag: 20190416.1
   pullPolicy: IfNotPresent
 imagePullSecrets: []
   # Optionally specify an array of imagePullSecrets.
