@@ -4,7 +4,7 @@ build:
   context: .
   dockerfile: Dockerfile
 install:
-  chart: charts/users
+  chart: ../UsersDeployFiles/charts/users
   values:
   - values.dev.yaml?
   - secrets.dev.yaml?
@@ -13,7 +13,7 @@ install:
     image:
       repository: users
       tag: $(tag)
-      pullPolicy: Never
+      pullPolicy: IfNotPresent
     ingress:
       annotations:
         kubernetes.io/ingress.class: traefik-azds
