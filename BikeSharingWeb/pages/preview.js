@@ -141,7 +141,7 @@ class PreviewBase extends Component {
                                 {this.state.vendor.name != null &&
                                     <div className="owner" tabIndex="0">Owned by {this.state.vendor.name}</div>
                                 }
-                                <Field label="Price per hour" value={this.state.bike.hourlyCost ? "$" + this.state.bike.hourlyCost : ""} />
+                                <Field label="Price per hour" value={this.state.bike.hourlyCost ? `$${this.state.bike.hourlyCost}` : ``} />
                                 <FormNote text="Charging card ending with 1732" />
                                 <Field label="Suggested rider height (meters)" value={this.state.bike.suitableHeightInMeters} />
                                 <Field label="Max weight (kg)" value={this.state.bike.maximumWeightInKg} />

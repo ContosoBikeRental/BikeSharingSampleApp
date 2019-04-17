@@ -47,6 +47,11 @@ class CurrentRideBase extends Component {
             return;
         }
 
+        this.setState({
+            userId: user.id,
+            userName: user.name
+        });
+
         let reservation = null;
         try {
             // get reservation
@@ -65,6 +70,10 @@ class CurrentRideBase extends Component {
             return;
         }
 
+        this.setState({
+            reservation: reservation
+        });
+
         let bike = null;
         try {
             // get bike
@@ -75,6 +84,10 @@ class CurrentRideBase extends Component {
             this.setState({errorMessage: `Error while retrieving bike's data. Make sure that your Gateway and Bikes services are up and running (run "azds list-up"). Details: ${error.message}`});
             return;
         }
+
+        this.setState({
+            bike: bike
+        });
 
         let vendor = null;
         try {
@@ -87,14 +100,9 @@ class CurrentRideBase extends Component {
             return;
         }
 
-        // Set state.
         this.setState({
-            userId: user.id,
-            userName: user.name,
-            reservation: reservation,
-            bike: bike,
             vendor: vendor
-        })
+        });
     }
 
     // handle return bike
@@ -136,16 +144,21 @@ class CurrentRideBase extends Component {
                 <Content>
                     <div className="row">
                         <div className="col-sm-6">
-                            <img src={this.state.bike.imageUrl} alt="photo of bike" />
+                            {this.state.bike.imageUrl != null &&
+                                <img src={this.state.bike.imageUrl} alt="photo of bike" />
+                            }
                         </div>
                         <div className="col-sm-6">
                             <div className="details-container">
-                                <div className="title" tabIndex="0">You've rented a {this.state.bike.model}</div>
-                                <div className="owner" tabIndex="0">Owned by {this.state.vendor.name}</div>
-
+                                {this.state.bike.model != null &&
+                                    <div className="title" tabIndex="0">You've rented a {this.state.bike.model}</div>
+                                }
+                                {this.state.vendor.name != null &&
+                                    <div className="owner" tabIndex="0">Owned by {this.state.vendor.name}</div>
+                                }
                                 <div className="row">
                                     <div className="col">
-                                        <Field label="Price per hour" value={"$" + this.state.bike.hourlyCost} />
+                                        <Field label="Price per hour" value={this.state.bike.hourlyCost ? `$${this.state.bike.hourlyCost}` : ``} />
                                         <FormNote text="Charging card ending with 1732" />
                                     </div>
                                 </div>

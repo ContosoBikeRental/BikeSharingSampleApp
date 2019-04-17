@@ -25,6 +25,11 @@ export default class FormButton extends Component {
                         max-width: 250px;
                     }
 
+                    .btn:hover {
+                        background-color: #536B62;
+                        border-color: #536B62;
+                    }
+
                     .primary {
                         background-color: #E67938;
                         border-color: #E67938;
