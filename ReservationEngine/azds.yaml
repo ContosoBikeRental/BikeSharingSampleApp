@@ -2,9 +2,9 @@ kind: helm-release
 apiVersion: 1.1
 build:
   context: .
-  dockerfile: Dockerfile
+  dockerfile: Files/Dockerfile
 install:
-  chart: charts/reservationengine
+  chart: ../ReservationEngineDeployFiles/charts/reservationengine
   values:
   - values.dev.yaml?
   - secrets.dev.yaml?
@@ -13,7 +13,7 @@ install:
     image:
       repository: reservationengine
       tag: $(tag)
-      pullPolicy: Never
+      pullPolicy: IfNotPresent
     ingress:
       annotations:
         kubernetes.io/ingress.class: traefik-azds
@@ -23,7 +23,7 @@ install:
 configurations:
   develop:
     build:
-      dockerfile: Dockerfile.develop
+      dockerfile: Files/Dockerfile.develop
       useGitIgnore: true
       args:
         BUILD_CONFIGURATION: ${BUILD_CONFIGURATION:-Debug}
