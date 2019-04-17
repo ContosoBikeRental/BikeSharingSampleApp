@@ -95,7 +95,7 @@ function requestIDParser(req, res, next) {
 // api ------------------------------------------------------------
 
 // find bike ------------------------------------------------------------
-app.get('/api/availableBikes', function (req, res) {
+app.get('/api/availableBikes1', function (req, res) {
     var requestID = req.header(requestIDHeaderName);
     
     var query = {};
