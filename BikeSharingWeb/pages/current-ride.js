@@ -140,8 +140,8 @@ class CurrentRideBase extends Component {
                         </div>
                         <div className="col-sm-6">
                             <div className="details-container">
-                                <div className="title">You've rented a {this.state.bike.model}</div>
-                                <div className="owner">Owned by {this.state.vendor.name}</div>
+                                <div className="title" tabIndex="0">You've rented a {this.state.bike.model}</div>
+                                <div className="owner" tabIndex="0">Owned by {this.state.vendor.name}</div>
 
                                 <div className="row">
                                     <div className="col">

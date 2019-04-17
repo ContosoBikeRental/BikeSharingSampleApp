@@ -63,7 +63,7 @@ export default class DevSignin extends Component {
                         <br /><br />
                         {this.state.users.length > 0 &&
                             <form>
-                                <div className={"userSelectionHeader"}>Select a test user:</div>
+                                <p className={"userSelectionHeader"} tabIndex="0">Select a test user:</p>
                                 {this.state.users.map((user, index) => (
                                     <FormButton key={index} primary onClick={this.handleClick.bind(this, user.id, user.name)}>{user.name} ({user.type})</FormButton>
                                 ))}

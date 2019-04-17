@@ -5,7 +5,7 @@ const BikeCard = (props) => (
     <div className="outer">
         <div className="media">
             <img className="mr-3" src={props.imageUrl} alt="photo of bike" />
-            <div className="media-body">
+            <div className="media-body" tabIndex="0">
                 <div className="mt-0 bike-name">{props.name}</div>
                 <div>{props.address}</div>
                 <div>${props.rate}/hour</div>

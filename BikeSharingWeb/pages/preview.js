@@ -131,8 +131,8 @@ class PreviewBase extends Component {
                         </div>
                         <div className="col-sm-6">
                             <div className="details-container">
-                                <div className="title">{this.state.bike.model}</div>
-                                <div className="owner">Owned by {this.state.vendor.name}</div>
+                                <div className="title" tabIndex="0">{this.state.bike.model}</div>
+                                <div className="owner" tabIndex="0">Owned by {this.state.vendor.name}</div>
                                 <Field label="Price per hour" value={"$" + this.state.bike.hourlyCost} />
                                 <FormNote text="Charging card ending with 1732" />
                                 <Field label="Suggested rider height (meters)" value={this.state.bike.suitableHeightInMeters} />

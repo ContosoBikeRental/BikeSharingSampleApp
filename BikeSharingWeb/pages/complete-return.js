@@ -111,7 +111,7 @@ export default class CompleteReturn extends Component {
                 <Content>
                     <div className="details-container">
                         <Map />
-                        <div className="title">You're returning a {this.state.bike.model}</div>
+                        <div className="title" tabIndex="0">You're returning a {this.state.bike.model}</div>
                         <Field label="Pick-up/return address" value={this.state.bike.address} />
                         <div className="row">
                             <div className="col">
