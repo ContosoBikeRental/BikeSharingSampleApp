@@ -18,7 +18,5 @@ namespace app
         public const string RequestIdHeaderName = "x-contoso-request-id";
 
         public const string RouteAsHeaderName = "azds-route-as";
-
-        public const string ApplicationInsightsKeyEnv = "applicationinsights_instrumentationkey";
     }
 }
