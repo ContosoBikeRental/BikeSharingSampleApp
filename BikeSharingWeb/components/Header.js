@@ -47,6 +47,10 @@ const Header = (props) => (
                 font-size: 16px;
             }
 
+            .userSignOut:hover {
+                text-decoration: underline;
+            }
+
             .logo {
                 padding-top: 12px;
                 text-align: center;

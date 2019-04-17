@@ -29,6 +29,11 @@ export default class FormButton extends Component {
                         background-color: #E67938;
                         border-color: #E67938;
                     }
+
+                    .primary:hover {
+                        background-color: #C56D39;
+                        border-color: #C56D39;
+                    }
                 `}</style>
             </div>
         )

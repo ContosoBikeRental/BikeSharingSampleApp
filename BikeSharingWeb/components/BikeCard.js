@@ -35,8 +35,12 @@ const BikeCard = (props) => (
             .outer {
                 margin-top: 12px;
                 margin-right: 12px;
-                box-shadow:0px 2px 10px rgba(65, 65, 65, 0.25);
+                box-shadow: 0px 2px 10px rgba(65, 65, 65, 0.25);
                 cursor: pointer;
+            }
+
+            .outer:hover {
+                box-shadow: 0px 2px 10px rgba(65, 65, 65, 0.55);
             }
         `}</style>
     </div>

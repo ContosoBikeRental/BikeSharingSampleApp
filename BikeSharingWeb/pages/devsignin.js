@@ -34,7 +34,12 @@ export default class DevSignin extends Component {
 
             // Filtering out vendors, as we don't provide any vendors experience for now.
             users = users.filter(user => user.type != "vendor");
-    
+
+            if (users.length == 0) {
+                this.setState({errorMessage: `No users have been retrieved from the database. Make sure that your PopulateDatabase job ran successfully.`});
+                return;
+            }
+
             this.setState({users: users});
         }
         catch (error) {
