@@ -27,7 +27,7 @@ ingress:
     kubernetes.io/ingress.class: addon-http-application-routing
   path: /
   hosts:
-  - dev.gateway.9dzcdlqvkp.eus.azds.io
+  - dev.gateway.<REPLACE_ME_WITH_HOST_SUFFIX>
   tls: []
     # - secretName: chart-example-tls
     #   hosts:
