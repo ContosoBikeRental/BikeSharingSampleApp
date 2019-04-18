@@ -45,6 +45,11 @@ export default class CompleteReturn extends Component {
             return;
         }
 
+        this.setState({
+            userId: user.id,
+            userName: user.name
+        });
+
         let reservation = null;
         try {
             // get reservation
@@ -63,6 +68,10 @@ export default class CompleteReturn extends Component {
             return;
         }
 
+        this.setState({
+            reservation: reservation
+        });
+
         let bike = null;
         try {
             // get bike
@@ -73,6 +82,10 @@ export default class CompleteReturn extends Component {
             this.setState({errorMessage: `Error while retrieving bike's data. Make sure that your Gateway and Bikes services are up and running (run "azds list-up"). Details: ${error.message}`});
             return;
         }
+
+        this.setState({
+            bike: bike
+        });
 
         let invoice = null;
         try {
@@ -85,14 +98,9 @@ export default class CompleteReturn extends Component {
             return;
         }
 
-        // set state
         this.setState({
-            userId: user.id,
-            userName: user.name,
-            reservation: reservation,
-            bike: bike,
             invoice: invoice
-        })
+        });
     }
 
     // handle return bike
@@ -111,15 +119,15 @@ export default class CompleteReturn extends Component {
                 <Content>
                     <div className="details-container">
                         <Map />
-                        <div className="title">You're returning a {this.state.bike.model}</div>
+                        <div className="title" tabIndex="0">{this.state.bike.model ? `You're returning a ${this.state.bike.model}` : ``}</div>
                         <Field label="Pick-up/return address" value={this.state.bike.address} />
                         <div className="row">
                             <div className="col">
-                                <Field label="Price per hour" value={"$" + this.state.bike.hourlyCost} />
+                                <Field label="Price per hour" value={this.state.bike.hourlyCost ? `$${this.state.bike.hourlyCost}` : ``} />
                                 <FormNote text="Charging card ending with 1732" />
                             </div>
                             <div className="col">
-                                <Field label="Total cost" value={"$" + this.state.invoice.amount} />
+                                <Field label="Total cost" value={this.state.invoice.amount ? `$${this.state.invoice.amount}` : ``} />
                             </div>
                         </div>
                         <MediaQuery minWidth={600}>

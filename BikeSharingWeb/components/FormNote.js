@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 const FormNote = (props) => (
-    <div className="fine-label">{props.text}
+    <div className="fine-label" tabIndex="0">{props.text}
     <style jsx>{`
         .fine-label {
             font-weight: 100;

@@ -34,7 +34,12 @@ export default class DevSignin extends Component {
 
             // Filtering out vendors, as we don't provide any vendors experience for now.
             users = users.filter(user => user.type != "vendor");
-    
+
+            if (users.length == 0) {
+                this.setState({errorMessage: `No users have been retrieved from the database. Make sure that your PopulateDatabase job ran successfully.`});
+                return;
+            }
+
             this.setState({users: users});
         }
         catch (error) {
@@ -63,7 +68,7 @@ export default class DevSignin extends Component {
                         <br /><br />
                         {this.state.users.length > 0 &&
                             <form>
-                                <div className={"userSelectionHeader"}>Select a test user:</div>
+                                <p className={"userSelectionHeader"} tabIndex="0">Select a test user:</p>
                                 {this.state.users.map((user, index) => (
                                     <FormButton key={index} primary onClick={this.handleClick.bind(this, user.id, user.name)}>{user.name} ({user.type})</FormButton>
                                 ))}

@@ -3,7 +3,7 @@
 
 const BikeCard = (props) => (
     <div className="outer">
-        <div className="media">
+        <div className="media" tabIndex="0">
             <img className="mr-3" src={props.imageUrl} alt="photo of bike" />
             <div className="media-body">
                 <div className="mt-0 bike-name">{props.name}</div>
@@ -35,8 +35,12 @@ const BikeCard = (props) => (
             .outer {
                 margin-top: 12px;
                 margin-right: 12px;
-                box-shadow:0px 2px 10px rgba(65, 65, 65, 0.25);
+                box-shadow: 0px 2px 10px rgba(65, 65, 65, 0.25);
                 cursor: pointer;
+            }
+
+            .outer:hover {
+                box-shadow: 0px 2px 10px rgba(65, 65, 65, 0.55);
             }
         `}</style>
     </div>

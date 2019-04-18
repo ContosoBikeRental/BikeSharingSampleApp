@@ -14,7 +14,7 @@ const Header = (props) => (
         <div className="col userMenu">
         {props.userName != null &&
             <span className="userSignOut">
-                <Link href="/devsignin"><span>Hi {props.userName}</span></Link>
+                <Link href="/devsignin"><span tabIndex="0">Hi {props.userName} | Sign out</span></Link>
             </span>
         }
         </div>
@@ -45,6 +45,10 @@ const Header = (props) => (
                 color: #000000;
                 letter-spacing: 0.05em;
                 font-size: 16px;
+            }
+
+            .userSignOut:hover {
+                text-decoration: underline;
             }
 
             .logo {

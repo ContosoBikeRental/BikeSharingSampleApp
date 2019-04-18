@@ -15,7 +15,7 @@ export default class ErrorPanel extends Component {
                 {this.props.errorMessage != null &&
                     <div className={"errorPanel"}>
                         <div className={"errorPanelIcon"}></div>
-                        <div className={"errorPanelMessage"}>{this.props.errorMessage}</div>
+                        <div className={"errorPanelMessage"} tabIndex="0">{this.props.errorMessage}</div>
                     </div>
                 }
                 <style jsx>{`

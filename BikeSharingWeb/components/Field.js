@@ -3,8 +3,8 @@
 
 const Field = (props) => (
     <div>
-        <div className="fieldLabel">{props.label}</div>
-        <div className="fieldValue">{props.value}</div>
+        <div className="fieldLabel" tabIndex="0">{props.label}</div>
+        <div className="fieldValue" tabIndex="0">{props.value}</div>
         <style jsx>{`
             .fieldLabel {
                 padding-top: 12px;
