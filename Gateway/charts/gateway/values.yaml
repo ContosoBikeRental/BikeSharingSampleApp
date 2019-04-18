@@ -43,8 +43,6 @@ secrets:
     dnsname: reservationengine
   billing:
     dnsname: billing
-  applicationinsights:
-    instrumentationkey: 00000000-0000-0000-0000-000000000000
   # Optionally specify a set of secret objects whose values
   # will be injected as environment variables by default.
   # You should add this section to a file like secrets.yaml

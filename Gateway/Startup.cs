@@ -50,12 +50,6 @@ namespace app
             );
             
             services.Configure<CustomConfiguration>(Configuration.GetSection("CustomConfiguration"));
-
-            // Configure application insights.
-            var applicationInsights = new ApplicationInsights();
-            Configuration.GetSection("ApplicationInsights").Bind(applicationInsights);
-            var instrumentationKey = Environment.GetEnvironmentVariable(Constants.ApplicationInsightsKeyEnv) ?? applicationInsights.InstrumentationKey;
-            services.AddApplicationInsightsTelemetry(instrumentationKey);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
