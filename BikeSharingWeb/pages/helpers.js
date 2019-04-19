@@ -53,11 +53,11 @@ const helpers = {
         }
         return await res.json();
     },
-    getBikeAsync: async function(bikeId, apiHost) {
+    getBikeAsync: async function(bikeId, apiHost, unitType = "metric") {
         if (!apiHost) {
             apiHost = await this.getApiHostAsync();
         }
-        const url = apiHost + '/api/bike/' + bikeId;
+        const url = `${apiHost}/api/bike/${bikeId}?unitType=${unitType}`;
         const res = await fetch(url);
         if (!res.ok) {
             throw new Error(await res.text());
