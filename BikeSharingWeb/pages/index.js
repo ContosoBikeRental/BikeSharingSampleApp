@@ -104,7 +104,7 @@ export default class Index extends Component {
             <Page>
                 <Header userName={this.state.userName} />
                 <Content>
-                    <div className="bikesListTitle">Bikes available in Seattle area</div>
+                    <div className="bikesListTitle">Bikes available in your area</div>
                     <div className="bikesListSubtitle">A selection of bikes that are best suited for your preferences.</div>
                     <div className="row">
                         <div className="col-md-6">
