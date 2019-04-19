@@ -233,6 +233,10 @@ app.get('/api/bikes/:bikeId', function(req, res) {
 
         var theBike = result;
         theBike.id = theBike._id;
+        if (req.query["unitType"] == "imperial") {
+            theBike.suitableHeightInMeters = theBike.suitableHeightInMeters * 3;
+            theBike.maximumWeightInKg = theBike.maximumWeightInKg * 3;
+        }
         delete theBike._id;
 
         res.send(theBike);
