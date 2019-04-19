@@ -33,9 +33,9 @@ namespace app.Controllers
 
         // GET: api/bike/1
         [HttpGet("{bikeId}")]
-        public async Task<IActionResult> GetBike(string bikeId)
+        public async Task<IActionResult> GetBike(string bikeId, [FromQuery(Name = "unitType")] string unitType = null)
         {
-            string getBikeUrl = $"http://{_bikesService}/api/bikes/{bikeId}";
+            string getBikeUrl = $"http://{_bikesService}/api/bikes/{bikeId}?unitType={unitType}";
             var response = await HttpHelper.GetAsync(getBikeUrl, this.Request);
             if (response.IsSuccessStatusCode)
             {
