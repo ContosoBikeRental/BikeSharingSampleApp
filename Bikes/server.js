@@ -13,8 +13,11 @@ var ObjectId = require('mongodb').ObjectID;
 var express = require('express');
 var async = require('async');
 
-var mongoDBCollection = process.env.mongo_collection;
-var mongoDBConnStr = process.env.mongo_connectionstring;
+// var mongoDBCollection = process.env.mongo_collection;
+var mongoDBCollection = "bikes";
+// var mongoDBConnStr = "mongodb://databases-mongo";
+var mongoDBConnStr = "mongodb://" + process.env.mongo_connectionstring + ":" + process.env.mongo_port;
+
 console.log("Collection: " + mongoDBCollection);
 console.log("MongoDB connection string: " + mongoDBConnStr);
 
