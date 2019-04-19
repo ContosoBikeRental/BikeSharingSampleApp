@@ -24,6 +24,7 @@ class PreviewBase extends Component {
         this.state = {
             userId: undefined,
             userName: undefined,
+            unitType: undefined,
             bike: {},
             vendor: {},
             errorMessage: undefined
@@ -46,16 +47,27 @@ class PreviewBase extends Component {
             return;
         }
 
+        const unitType = "imperial";
+        this.setState({
+            userId: user.id,
+            userName: user.name,
+            unitType: unitType
+        });
+
         let bikeData = null;
         try {
             // get bike
-            bikeData = await helpers.getBikeAsync(this.props.bikeId, this.apiHost);
+            bikeData = await helpers.getBikeAsync(this.props.bikeId, this.apiHost, unitType);
         }
         catch (error) {
             console.error(error);
             this.setState({errorMessage: `Error while retrieving bike's data. Make sure that your Gateway and Bikes services are up and running (run "azds list-up"). Details: ${error.message}`});
             return;
         }
+
+        this.setState({
+            bike: bikeData
+        });
 
         let vendorData = null;
         try {
@@ -68,15 +80,11 @@ class PreviewBase extends Component {
             return;
         }
 
-        // set state
         this.setState({
-            userId: user.id,
-            userName: user.name,
-            bike: bikeData,
             vendor: vendorData
-        })
+        });
     }
-    
+
     static async getInitialProps(context) {
         return {
             bikeId: context.query.id
@@ -124,19 +132,22 @@ class PreviewBase extends Component {
             <Page>
                 <Header userName={this.state.userName} />
                 <Content>
-
                     <div className="row">
                         <div className="col-sm-6">
-                            <img src={this.state.bike.imageUrl} alt="photo of bike" />
+                            {this.state.bike.imageUrl != null &&
+                                <img src={this.state.bike.imageUrl} alt="photo of bike" />
+                            }
                         </div>
                         <div className="col-sm-6">
                             <div className="details-container">
-                                <div className="title">{this.state.bike.model}</div>
-                                <div className="owner">Owned by {this.state.vendor.name}</div>
-                                <Field label="Price per hour" value={"$" + this.state.bike.hourlyCost} />
+                                <div className="title" tabIndex="0">{this.state.bike.model}</div>
+                                {this.state.vendor.name != null &&
+                                    <div className="owner" tabIndex="0">Owned by {this.state.vendor.name}</div>
+                                }
+                                <Field label="Price per hour" value={this.state.bike.hourlyCost ? `$${this.state.bike.hourlyCost}` : ``} />
                                 <FormNote text="Charging card ending with 1732" />
-                                <Field label="Suggested rider height (meters)" value={this.state.bike.suitableHeightInMeters} />
-                                <Field label="Max weight (kg)" value={this.state.bike.maximumWeightInKg} />
+                                <Field label={`Suggested rider height ${this.state.unitType == "imperial" ? "(feet)" : "(meters)"}`} value={this.state.bike.suitableHeightInMeters} />
+                                <Field label={`Max weight ${this.state.unitType == "imperial" ? "(lb)" : "(kg)"}`} value={this.state.bike.maximumWeightInKg} />
                                 <Field label="Pick-up/return address" value={this.state.bike.address} />
 
                                 <MediaQuery minWidth={600}>
