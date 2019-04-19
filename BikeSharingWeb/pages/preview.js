@@ -24,6 +24,7 @@ class PreviewBase extends Component {
         this.state = {
             userId: undefined,
             userName: undefined,
+            unitType: undefined,
             bike: {},
             vendor: {},
             errorMessage: undefined
@@ -46,15 +47,17 @@ class PreviewBase extends Component {
             return;
         }
 
+        const unitType = "imperial";
         this.setState({
             userId: user.id,
-            userName: user.name
+            userName: user.name,
+            unitType: unitType
         });
 
         let bikeData = null;
         try {
             // get bike
-            bikeData = await helpers.getBikeAsync(this.props.bikeId, this.apiHost);
+            bikeData = await helpers.getBikeAsync(this.props.bikeId, this.apiHost, unitType);
         }
         catch (error) {
             console.error(error);
@@ -143,8 +146,8 @@ class PreviewBase extends Component {
                                 }
                                 <Field label="Price per hour" value={this.state.bike.hourlyCost ? `$${this.state.bike.hourlyCost}` : ``} />
                                 <FormNote text="Charging card ending with 1732" />
-                                <Field label="Suggested rider height (meters)" value={this.state.bike.suitableHeightInMeters} />
-                                <Field label="Max weight (kg)" value={this.state.bike.maximumWeightInKg} />
+                                <Field label={`Suggested rider height ${this.state.unitType == "imperial" ? "(feet)" : "(meters)"}`} value={this.state.bike.suitableHeightInMeters} />
+                                <Field label={`Max weight ${this.state.unitType == "imperial" ? "(lb)" : "(kg)"}`} value={this.state.bike.maximumWeightInKg} />
                                 <Field label="Pick-up/return address" value={this.state.bike.address} />
 
                                 <MediaQuery minWidth={600}>
