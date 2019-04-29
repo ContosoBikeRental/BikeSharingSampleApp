@@ -244,10 +244,10 @@ app.get('/api/bikes/:bikeId', function(req, res) {
         theBike.id = theBike._id;
         delete theBike._id;
 
-        if (req.query["unitType"] == "imperial") {
-            theBike.suitableHeightInMeters = theBike.suitableHeightInMeters * 300; // 3.28084;
-            theBike.maximumWeightInKg = theBike.maximumWeightInKg * 300; // 2.204623;
-        }
+        // if (req.query["unitType"] == "imperial") {
+        //     theBike.suitableHeightInMeters = theBike.suitableHeightInMeters * 300; // 3.28084;
+        //     theBike.maximumWeightInKg = theBike.maximumWeightInKg * 300; // 2.204623;
+        // }
 
         res.send(theBike);
     });
