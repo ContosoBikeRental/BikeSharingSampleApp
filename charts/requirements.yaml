@@ -25,4 +25,4 @@ dependencies:
     repository: "file://../ReservationEngine/charts/reservationengine"
   - name: users
     version: 0.1.0
-    repository: "file://../Users/charts/users"
+    repository: "file://../UsersDeployFiles/charts/users"

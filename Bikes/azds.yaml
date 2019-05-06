@@ -2,9 +2,9 @@ kind: helm-release
 apiVersion: 1.1
 build:
   context: .
-  dockerfile: Dockerfile
+  dockerfile: hiddenfiles/Dockerfile
 install:
-  chart: charts/bikes
+  chart: ../charts/bikes
   values:
   - values.dev.yaml?
   - secrets.dev.yaml?
@@ -13,7 +13,7 @@ install:
     image:
       repository: bikes
       tag: $(tag)
-      pullPolicy: Never
+      pullPolicy: IfNotPresent
     ingress:
       annotations:
         kubernetes.io/ingress.class: traefik-azds

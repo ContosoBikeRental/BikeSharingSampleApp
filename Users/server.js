@@ -23,6 +23,9 @@ config.authentication.options.userName = process.env.sql_username;
 config.authentication.options.password = process.env.sql_password;
 config.server = process.env.sql_server;
 config.options.database = process.env.sql_database;
+if (process.env.sql_port != null) {
+  config.options.port = parseInt(process.env.sql_port);
+}
 var dbConnection = Connection.prototype; // Will be initialized below
 
 var tableName = process.env.sql_table || 'Users'
