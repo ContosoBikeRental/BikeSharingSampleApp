@@ -5,8 +5,8 @@ fullnameOverride: billing
 replicaCount: 1
 image:
   repository: azdspublic/bikesharing-billing
-  tag: latest
-  pullPolicy: Always
+  tag: 20190416.1
+  pullPolicy: IfNotPresent
 imagePullSecrets: []
   # Optionally specify an array of imagePullSecrets.
   # Secrets must be manually created in the namespace.
